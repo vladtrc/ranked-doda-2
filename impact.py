@@ -1,227 +1,324 @@
 """
 Goals:
-- Role neutrality: average impact per role = 0 (no built-in bias).  
-- Bounded scale: player impact always within [-100, 100].  
-- Stable distribution: roughly bell-shaped, with <1% extreme outliers.  
+- Role neutrality: average impact per role = 0 (no built-in bias).
+- Bounded scale: player impact always within [-100, 100].
+- Stable distribution: roughly bell-shaped, with <1% extreme outliers.
 - Historical impacts remain unchanged when new matches are added.
 
 Exports:
-- calculate_impacts(matches): Given connection with, creates a table impact_result
-  with per-player impact values (match_id:int64, player_name:varchar, impact:double).
-- debug_impacts(matches): Uses calculate_impacts internally, then prints
-  diagnostics that you probably do not need unless debugging the alg.
+- calculate_impacts(conn): creates table impact_result (match_id:int64, player_name:varchar, impact:double).
+  Creates helper DuckDB views and tables with prefix `v_impact_*`. Avoid relying on them.
 
-Notice:
-- The module creates *DuckDB views and tables* with prefix `v_impact_*` inside the provided connection. Others should avoid relying on them.
+- debug_impacts(conn): Uses calculate_impacts internally, then prints diagnostics. Floods global state.
+
 """
 import duckdb
 
 
 def init_impact_views(conn: duckdb.DuckDBPyConnection) -> None:
-    # 1) Hardcoded weights per position
+    # 1) weights per position
     conn.execute("""
-        CREATE OR REPLACE TABLE impact_weights AS
-        SELECT * FROM (VALUES
-            (1, 2.0,  -1.5, 0.5,  0.0020),   -- pos1 carry
-            (2, 2.0,  -1.5, 0.5,  0.0018),   -- pos2 mid
-            (3, 1.5,  -1.5, 0.7,  0.0015),   -- pos3 offlane
-            (4, 0.7,  -1.5, 1.5,  0.0010),   -- pos4 support
-            (5, 0.5,  -1.5, 2.0,  0.0008)    -- pos5 hard support
-        ) AS t(position, w_k, w_d, w_a, w_net);
+        create or replace table v_impact_weights as
+        with params_weights as (
+            select 1::int as position, 2.0::double as w_k,  -1.5::double as w_d, 0.5::double as w_a,  0.0020::double as w_net
+            union all select 2,         2.0,                 -1.5,              0.5,                 0.0018
+            union all select 3,         1.5,                 -1.5,              0.7,                 0.0015
+            union all select 4,         0.7,                 -1.5,              1.5,                 0.0010
+            union all select 5,         0.5,                 -1.5,              2.0,                 0.0008
+        )
+        select * from params_weights;
     """)
 
-    # 2) Player-level raw impact
+    # 2) player-level raw impact
     conn.execute("""
-                 CREATE
-                 OR REPLACE VIEW v_impact_player_raw AS
-                 SELECT pr.match_id,
-                        pr.player_name,
-                        pr.team,
-                        pr.position,
-                        pr.kills,
-                        pr.deaths,
-                        pr.assists,
-                        pr.net_worth,
-                        iw.w_k,
-                        iw.w_d,
-                        iw.w_a,
-                        iw.w_net,
-                        (iw.w_k * pr.kills) +
-                        (iw.w_d * pr.deaths) +
-                        (iw.w_a * pr.assists) +
-                        (iw.w_net * pr.net_worth) AS impact
-                 FROM player_result pr
-                          JOIN impact_weights iw USING (position);
+                 create or replace view v_impact_player_raw as
+        with src_player as (
+            select
+                pr.match_id,
+                pr.player_name,
+                pr.team,
+                pr.position,
+                pr.kills,
+                pr.deaths,
+                pr.assists,
+                pr.net_worth
+            from player_result pr
+        ),
+        jn_weights as (
+            select
+                s.*,
+                iw.w_k,
+                iw.w_d,
+                iw.w_a,
+                iw.w_net
+            from src_player s
+            join v_impact_weights iw using (position)
+        ),
+        calc_raw as (
+            select
+                match_id,
+                player_name,
+                team,
+                position,
+                kills,
+                deaths,
+                assists,
+                net_worth,
+                w_k,
+                w_d,
+                w_a,
+                w_net,
+                (w_k * kills) + (w_d * deaths) + (w_a * assists) + (w_net * net_worth) as impact
+            from jn_weights
+        )
+                 select * from calc_raw;
                  """)
 
-    # 2b) Fixed calibration per role
+    # 2b) fixed calibration per role
     conn.execute("""
-        CREATE OR REPLACE TABLE impact_calibration AS
-        SELECT * FROM (VALUES
-            (1, 0.0, 45.0),
-            (2, 0.0, 45.0),
-            (3, 0.0, 40.0),
-            (4, 0.0, 35.0),
-            (5, 0.0, 30.0)
-        ) AS t(position, bias, scale);
+        create or replace table v_impact_calibration as
+        with params_cal as (
+            select 1::int as position, 0.0::double as bias, 45.0::double as scale
+            union all select 2,        0.0,                45.0
+            union all select 3,        0.0,                40.0
+            union all select 4,        0.0,                35.0
+            union all select 5,        0.0,                30.0
+        )
+        select * from params_cal;
     """)
 
-    # 2c) Bounded impact
+    # 2c) bounded impact
     conn.execute("""
-                 CREATE
-                 OR REPLACE VIEW v_impact_player AS
-                 SELECT p.match_id,
-                        p.player_name,
-                        p.team,
-                        p.position,
-                        p.kills,
-                        p.deaths,
-                        p.assists,
-                        p.net_worth,
-                        p.impact                                                   AS raw_impact,
-                        100.0 * tanh((p.impact - ic.bias) / NULLIF(ic.scale, 0.0)) AS impact
-                 FROM v_impact_player_raw p
-                          JOIN impact_calibration ic USING (position);
-                 """)
-
-    # 3) Team impact per match
-    conn.execute("""
-                 CREATE
-                 OR REPLACE VIEW v_impact_team_raw AS
-                 SELECT match_id, team, SUM(impact) AS team_impact
-                 FROM v_impact_player_raw
-                 GROUP BY match_id, team;
-                 """)
-    conn.execute("""
-                 CREATE
-                 OR REPLACE VIEW v_impact_team AS
-                 SELECT match_id, team, SUM(impact) AS team_impact
-                 FROM v_impact_player
-                 GROUP BY match_id, team;
-                 """)
-
-    # 4) Numeric outcome
-    conn.execute("""
-                 CREATE
-                 OR REPLACE VIEW v_impact_outcome AS
-                 SELECT m.match_id,
-                        CASE
-                            WHEN m.winning_team = 'radiant' THEN 1
-                            WHEN m.winning_team = 'dire' THEN -1
-                            ELSE NULL END AS outcome
-                 FROM match m;
-                 """)
-
-    # 5) Match-level impact diff
-    conn.execute("""
-                 CREATE
-                 OR REPLACE VIEW v_impact_match_raw AS
-        WITH ti AS (
-            SELECT
+                 create or replace view v_impact_player as
+        with src_raw as (
+            select * from v_impact_player_raw
+        ),
+        jn_cal as (
+            select
+                p.*,
+                ic.bias,
+                ic.scale
+            from src_raw p
+            join v_impact_calibration ic using (position)
+        ),
+        calc_bounded as (
+            select
                 match_id,
-                MAX(CASE WHEN team='radiant' THEN team_impact END) AS radiant_impact,
-                MAX(CASE WHEN team='dire'    THEN team_impact END) AS dire_impact
-            FROM v_impact_team_raw
-            GROUP BY match_id
+                player_name,
+                team,
+                position,
+                kills,
+                deaths,
+                assists,
+                net_worth,
+                impact as raw_impact,
+                100.0 * tanh((impact - bias) / nullif(scale, 0.0)) as impact
+            from jn_cal
         )
-                 SELECT ti.match_id,
-                        ti.radiant_impact,
-                        ti.dire_impact,
-                        (ti.radiant_impact - ti.dire_impact) AS impact_diff,
-                        mo.outcome
-                 FROM ti
-                          JOIN v_impact_outcome mo USING (match_id);
+                 select * from calc_bounded;
+                 """)
+
+    # 3) team impact per match
+    conn.execute("""
+                 create or replace view v_impact_team_raw as
+        with src as (select * from v_impact_player_raw),
+        agg as (
+            select
+                match_id,
+                team,
+                sum(impact) as team_impact
+            from src
+            group by match_id, team
+        )
+                 select * from agg;
                  """)
     conn.execute("""
-                 CREATE
-                 OR REPLACE VIEW v_impact_match AS
-        WITH ti AS (
-            SELECT
+                 create or replace view v_impact_team as
+        with src as (select * from v_impact_player),
+        agg as (
+            select
                 match_id,
-                MAX(CASE WHEN team='radiant' THEN team_impact END) AS radiant_impact,
-                MAX(CASE WHEN team='dire'    THEN team_impact END) AS dire_impact
-            FROM v_impact_team
-            GROUP BY match_id
+                team,
+                sum(impact) as team_impact
+            from src
+            group by match_id, team
         )
-                 SELECT ti.match_id,
-                        ti.radiant_impact,
-                        ti.dire_impact,
-                        (ti.radiant_impact - ti.dire_impact) AS impact_diff,
-                        mo.outcome
-                 FROM ti
-                          JOIN v_impact_outcome mo USING (match_id);
+                 select * from agg;
+                 """)
+
+    # 4) numeric outcome
+    conn.execute("""
+                 create or replace view v_impact_outcome as
+        with src as (
+            select
+                m.match_id,
+                case
+                    when m.winning_team = 'radiant' then 1
+                    when m.winning_team = 'dire' then -1
+                    else null
+                end as outcome
+            from match m
+        )
+                 select * from src;
+                 """)
+
+    # 5) match-level impact diff
+    conn.execute("""
+                 create or replace view v_impact_match_raw as
+        with ti as (
+            select
+                match_id,
+                max(case when team = 'radiant' then team_impact end) as radiant_impact,
+                max(case when team = 'dire' then team_impact end)     as dire_impact
+            from v_impact_team_raw
+            group by match_id
+        ),
+        pres as (
+            select
+                ti.match_id,
+                ti.radiant_impact,
+                ti.dire_impact,
+                (ti.radiant_impact - ti.dire_impact) as impact_diff
+            from ti
+        ),
+        jn as (
+            select
+                p.match_id,
+                p.radiant_impact,
+                p.dire_impact,
+                p.impact_diff,
+                o.outcome
+            from pres p
+            join v_impact_outcome o using (match_id)
+        )
+                 select * from jn;
+                 """)
+    conn.execute("""
+                 create or replace view v_impact_match as
+        with ti as (
+            select
+                match_id,
+                max(case when team = 'radiant' then team_impact end) as radiant_impact,
+                max(case when team = 'dire' then team_impact end)     as dire_impact
+            from v_impact_team
+            group by match_id
+        ),
+        pres as (
+            select
+                ti.match_id,
+                ti.radiant_impact,
+                ti.dire_impact,
+                (ti.radiant_impact - ti.dire_impact) as impact_diff
+            from ti
+        ),
+        jn as (
+            select
+                p.match_id,
+                p.radiant_impact,
+                p.dire_impact,
+                p.impact_diff,
+                o.outcome
+            from pres p
+            join v_impact_outcome o using (match_id)
+        )
+                 select * from jn;
                  """)
 
 
 def calculate_impacts(conn: duckdb.DuckDBPyConnection) -> None:
     init_impact_views(conn)
     conn.execute("""
-        CREATE OR REPLACE TABLE impact_result AS
-        SELECT match_id, player_name, impact
-        FROM v_impact_player
-        ORDER BY match_id, player_name;
+        create or replace table impact_result as
+        with src as (
+            select match_id, player_name, impact
+            from v_impact_player
+        ),
+        pres as (
+            select * from src
+            order by match_id, player_name
+        )
+        select * from pres;
     """)
 
 
 def debug_impacts(conn: duckdb.DuckDBPyConnection) -> None:
-    # --- Per-position distribution ---
+    # per-position distribution
     pos_rows = conn.execute("""
-                            WITH pos_stats AS (SELECT position,
-                                                      COUNT(*)            AS n,
-                                                      AVG(impact)         AS mean_impact,
-                                                      STDDEV_SAMP(impact) AS std_impact,
-                                                      MIN(impact)         AS min_impact,
-                                                      MAX(impact)         AS max_impact
-                                               FROM v_impact_player
-                                               GROUP BY position),
-                                 outlier_counts AS (SELECT p.position,
-                                                           SUM(CASE WHEN ABS(p.impact) > 5 * ps.std_impact THEN 1 ELSE 0 END) AS n_outliers,
-                                                           COUNT(*)                                                           AS n_total
-                                                    FROM v_impact_player p
-                                                             JOIN pos_stats ps USING (position)
-                                                    GROUP BY p.position, ps.std_impact)
-                            SELECT ps.position,
-                                   ps.n,
-                                   ps.mean_impact,
-                                   ps.std_impact,
-                                   ps.min_impact,
-                                   ps.max_impact,
-                                   CAST(oc.n_outliers AS DOUBLE) / NULLIF(oc.n_total, 0) AS frac_gt_5sigma
-                            FROM pos_stats ps
-                                     JOIN outlier_counts oc USING (position)
-                            ORDER BY ps.position
+                            with pos_stats as (
+                                select
+                                    position,
+                                    count(*)            as n,
+                                    avg(impact)         as mean_impact,
+                                    stddev_samp(impact) as std_impact,
+                                    min(impact)         as min_impact,
+                                    max(impact)         as max_impact
+                                from v_impact_player
+                                group by position
+                            ),
+                                 outlier_counts as (
+                                     select
+                                         p.position,
+                                         sum(case when abs(p.impact) > 5 * ps.std_impact then 1 else 0 end) as n_outliers,
+                                         count(*)                                                           as n_total
+                                     from v_impact_player p
+                                              join pos_stats ps using (position)
+                                     group by p.position, ps.std_impact
+                                 )
+                            select
+                                ps.position,
+                                ps.n,
+                                ps.mean_impact,
+                                ps.std_impact,
+                                ps.min_impact,
+                                ps.max_impact,
+                                cast(oc.n_outliers as double) / nullif(oc.n_total, 0) as frac_gt_5sigma
+                            from pos_stats ps
+                                     join outlier_counts oc using (position)
+                            order by ps.position;
                             """).fetchall()
 
-    # --- Team spread ---
+    # team spread
     team_rows = conn.execute("""
-                             SELECT team,
-                                    AVG(team_impact)         AS mean_team_impact,
-                                    STDDEV_SAMP(team_impact) AS std_team_impact
-                             FROM v_impact_team
-                             GROUP BY team
-                             ORDER BY team
+                             with src as (select * from v_impact_team),
+                                  agg as (
+                                      select
+                                          team,
+                                          avg(team_impact)         as mean_team_impact,
+                                          stddev_samp(team_impact) as std_team_impact
+                                      from src
+                                      group by team
+                                  )
+                             select * from agg order by team;
                              """).fetchall()
 
-    # --- Match-level correlation & accuracy ---
+    # match-level correlation & accuracy
     n_matches, corr_diff_outcome, accuracy = conn.execute("""
-                                                          SELECT COUNT(*)                                                     AS n_matches,
-                                                                 CORR(impact_diff, outcome)                                   AS corr_diff_outcome,
-                                                                 AVG(CASE WHEN SIGN(impact_diff) = outcome THEN 1 ELSE 0 END) AS accuracy
-                                                          FROM v_impact_match
-                                                          WHERE outcome IS NOT NULL
-                                                            AND impact_diff IS NOT NULL
+                                                          with src as (
+                                                              select * from v_impact_match
+                                                              where outcome is not null
+                                                                and impact_diff is not null
+                                                          )
+                                                          select
+                                                              count(*)                                                     as n_matches,
+                                                              corr(impact_diff, outcome)                                   as corr_diff_outcome,
+                                                              avg(case when sign(impact_diff) = outcome then 1 else 0 end) as accuracy
+                                                          from src;
                                                           """).fetchone()
 
-    # --- Raw role zero-sum check ---
+    # raw role zero-sum check
     role_rows = conn.execute("""
-                             SELECT position,
-                                    SUM(impact) AS sum_impact_all_matches
-                             FROM v_impact_player_raw
-                             GROUP BY position
-                             ORDER BY position
+                             with src as (select * from v_impact_player_raw),
+                                  agg as (
+                                      select
+                                          position,
+                                          sum(impact) as sum_impact_all_matches
+                                      from src
+                                      group by position
+                                  )
+                             select * from agg order by position;
                              """).fetchall()
 
-    # --- Printing ---
+    # printing
     def _fmt(x):
         return "None" if x is None else f"{x:.3f}"
 
