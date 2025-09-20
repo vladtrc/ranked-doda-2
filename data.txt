@@ -1,0 +1,3570 @@
+// YYYY-MM-DD HH:MM
+// MM:SS RADIANT_KILLS-DIRE_KILLS WINNING_TEAM(radiant/dire)
+// radiant
+// PLAYER_NAME POSITION NET_WORTH KILLS/DEATHS/ASSISTS
+// dire
+// PLAYER_NAME POSITION NET_WORTH KILLS/DEATHS/ASSISTS
+
+2023-11-12 22:37
+45:06 39-37 radiant
+radiant
+palec 4 14161 2/7/15
+imba 1 38330 20/1/10
+aizlkel 5 18852 6/15/23
+sobolew 3 24387 5/5/23
+katokan 2 21868 4/9/21
+dire
+pizza 5 12827 6/5/20
+poopy 4 16505 6/12/18
+dextron 3 15600 8/7/8
+toyota 1 22755 3/5/12
+starlight 2 19327 14/11/9
+
+2023-11-11 00:14
+33:58 24-42 dire
+radiant
+pizza 5 8052 7/7/9
+imba 1 17387 12/4/8
+itnon 4 6408 1/12/10
+dextron 3 8620 2/10/9
+starlight 2 11519 2/9/10
+dire
+poopy 2 16602 10/3/19
+palec 4 12165 0/5/24
+fishscale 1 28020 25/1/8
+kebab 5 11994 5/3/18
+aizlkel 3 13849 2/12/24
+
+
+2023-11-10 23:18
+46:46 29-31 dire
+radiant
+dextron 3 15878 3/7/15
+kebab 4 12194 3/4/12
+starlight 1 19571 5/9/13
+itnon 5 9359 1/8/11
+imba 2 23902 14/4/4
+dire
+egor 4 17498 4/7/14
+fishscale 1 36597 22/1/2
+poopy 2 17861 4/6/14
+pizza 5 12924 1/8/22
+katokan 3 23545 1/7/13
+
+
+2023-11-10 1:38
+32:55 24-46 dire
+radiant
+pizza 5 8596 5/10/11
+yak 2 11632 8/10/6
+kebab 4 8943 3/9/4
+aizlkel 3 6208 1/13/10
+toyota 1 12755 5/4/9
+dire
+fishscale 1 26127 24/1/10
+itnon 4 9482 4/7/18
+egor 3 13509 2/4/19
+emperor 2 23071 12/5/19
+palandirka 5 10576 4/7/18
+
+2023-11-10 0:42
+47:32 49-22 radiant
+radiant
+itnon 4 11746 1/5/20
+palandirka 4 13747 4/9/24
+egor 3 25277 8/4/17
+fishscale 1 45383 27/1/10
+emperor 2 21012 9/3/38
+dire
+toyota 1 16246 12/6/8
+starlight 2 18554 4/13/6
+pizza 5 6633 0/12/7
+kebab 4 10688 5/7/8
+aizlkel 3 13931 1/11/9
+
+
+2023-10-30 21:52
+37:55 38-40 radiant
+radiant
+pizza 2 16165 5/8/19
+palec 4 11599 1/11/19
+katokan 1 31834 24/6/9
+fishscale 5 14914 7/5/26
+aizlkel 3 12525 1/10/25
+dire
+itnon 5 6320 2/11/20
+emperor 2 17950 14/3/18
+dextron 3 12339 3/9/9
+egor 1 20906 14/6/9
+toyota 4 11001 7/9/19
+
+
+
+
+2023-10-30 23:02
+53:40 52-41 radiant
+radiant
+pizza 5 20118 7/9/31
+fishscale 3 50484 22/3/18
+palec 4 16703 3/10/22
+aizlkel 1 20917 3/13/9
+katokan 2 31196 17/6/21
+dire
+toyota 5 11938 2/12/15
+emperor 1 30677 23/11/10
+egor 2 20248 8/12/16
+itnon 4 13940 3/9/12
+dextron 3 17394 4/8/18
+
+2023-10-31 23:51
+50:28 27-42 radiant
+radiant
+imba 1 40304 12/3/12
+palec 4 18822 4/10/12
+aizlkel 5 11636 3/18/16
+rubius 3 17352 1/9/19
+katokan 2 23793 7/2/10
+dire
+fishscale 1 34375 13/2/12
+dextron 3 20512 10/5/15
+pizza 5 10363 2/8/18
+kebab 4 13478 7/7/18
+starlight 2 22508 8/5/14
+
+2023-11-01 00:39
+30:13 41-15 radiant
+radiant
+pizza 4 7915 5/6/11
+kebab 5 9773 3/2/20
+fishscale 1 21556 22/1/9
+starlight 2 13438 7/4/16
+dextron 3 12501 2/2/26
+dire
+imba 1 14556 6/4/7
+aizlkel 5 4506 1/12/9
+katokan 2 10239 6/6/3
+palec 4 6152 0/10/10
+RubiuS 3 8429 1/10/4
+
+2023-11-07 2:22
+55:39 58-39 dire
+radiant
+pizza 5 12468 5/11/27
+Yak 3 33103 13/11/31
+palec 4 21538 9/6/31
+fishscale 1 40862 19/7/17
+Mikitos 2 31643 12/5/16
+dire
+Starlight 3 21804 10/11/14
+solence 1 26909 9/6/11
+dextron 2 15626 4/15/11
+AizlKEl 5 18661 5/12/18
+unseash 4 22015 10/14/13
+
+2023-11-07 21:40
+32:16 38-14 radiant
+radiant
+pizza 5 10098 6/6/23
+palec 4 8495 1/5/13
+ginecolog 3 15151 5/1/18
+sobolew 1 20744 8/2/22
+Starlight 2 24071 18/0/11
+dire
+toyota 1 13089 5/5/5
+dextron 5 7602 2/8/4
+kebab 4 4725 2/9/3
+svetlana 3 12414 1/8/8
+poopy 2 11219 2/8/3
+
+2023-11-07 23:01
+53:55 39-47 dire
+radiant
+Starlight 2 24292 13/8/15
+toyota 1 21274 7/9/13
+pizza 4 13438 1/9/17
+koba 3 23700 14/10/8
+dextron 5 12494 4/11/9
+dire
+fishscale 1 41019 18/9/17
+imba 3 26787 6/6/24
+palec 4 12884 5/12/10
+poopy 2 34281 6/4/27
+kebab 5 20652 12/9/2
+
+
+2023-11-08 22:05
+64:39 51-48 dire
+radiant
+pizza 5 16504 8/9/23
+Starlight 3 27977 10/15/28
+kebab 4 19851 5/12/23
+Shu_bert 2 36655 17/5/25
+toyota 1 29148 11/8/13
+dire
+poopy 4 32794 6/12/27
+Yak 2 36267 13/11/12
+imba 1 44624 20/9/15
+rupich 3 37759 5/9/30
+solence 5 21484 4/10/32
+
+
+2023-11-08 23:15
+42:59 42-27 radiant
+radiant
+poopy 4 14433 2/7/23
+fishscale 1 26465 7/1/17
+Shu_bert 2 27202 16/4/16
+Starlight 3 20951 12/7/19
+rupich 5 12959 4/8/25
+dire
+Yak 2 19076 10/7/9
+pizza 5 7931 3/12/8
+imba 1 24430 5/7/8
+toyota 3 17693 5/5/13
+kebab 4 11514 4/11/14
+
+
+2023-11-08 00:00
+34:57 19-40 dire
+radiant
+palec 5 8188 2/5/7
+fishscale 1 17657 8/5/3
+koba 2 12117 4/8/8
+kebab 4 6924 3/12/5
+dextron 3 7127 0/10/9
+dire
+aizlkel 4 13240 8/6/25
+imba 1 25267 5/2/14
+pizza 5 9188 0/5/17
+toyota 3 23471 19/4/11
+poopy 2 18844 8/2/20
+
+
+2023-11-08 22:05
+64:39 51-48 dire
+radiant
+pizza 5 16504 8/9/23
+starlight 3 27977 10/15/28
+kebab 4 19851 5/12/23
+shu_bert 2 36655 17/5/25
+toyota 1 29148 11/8/13
+dire
+poopy 4 32794 6/12/27
+yak 2 36267 13/11/12
+imba 1 44624 20/9/15
+rupich 3 37758 5/9/30
+solence 5 21484 4/10/32
+
+
+
+
+2023-10-06 22:36
+58:28 37-37 dire
+radiant
+pizza 5 17116 2/5/21
+fishscale 1 35637 8/5/12
+mugiwara 2 31369 11/5/17
+otstalii 3 15020 6/11/20
+kebab 4 16138 8/11/19
+dire
+katokan 2 43636 20/4/6
+sobolew 4 22220 1/9/30
+starlight 1 36123 6/6/20
+rupich 5 17377 5/11/21
+p 3 23892 5/7/13
+
+
+2023-10-07 23:50
+49:00 47-49 dire
+radiant
+pizza 5 13969 4/12/18
+runner 4 18536 12/8/17
+fishscale 2 18986 9/10/20
+dimka 1 22935 11/7/15
+cashier 3 24433 11/12/21
+dire
+p 4 16139 3/9/19
+yak 2 23473 10/15/17
+katokan 3 33634 22/4/15
+imba 1 31608 10/8/19
+angry_duck 5 19355 3/11/29
+
+2023-10-07 22:21
+35:51 43-20 radiant
+radiant
+pizza 5 12416 5/5/22
+fishscale 4 11669 9/1/22
+runner 2 16961 13/5/13
+sobolew 1 21562 8/3/10
+starlight 3 18197 8/6/16
+dire
+imba 1 15022 5/6/11
+angry_duck 4 6778 0/12/10
+katokan 2 13819 5/11/12
+tayviscon 5 8727 4/8/13
+p 3 11816 5/6/6
+
+2023-10-07 21:12
+41:06 22-41 dire
+radiant
+pizza 5 8501 7/12/5
+yana 4 11139 0/9/11
+fishscale 1 24691 11/5/5
+sobolew 3 14466 3/8/12
+mugiwara 2 13782 1/7/11
+dire
+runner 3 20046 15/7/19
+katokan 2 19296 8/3/16
+angry_duck 4 16440 3/6/18
+tayviscon 5 14253 5/4/17
+imba 1 27302 10/2/11
+
+
+2023-10-24 0:35
+26:32 28-6 radiant
+radiant
+pizza 5 7755 3/2/11
+katokan 2 12695 2/1/14
+imba 1 21095 5/0/5
+kebab 4 8861 5/2/14
+kot 3 13513 13/1/0
+dire
+dextron 3 8153 1/3/2
+unseash 1 12613 3/4/0
+egor 5 4116 2/7/2
+itnon 4 3564 0/9/3
+starlight 2 7782 0/5/1
+
+2023-10-23 23:45
+46:45 53-19 radiant
+radiant
+egor 2 35930 18/2/17
+fishscale 5 17037 11/5/22
+pizza 4 9839 1/5/20
+unseash 1 40241 17/1/19
+dextron 3 16493 6/6/15
+dire
+katokan 2 16601 5/11/11
+itnon 5 13288 2/9/11
+imba 1 28918 7/4/7
+kebab 4 7931 1/16/8
+kot 3 13355 4/13/9
+
+
+2023-10-23 22:31
+41:57 54-22 radiant
+radiant
+pizza 2 21638 10/5/8
+fishscale 3 17913 8/2/27
+kebab 4 15017 7/5/27
+yak 1 32771 20/6/17
+palec 5 16164 8/4/18
+dire
+itnon 4 9958 1/13/13
+egor 1 22239 10/6/3
+unseash 2 18423 7/9/10
+dextron 3 11817 3/13/11
+kot 5 7771 1/13/15
+
+2023-10-23 21:19
+33:14 40-9 radiant
+radiant
+pizza 2 14221 5/3/10
+fishscale 1 21973 20/0/15
+kebab 4 12160 4/3/22
+palec 5 10532 5/1/16
+dextron 3 15273 5/2/18
+dire
+egor 1 12518 1/7/1
+itnon 5 4803 0/10/3
+ginecolog 2 12492 7/5/0
+drugdilla 3 8365 0/9/6
+bidlo 4 8993 1/9/3
+
+
+2023-10-23 0:20
+44:27 45-29 radiant
+radiant
+pizza 5 14365 6/7/25
+kebab 3 19051 6/7/25
+fishscale 1 31819 23/3/16
+katokan 2 27919 6/5/22
+palec 4 13900 3/7/25
+dire
+kot 2 11293 4/11/14
+egor 1 20717 8/6/8
+itnon 5 7278 2/10/9
+toyota 4 16392 6/7/15
+dextron 3 12214 7/11/8
+
+2023-10-22 23:18
+27:46 16-36 dire
+radiant
+itnon 5 4809 1/10/9
+egor 1 12906 10/5/2
+dextron 3 6631 0/8/4
+toyota 2 10015 2/4/2
+kot 4 5288 3/9/2
+dire
+fishscale 1 19826 19/1/9
+katokan 2 14471 8/1/9
+pizza 5 10043 3/1/22
+kebab 3 9470 2/9/7
+palec 4 9169 4/4/17
+
+2023-10-05 22:49
+20:55 19-4 radiant
+radiant
+pizza 5 4079 1/2/10
+fishscale 1 12160 7/0/5
+ginecolog 3 9828 4/2/3
+yana 4 5595 4/1/6
+sobolew 2 8872 3/0/6
+dire
+palec 5 3670 2/6/0
+yak 2 6028 0/4/0
+mugiwara 1 6961 1/3/0
+jumays 3 6209 0/4/0
+kebab 4 5171 1/2/2
+
+
+
+2023-10-05 21:00
+37:03 35-19 radiant
+radiant
+fishscale 1 27048 13/1/4
+pizza 5 10697 2/4/17
+sobolew 2 17613 5/5/19
+ginecolog 3 17437 8/4/15
+yana 4 13560 7/5/21
+dire
+yak 2 19080 9/7/7
+jumays 4 9592 5/10/11
+mugiwara 1 14872 3/6/4
+kebab 3 9995 1/5/7
+palec 5 7016 1/8/7
+
+
+2023-10-05 22:52
+39:51 44-25 radiant
+radiant
+fishscale 1 26986 15/3/18
+katokan 2 21247 7/6/18
+pizza 5 12499 0/9/25
+kebab 4 13274 5/5/28
+dimka 3 21341 17/2/13
+dire
+sobolew 1 18803 7/7/10
+ginecolog 4 13881 7/7/7
+yana 4 7012 2/12/7
+mugiwara 2 15007 8/9/15
+palec 5 8882 0/9/6
+
+
+2023-10-09 21:55
+47:00 23-41 dire
+radiant
+pizza 5 11700 2/5/10
+umeyu 3 19981 6/8/6
+kebab 4 8432 2/10/6
+andrew 1 21328 7/7/8
+starlight 2 18337 6/11/6
+dire
+katokan 2 27565 16/2/13
+imba 1 34450 10/2/12
+fishscale 4 17667 8/7/24
+palec 5 18991 3/4/17
+koba 3 28610 4/8/18
+
+
+2023-10-09 2:08
+39:38 29-42 dire
+radiant
+sobolew 1 20814 9/7/9
+toyota 3 14293 9/9/8
+doyota 4 17517 6/4/14
+itnon 4 7232 3/11/8
+dextron 5 8296 2/11/3
+dire
+fishscale 1 30122 18/4/13
+katokan 3 21235 8/6/19
+kebab 4 12348 2/10/15
+pizza 5 15744 9/5/21
+yak 2 21606 3/4/24
+
+
+2023-10-05 21:30
+20:55 4-20 dire
+radiant
+katokan 2 7337 1/3/3
+imba 1 6881 0/3/3
+dextron 4 3291 0/5/3
+dimka 3 6874 3/6/1
+palec 5 3149 0/3/1
+dire
+fishscale 1 9562 5/2/7
+jumays 2 10248 9/0/4
+pizza 5 5880 1/2/12
+itnon 3 8247 2/0/5
+kebab 4 6014 3/1/8
+
+
+2023-10-04 23:30
+26:33 8-31 dire
+radiant
+katokan 2 9739 4/5/1
+palec 4 4892 1/8/1
+imba 1 11405 0/2/2
+dimka 3 8463 1/5/3
+dextron 5 3643 1/11/2
+dire
+fishscale 1 17695 16/1/10
+jumays 2 11775 6/2/9
+pizza 5 9258 6/2/19
+itnon 3 10219 0/0/9
+kebab 4 7958 3/3/12
+
+
+2023-10-04 22:50
+16:16 20-3 radiant
+radiant
+itnon 5 3203 0/3/6
+fishscale 1 8555 8/0/4
+dimka 3 7632 7/0/4
+jumays 2 8019 3/0/6
+kebab 4 4211 2/0/8
+dire
+katokan 2 4052 0/4/1
+pizza 5 3524 2/4/1
+dextron 3 3786 0/4/0
+palec 4 2654 0/6/0
+imba 1 5579 1/2/1
+
+
+2023-11-16 22:10
+28:34 10-38 dire
+radiant
+katokan 2 11208 4/4/2
+pizza 5 6535 2/11/4
+solence 1 10188 1/6/1
+kebab 3 5946 2/8/3
+palec 4 4647 0/10/3
+dire
+toyota 3 13552 7/1/16
+poopy 2 13787 6/4/15
+doyota 4 10389 12/0/17
+svetlana 5 11665 5/4/24
+imba 1 22066 7/1/5
+
+
+2023-11-16 23:12
+44:27 24-42 dire
+radiant
+pizza 5 8889 1/10/8
+solence 4 15554 6/5/10
+poopy 2 18988 8/9/7
+aizlkel 3 13612 5/12/11
+imba 1 23279 3/6/6
+dire
+toyota 1 32297 15/3/11
+doyota 2 26275 11/2/22
+svetlana 3 25206 6/4/19
+kebab 5 15069 5/9/25
+palec 4 15370 5/7/29
+
+2024-01-28 19:00
+26:20 29-9 radiant
+radiant
+katokan 5 6500 1/1/12
+imba 2 14800 6/3/5
+cosmo 4 10000 10/2/12
+cashier 3 14100 7/1/14
+toyota 1 14000 5/2/7
+dire
+pizza 5 3252 0/6/2
+palec 4 7399 0/6/4
+fishscale 2 11877 5/3/4
+kebab 3 9365 1/7/6
+angry_duck 1 6961 1/7/1
+
+
+2024-03-16 22:54
+33:29 36-22 radiant
+radiant
+katokan 2 18717 4/3/19
+fishscale 4 15563 7/4/24
+starlight 3 20571 12/4/13
+durila 1 24635 8/5/11
+pizza 5 10071 5/6/16
+dire
+heart 5 4475 2/9/8
+gantz 1 16788 8/6/2
+de 4 7095 1/7/15
+poopy 2 12453 3/7/12
+ginecolog 3 13042 7/7/9
+
+
+2024-03-16 23:57
+34:32 18-34 dire
+radiant
+gantz 1 13391 5/7/5
+de 4 7632 2/8/10
+poopy 3 10592 5/6/6
+ginecolog 3 13126 4/5/11
+heart 5 6510 0/8/10
+dire
+pizza 5 11117 2/3/26
+katokan 2 20110 10/0/17
+fishscale 4 11407 6/5/20
+durila 1 23129 7/4/9
+starlight 3 19295 8/6/17
+
+
+
+2024-03-17 1:17
+43:52 20-37 dire
+radiant
+fishscale 2 24801 6/5/6
+sobolew 1 18706 6/6/4
+de 3 13761 5/9/11
+pizza 5 9684 0/7/12
+palec 4 8800 3/10/9
+dire
+starlight 2 27847 13/5/11
+durila 1 30916 5/3/12
+ginecolog 4 18488 4/3/21
+heart 5 14187 6/4/17
+gantz 3 20275 9/5/17
+
+
+2024-07-03 21:40
+37:20 32-18 radiant
+radiant
+starlight 2 23358 12/4/8
+gantz 1 22100 9/3/3
+poopy 3 17775 6/5/17
+pizza 5 13121 5/5/22
+bnc 4 12796 0/1/18
+dire
+imba 4 8804 1/3/10
+de 5 6271 2/11/12
+kebab 1 14231 7/7/4
+jumays 3 12049 1/5/9
+sokoloff 2 12525 6/6/6
+
+
+2024-07-03 22:40
+26:56 10-42 dire
+radiant
+yak 3 9636 1/9/5
+pizza 5 6589 3/11/3
+bnc 4 4545 0/8/4
+imba 1 9369 4/6/3
+poopy 2 6821 0/8/2
+dire
+starlight 2 16244 8/1/9
+gantz 1 20156 12/0/8
+wu3oud 3 13783 12/2/14
+de 5 10944 9/4/23
+kebab 4 9538 1/3/21
+
+2024-07-03 23:20
+40:47 50-32 radiant
+radiant
+starlight 2 25975 11/7/17
+gantz 1 27004 11/5/13
+wu3oud 3 27141 23/4/12
+de 5 11085 4/8/23
+kebab 4 11408 1/9/25
+dire
+pizza 5 8096 0/14/24
+yak 2 15100 4/13/18
+imba 1 25316 20/2/6
+katokan 3 16735 3/9/21
+bnc 4 12704 5/12/15
+
+2024-07-04 22:10
+43:18 29-28 radiant
+radiant
+starlight 1 33810 8/2/12
+gantz 2 21135 8/7/7
+imba 3 18809 8/6/10
+pizza 5 11784 0/6/18
+poopy 4 13389 3/7/16
+dire
+katokan 2 18247 10/2/10
+de 5 9335 3/9/16
+toyota 3 16830 5/5/16
+bnc 1 19886 8/3/6
+aizlkel 4 12936 2/10/16
+
+
+2024-07-04 23:16
+63:35 50-46 radiant
+radiant
+gantz 1 31651 16/9/9
+de 5 21507 7/12/22
+katokan 2 36456 8/7/34
+kebab 4 27260 6/12/24
+bnc 4 29961 11/7/17
+dire
+starlight 2 28918 6/13/28
+imba 1 42536 11/5/16
+toyota 3 24307 9/11/17
+poopy 4 29493 12/5/23
+aizlkel 5 18961 8/16/15
+
+2024-07-06 21:30
+29:41 29-19 radiant
+radiant
+starlight 2 15987 9/4/3
+gantz 1 21385 11/0/8
+mugiwara 4 9617 2/5/14
+de 5 10016 5/4/17
+kebab 3 13372 2/6/9
+dire
+fishscale 2 15319 5/2/10
+jumays 1 10233 0/4/8
+pizza 4 7653 6/10/7
+voopvoop 5 7447 1/6/7
+aizlkel 3 9757 4/7/7
+
+2024-07-06 22:20
+44:01 40-29 radiant
+radiant
+starlight 2 21608 7/5/21
+gantz 1 30772 18/4/10
+pizza 4 16906 0/8/21
+de 5 13501 4/7/22
+kebab 3 22569 11/5/17
+dire
+fishscale 2 25610 11/6/11
+jumays 3 16482 11/9/4
+mugiwara 1 19319 3/8/22
+voopvoop 5 11885 0/8/19
+aizlkel 4 13963 3/10/21
+
+2024-07-06 23:30
+33:01 36-25 radiant
+radiant
+katokan 2 14695 6/6/13
+gantz 1 27045 12/0/10
+pizza 4 11295 2/7/21
+de 5 10614 9/8/12
+toyota 3 15761 2/7/21
+dire
+fishscale 2 17051 9/5/7
+starlight 1 13929 4/6/10
+mugiwara 4 8067 4/8/12
+kebab 3 10697 3/6/4
+aizlkel 5 7621 4/11/11
+
+2024-07-07 22:00
+61:24 46-46 radiant
+radiant
+starlight 2 31732 14/9/26
+imba 4 28152 6/6/23
+toyota 1 39698 9/4/17
+rupich 3 25350 8/14/15
+aizlkel 5 16224 7/13/17
+dire
+katokan 2 27117 9/5/25
+de 5 11743 2/13/28
+gantz 1 31554 24/11/11
+bnc 3 25916 8/10/19
+zikat 4 21517 2/8/23
+
+2024-07-07 23:00
+47:03 34-45 dire
+radiant
+katokan 3 19482 8/5/10
+imba 1 23747 11/6/7
+de 4 9902 2/14/17
+bnc 2 22284 11/7/8
+aizlkel 5 11699 2/13/14
+dire
+starlight 2 27585 13/5/13
+gantz 1 26794 9/5/12
+toyota 3 24370 15/5/26
+rupich 4 20160 2/10/25
+zikat 5 15629 6/9/27
+
+2024-07-11 22:00
+50:14 55-43 radiant
+radiant
+de 5 15209 15/9/21
+kebab 3 21275 10/13/26
+poopy 2 31007 14/5/18
+aizlkel 5 16653 5/12/22
+gantz 1 26760 8/4/25
+dire
+starlight 3 17202 3/12/15
+wu3oud 4 17181 1/11/27
+katokan 2 21176 8/8/19
+deniska 1 31966 21/9/13
+pizza 5 17201 8/15/23
+
+2024-07-11 23:00
+40:20 34-42 dire
+radiant
+starlight 3 14566 3/10/17
+yak 2 18219 8/8/18
+imba 4 16173 10/3/14
+deniska 1 23597 12/6/11
+pizza 5 9439 0/15/19
+dire
+gantz 1 29378 23/4/9
+katokan 3 17959 4/7/25
+wu3oud 5 12703 0/7/19
+poopy 2 17963 3/7/17
+aizlkel 4 12648 11/9/16
+
+2024-07-12 21:00
+36:55 18-44 radiant
+radiant
+gantz 1 21506 5/3/16
+abuser 2 17819 13/3/12
+toyota 3 17649 9/6/6
+pizza 5 12384 6/10/18
+aizlkel 4 10943 0/5/17
+dire
+starlight 2 10174 1/9/7
+de 5 8312 4/7/17
+wu3oud 4 10649 6/8/11
+imba 3 12483 3/6/8
+deniska 1 23205 13/3/3
+
+2024-07-12 23:00
+30:31 15-33 dire
+radiant
+katokan 2 10696 5/6/8
+de 5 4938 0/8/12
+toyota 3 11381 2/6/8
+imba 1 11674 2/4/6
+pizza 4 7104 4/9/9
+dire
+gantz 1 20850 12/3/12
+shu_bert 2 15595 10/2/11
+kebab 5 11759 1/5/23
+aizlkel 4 10248 4/4/8
+deniska 3 17529 6/1/15
+
+2024-07-15 21:00
+47:29 52-35 radiant
+radiant
+fishscale 4 15861 11/5/23
+wu3oud 3 27464 10/8/26
+starlight 2 26206 10/8/17
+dimka 5 15949 4/11/26
+deniska 1 34874 16/3/22
+dire
+imba 5 17766 11/8/11
+gantz 1 23937 4/9/12
+toyota 3 17766 7/11/16
+bnc 2 21595 9/9/9
+aizlkel 5 12523 4/15/15
+
+
+2024-07-15 22:00
+47:54 48-34 radiant
+radiant
+deniska 1 31494 11/5/14
+imba 3 22107 13/4/15
+bnc 2 31149 16/6/13
+toyota 4 18603 4/9/25
+aizlkel 5 13835 3/10/25
+dire
+gantz 1 23444 10/5/10
+starlight 2 16341 4/9/18
+katokan 4 15546 3/7/20
+wu3oud 3 22063 8/13/17
+pizza 5 15187 9/14/15
+
+2024-07-21 21:00
+28:03 15-38 dire
+radiant
+starlight 4 6071 3/13/6
+gantz 2 8783 3/7/4
+deniska 1 12947 2/3/1
+katokan 5 5552 1/9/8
+toyota 3 9370 5/7/9
+dire
+fishscale 4 9419 3/4/23
+yak 1 16366 8/2/19
+de 3 13043 10/4/14
+bnc 2 19294 15/0/7
+pizza 5 7897 1/5/16
+
+2024-07-21 22:00
+48:19 37-37 dire
+radiant
+deniska 1 24444 7/4/11
+fishscale 4 17228 5/6/20
+bnc 2 16949 10/8/5
+yak 3 19598 6/10/18
+toyota 3 16789 9/9/16
+dire
+gantz 3 36725 13/3/22
+de 5 15123 2/11/25
+starlight 2 33221 16/6/11
+katokan 3 17446 3/5/17
+pizza 4 16656 3/12/19
+
+
+2024-07-21 23:00
+27:43 38-18 radiant
+radiant
+yak 3 16239 7/5/16
+katokan 5 8230 0/5/18
+bnc 2 14940 5/0/15
+fishscale 4 11493 9/4/10
+deniska 1 20472 17/4/4
+dire
+wu3oud 3 10089 4/7/8
+starlight 2 10011 3/5/5
+pizza 4 6784 3/7/10
+gantz 1 11626 5/9/4
+de 5 5217 1/10/9
+
+
+2024-07-22 21:00
+46:12 42-45 radiant
+radiant
+fishscale 2 28637 16/6/15
+deniska 1 32677 12/6/11
+imba 3 21142 10/6/17
+aizlkel 5 12726 2/18/26
+de 4 13186 1/9/35
+dire
+katokan 2 20336 8/9/15
+toyota 3 20797 16/6/17
+kebab 4 18461 8/11/18
+pizza 5 10525 3/10/28
+gantz 1 25471 9/6/14
+
+
+2024-07-22 22:00
+31:25 22-43 dire
+radiant
+pizza 5 6070 1/11/11
+fishscale 2 11463 7/7/7
+katokan 3 10901 4/7/9
+gantz 1 12941 7/7/3
+kebab 4 8033 3/11/7
+dire
+aizlkel 5 8725 6/10/22
+toyota 3 13672 5/3/20
+imba 1 18252 15/2/17
+de 4 11361 9/6/20
+deniska 1 21062 7/2/12
+
+
+2024-07-26 21:00
+32:55 34-27 radiant
+radiant
+pizza 5 11623 3/2/26
+de 3 14118 4/10/20
+starlight 2 22104 13/4/14
+deniska 1 22308 12/3/16
+rect 4 9359 2/8/16
+dire
+aizlkel 5 11443 7/10/16
+gantz 1 19556 9/3/9
+toyota 3 11684 4/6/11
+bnc 2 14767 6/5/6
+palec 4 6337 1/10/7
+
+
+
+2024-07-26 22:00
+29:11 36-15 radiant
+radiant
+starlight 2 19467 14/1/15
+de 3 14010 7/4/17
+palec 4 12574 4/5/22
+pizza 5 9829 2/4/19
+gantz 1 18852 9/1/14
+dire
+bnc 2 8638 3/7/2
+deniska 1 17014 7/3/4
+toyota 3 11882 3/7/9
+rect 4 6566 0/5/8
+aizlkel 5 3606 1/14/7
+
+
+2024-07-26 23:00
+51:06 55-38 radiant
+radiant
+starlight 3 26506 10/6/18
+de 5 15429 5/13/23
+katokan 2 31681 23/3/15
+gantz 1 30676 12/5/9
+aizlkel 4 17764 5/11/32
+dire
+bnc 2 20228 7/11/12
+toyota 3 19169 9/14/24
+rect 4 13724 3/9/12
+pizza 5 10165 2/13/24
+deniska 1 35908 17/8/10
+
+2024-07-27 21:00
+45:36 49-30 radiant
+radiant
+deniska 1 31065 18/3/13
+abuser 2 21427 6/5/23
+dimka 3 26044 15/5/24
+pizza 5 15691 5/6/27
+voopvoop 4 18414 5/11/24
+dire
+starlight 4 9577 4/11/14
+wu3oud 2 30490 12/9/8
+shu_bert 2 23261 5/8/13
+katokan 3 17255 6/7/8
+zavod 5 10693 3/14/14
+
+
+2024-07-27 22:00
+46:03 30-44 dire
+radiant
+deniska 1 27405 11/6/6
+toyota 3 18866 5/6/14
+abuser 2 13758 7/9/9
+pizza 5 10394 4/14/14
+voopvoop 4 10442 3/10/10
+dire
+wu3oud 5 20340 3/10/24
+starlight 2 23660 13/3/25
+shu_bert 1 29970 15/3/14
+katokan 3 22074 11/4/28
+zavod 4 12248 2/10/18
+
+
+2024-07-27 23:00
+39:22 49-19 radiant
+radiant
+pizza 4 16434 9/4/18
+shu_bert 1 28598 17/2/23
+toyota 3 19333 5/7/21
+abuser 5 15435 10/3/25
+starlight 2 23193 8/3/22
+dire
+voopvoop 4 11482 6/7/8
+dimka 3 11897 4/14/11
+zavod 5 8230 1/13/7
+wu3oud 2 12337 7/8/7
+deniska 1 17330 1/7/6
+
+
+2024-07-28 00:00
+40:04 44-14 radiant
+radiant
+starlight 1 24649 11/1/13
+shu_bert 2 25451 18/2/14
+toyota 3 18362 3/2/28
+wu3oud 4 18362 3/2/28
+abuser 5 14139 7/5/17
+dire
+katokan 2 13843 1/8/8
+de 5 7669 2/12/9
+imba 3 18824 3/5/8
+gantz 1 19543 8/4/4
+aizlkel 4 6472 0/16/9
+
+2024-07-28 01:00
+32:50 42-16 radiant
+radiant
+pizza 4 10066 1/4/20
+abuser 5 12027 7/5/27
+shu_bert 2 18153 4/3/22
+toyota 1 23020 12/4/14
+dimka 3 21150 17/0/12
+dire
+kebab 5 4100 1/6/5
+starlight 1 12949 1/9/1
+imba 3 1247 4/10/7
+wu3oud 2 12979 7/3/3
+aizlkel 4 7067 2/14/9
+
+
+2024-07-30 22:00
+48:36 29-41 dire
+radiant
+deniska 1 31229 15/8/5
+bnc 2 15418 2/9/11
+fishscale 3 22187 7/5/12
+angry_duck 5 14212 1/11/21
+doge 4 15139 4/8/13
+dire
+de 4 17514 7/9/21
+imba 2 25366 15/5/4
+katokan 3 21381 8/3/10
+gantz 1 30700 11/5/7
+AizlKEl 5 20677 0/7/22
+
+2024-07-30 23:00
+38:21 30-14 radiant
+radiant
+starlight 2 20016 12/4/5
+katokan 3 17862 2/2/18
+kebab 5 10029 1/2/10
+angry_duck 4 17802 4/5/13
+deniska 1 34382 11/1/3
+dire
+doge 4 5982 1/7/3
+imba 3 14004 0/3/7
+fishscale 1 21915 8/2/1
+pizza 5 5153 0/10/8
+bnc 2 11099 3/8/4
+
+
+2024-08-02 22:00
+51:21 32-45 dire
+radiant
+gantz 1 21161 8/8/7
+imba 3 18780 6/9/10
+poopy 2 20888 2/7/18
+rupich 5 13950 10/9/16
+fwhae 4 15084 5/12/13
+dire
+deniska 1 46380 15/2/18
+bnc 2 29279 10/7/21
+starlight 3 23300 6/5/27
+doge 4 16099 5/8/23
+aizlkel 5 15335 9/10/23
+
+
+2024-08-02 23:00
+46:16 32-34 dire
+radiant
+deniska 1 26486 8/4/15
+bnc 3 1927 2/7/17
+starlight 2 24484 13/4/12
+doge 5 8838 4/10/21
+fwhae 5 10220 5/9/12
+dire
+gantz 1 28998 11/4/11
+de 5 13632 2/11/25
+imba 3 20686 6/4/12
+poopy 2 19677 8/7/17
+aizlkel 5 17010 7/6/23
+
+2024-08-03 21:00
+26:50 37-19 radiant
+radiant
+deniska 1 16060 17/4/9
+bnc 2 18284 7/0/5
+abuser 3 12793 7/10/18
+pizza 5 8122 3/2/18
+poopy 4 9919 3/4/22
+dire
+katokan 2 11848 8/4/6
+de 2 10596 4/8/12
+jumays 3 7614 1/7/9
+zavod 5 5265 2/10/6
+voopvoop 4 6169 3/8/8
+
+2024-08-03 22:00
+29:39 39-15 radiant
+radiant
+deniska 1 21793 11/0/9
+abuser 2 15120 18/4/12
+jumays 3 9538 3/7/26
+imba 3 16010 6/0/15
+zavod 5 8697 1/4/24
+dire
+bnc 2 7806 2/12/6
+voopvoop 4 6294 2/6/10
+toyota 1 12214 2/6/5
+pizza 5 5512 3/8/9
+poopy 3 9431 4/7/6
+
+
+2024-08-06 21:00
+45:36 46-50 dire
+radiant
+deniska 1 25235 19/6/14
+starlight 2 17601 7/11/17
+emperor 4 9058 5/9/19
+pizza 5 10207 2/11/25
+poopy 3 16821 12/14/15
+dire
+gantz 1 27257 8/9/20
+de 4 12709 4/15/30
+katokan 3 21593 8/9/25
+imba 2 27023 24/3/11
+aizlkel 5 15414 5/11/30
+
+
+2024-08-06 22:00
+41:40 18-37 dire
+radiant
+gantz 1 19211 6/6/2
+de 5 6465 1/10/10
+katokan 3 16450 3/6/6
+poopy 2 16080 5/4/6
+aizlkel 4 9378 2/11/11
+dire
+starlight 2 29347 15/2/10
+deniska 1 28399 7/1/13
+bnc 3 17935 1/5/20
+imba 4 18760 6/1/17
+emperor 5 12703 7/9/16
+
+
+2024-08-07 21:00
+56:30 55-46 radiant
+radiant
+starlight 2 25654 12/7/23
+gantz 1 35606 18/6/17
+albert 4 16165 6/14/36
+bnc 3 27741 5/7/34
+pizza 5 23095 14/12/26
+dire
+katokan 2 26307 6/10/21
+de 4 20874 12/13/27
+deniska 1 32250 21/5/10
+voopvoop 5 19460 4/9/25
+dextron 3 16752 3/18/18
+
+
+2024-08-07 22:00
+30:34 50-18 radiant
+radiant
+deniska 1 20692 20/2/16
+albert 4 11500 0/6/18
+bnc 3 14705 12/1/13
+starlight 2 16716 8/4/17
+pizza 5 12041 8/5/25
+dire
+gantz 1 11575 3/9/8
+de 5 6373 5/9/4
+katokan 2 10239 3/6/4
+emperor 3 7723 3/13/6
+aizlkel 4 6592 2/13/9
+
+2024-08-20 22:00
+28:42 33-17 radiant
+radiant
+deniska 1 18942 11/0/4
+yak 3 18132 8/3/16
+starlight 2 16356 9/5/14
+pizza 5 8096 1/7/20
+palec 4 10644 4/2/20
+dire
+imba 1 14334 3/3/4
+katokan 3 10127 3/5/6
+bnc 3 10522 8/4/4
+aizlkel 4 6657 2/13/7
+doge 5 4994 0/8/7
+
+2024-08-20 23:30
+32:22 31-51 dire
+radiant
+deniska 1 15530 6/5/1
+yak 3 17755 13/9/8
+bnc 2 12200 5/7/14
+pizza 5 7024 3/17/8
+doge 4 7939 3/13/14
+dire
+gantz 1 24485 14/2/12
+starlight 3 17954 13/7/18
+katokan 4 16803 12/7/30
+dimka 2 21724 9/2/19
+aizlkel 5 8590 3/13/18
+
+2024-08-20 22:42
+38:39 43-38 radiant
+radiant
+starlight 2 19200 13/7/10
+deniska 1 35573 22/2/10
+katokan 3 15887 4/8/13
+doge 4 12060 2/14/22
+palec 5 10444 2/7/20
+dire
+bnc 2 19233 5/6/12
+yak 1 20966 19/8/8
+sobolew 3 17948 6/7/14
+pizza 5 11106 3/8/28
+aizlkel 4 11294 4/14/16
+
+
+2024-08-19 20:20
+45:44 29-48 dire
+radiant
+shiva 1 23578 5/12/11
+heart 5 15196 13/6/11
+nakiev 4 16567 2/9/14
+sobolew 5 14511 4/9/16
+aizlkel 3 13602 4/12/7
+dire
+gantz 1 35302 20/5/14
+de 5 13696 5/6/26
+katokan 3 25164 4/8/28
+imba 2 31297 14/1/22
+doge 4 16581 3/9/30
+
+2024-08-22 21:00
+36:02 53-29 radiant
+radiant
+deniska 1 31994 13/0/15
+yak 3 19307 12/8/21
+bnc 2 17193 10/6/24
+sobol3w 4 14925 15/4/20
+pizza 5 10277 3/11/26
+dire
+de 2 14231 1/9/18
+emperor 3 12964 4/12/13
+aizlkel 5 9797 3/15/16
+imba 4 17584 14/6/7
+gantz 1 12321 6/11/11
+
+
+2024-08-22 22:00
+60:24 44-54 dire
+radiant
+bnc 1 37899 16/6/14
+deniska 2 35317 6/6/15
+emperor 4 13822 7/15/20
+imba 3 21498 13/10/16
+aizlkel 5 14558 1/17/19
+dire
+yak 2 42348 14/11/26
+pizza 4 28078 8/5/30
+de 3 22988 6/8/32
+doge 5 19152 9/12/23
+gantz 1 32101 15/8/23
+
+
+2024-08-23 21:00
+42:59 38-36 radiant
+radiant
+starlight 2 27141 6/6/19
+de 4 17026 4/8/18
+emperor 3 21566 6/8/21
+aizlkel 5 12875 2/10/20
+gantz 1 31130 20/4/2
+dire
+bnc 3 14803 9/10/11
+yak 5 16846 3/14/27
+deniska 1 29810 11/3/9
+pizza 4 11127 8/5/15
+doge 2 14174 5/7/20
+
+
+2024-08-24 21:00
+56:21 33-39 radiant
+radiant
+deniska 1 35627 8/6/15
+yak 3 34914 7/6/19
+dimka 2 26832 9/8/15
+doge 5 14577 6/8/12
+pizza 4 15386 2/11/25
+dire
+de 5 18599 3/7/27
+katokan 3 23785 9/6/18
+imba 2 29485 9/4/19
+aizlkel 4 14247 4/9/25
+gantz 1 32484 13/7/18
+
+
+2024-08-29 21:00
+35:31 37-45 dire
+radiant
+de 4 12018 9/12/21
+gantz 2 12402 11/9/14
+palec 5 8459 0/9/10
+wu3oud 1 21344 10/8/13
+dimka 3 13867 6/7/15
+dire
+bnc 1 18908 16/7/13
+imba 3 14901 6/8/27
+aizlkel 5 8091 2/12/13
+emperor 4 15605 10/12/21
+deniska 2 29172 10/0/20
+
+
+2024-08-29 22:00
+39:01 47-16 radiant
+radiant
+deniska 1 30372 19/1/11
+bnc 2 12402 8/2/15
+emperor 4 13514 10/4/27
+toyota 3 19488 5/3/21
+aizlkel 5 10413 5/6/23
+dire
+de 5 7673 3/8/11
+gantz 1 16529 5/10/4
+imba 2 12593 2/7/6
+poopy 3 11266 2/11/9
+palec 4 7179 3/11/6
+
+
+2024-10-25 21:00
+28:51 36-14 radiant
+radiant
+fishscale 1 15349 1/3/12
+mugiwara 3 16487 10/1/14
+sobolew 2 13371 14/3/19
+pizza 5 9597 3/6/18
+yana 4 12221 6/2/27
+dire
+bnc 1 11203 9/8/1
+kebab 4 6606 1/4/7
+toyota 3 9772 2/5/6
+poopy 2 8862 0/6/4
+palec 5 5975 1/13/7
+
+
+2024-10-25 22:00
+33:06 39-20 radiant
+radiant
+bnc 2 22687 16/2/13
+pizza 5 8298 4/8/14
+sobolew 1 21100 6/2/6
+toyota 3 18394 13/3/15
+kebab 4 10076 0/5/26
+dire
+fishscale 1 21405 7/5/4
+mugiwara 2 13910 5/5/5
+yana 4 8533 4/12/7
+poopy 3 11247 1/8/8
+palec 5 6687 2/9/11
+
+
+2024-10-25 23:00
+27:27 41-19 radiant
+radiant
+bnc 1 17118 11/2/4
+mugiwara 2 16420 15/1/15
+pizza 4 8645 0/11/21
+toyota 3 14940 10/2/15
+kebab 5 7901 5/3/23
+dire
+yak 4 6031 2/11/7
+fishscale 3 12644 11/7/4
+poopy 2 9037 3/5/5
+sobolew 1 12734 2/6/1
+palec 5 5481 1/12/6
+
+
+2024-10-26 21:00
+61:45 67-46 radiant
+radiant
+starlight 1 32428 13/11/21
+fishscale 5 23976 9/4/29
+mugiwara 4 27125 13/11/33
+sobolew 3 32174 13/12/37
+imba 2 28780 18/8/26
+dire
+bnc 2 31092 7/12/18
+yak 1 35932 17/12/9
+toyota 3 27208 8/10/26
+kebab 5 17197 9/16/23
+pizza 4 19835 5/17/30
+
+2024-11-01 21:00
+29:13 18-37 dire
+radiant
+yak 2 32428 13/11/21
+bnc 1 23976 9/4/29
+toyota 3 27125 13/11/33
+bnc 4 32174 13/12/37
+imba 5 28780 18/8/26
+dire
+bnc 2 31092 7/12/18
+yak 1 35932 17/12/9
+toyota 4 27208 8/10/26
+kebab 3 17197 9/16/23
+pizza 5 19835 5/17/30
+
+
+2024-11-01 22:00
+34:46 23-38 dire
+radiant
+pizza 4 6512 0/14/10
+bnc 1 18274 5/7/6
+sobolew 3 12778 5/8/11
+bnc 5 7624 4/5/3
+fishscale 2 16155 9/5/9
+dire
+palec 5 9743 3/7/15
+yak 2 18878 11/5/9
+de 4 11425 1/5/26
+toyota 3 15777 8/4/16
+gantz 1 23745 15/2/11
+
+
+2024-11-02 21:00
+48:59 33-42 dire
+radiant
+katokan 2 20340 10/11/14
+toyota 3 21421 10/8/12
+fishscale 4 16802 2/5/27
+kebab 5 11381 2/12/22
+gantz 1 24604 9/6/5
+dire
+imba 2 28692 7/5/13
+yak 1 27893 17/6/18
+sobolew 3 22863 10/6/18
+bnc 4 14420 4/8/16
+de 5 12624 3/8/27
+
+
+2024-11-02 22:00
+67:17 46-41 dire
+radiant
+fishscale 2 43129 13/7/19
+imba 1 41673 18/5/11
+mugiwara 3 25859 6/7/21
+toyota 5 15940 2/14/22
+sobolew 4 22214 7/8/29
+dire
+yak 2 40608 17/8/19
+katokan 1 44768 18/5/8
+de 4 21015 1/12/25
+pizza 5 16119 1/12/17
+kebab 3 26123 3/9/22
+
+
+2024-11-08 21:00
+42:58 29-50 dire
+radiant
+pizza 4 9129 4/8/14
+gantz 2 19180 6/9/10
+de 3 13645 4/12/13
+toyota 1 19024 13/8/12
+palec 5 9601 1/13/15
+dire
+fishscale 1 32897 14/2/15
+imba 3 21228 10/5/27
+sobolew 4 16901 8/7/25
+menstruale 5 13052 8/10/22
+mugiwara 2 30232 10/5/29
+
+
+2024-11-08 22:00
+32:59 13-36 dire
+radiant
+kebab 5 6422 1/9/8
+mugiwara 2 12588 2/5/6
+toyota 3 14338 4/9/6
+palec 4 8150 4/7/6
+de 1 13044 2/6/4
+dire
+pizza 4 12200 2/3/24
+fishscale 2 19388 7/1/19
+imba 3 18887 9/1/8
+menstruale 5 12821 9/3/13
+gantz 1 20042 9/5/20
+
+
+2024-11-10 21:00
+40:00 22-38 dire
+radiant
+toyota 3 10000 3/8/11
+palec 4 10000 2/9/8
+fishscale 2 10000 8/8/5
+imba 1 10000 6/6/3
+pizza 5 10000 2/7/10
+dire
+mugiwara 4 10000 6/2/28
+kebab 5 10000 7/9/12
+katokan 3 10000 5/3/24
+de 2 10000 6/6/27
+gantz 1 10000 13/2/15
+
+
+2024-11-29 21:00
+32:59 13-36 radiant
+radiant
+bnc 1 48015 15/6/29
+pizza 4 21509 4/13/34
+ranger228 5 16938 4/18/29
+doyota 2 39206 21/6/11
+ascendead 3 27585 9/13/15
+dire
+de 5 13962 3/12/31
+imba 1 38507 24/5/20
+poopy 4 18991 3/14/20
+sylphie 3 24827 3/14/35
+gantz 2 36731 22/8/21
+
+
+2024-11-29 22:00
+40:00 43-21 radiant
+radiant
+ranger228 2 18500 13/5/14
+imba 3 16972 13/4/14
+gantz 1 22830 8/3/21
+dextron 4 9695 2/7/21
+de 3 8909 5/5/29
+dire
+ascendead 3 10078 1/10/7
+doyota 2 14907 6/6/9
+toyota 1 13868 8/6/9
+itnon 4 8149 3/9/11
+pizza 5 7290 3/11/16
+
+
+2024-12-07 23:00
+63:10 52-59 dire
+radiant
+mode 1 41446 12/10/21
+mugiwara 4 22317 7/15/31
+fishscale 2 32608 20/8/10
+de 3 17263 4/15/26
+starlight 5 18965 8/12/22
+dire
+katokan 3 46339 13/10/36
+yak 4 25007 6/19/39
+imba 2 38616 19/6/26
+bnc 5 19589 3/9/36
+gantz 1 40399 18/8/16
+
+
+2024-12-08 22:00
+45:00 42-30 radiant
+radiant
+starlight 3 19330 6/6/26
+mode 1 36765 11/6/17
+fishscale 2 28391 9/1/24
+mugiwara 3 22511 15/8/15
+sylphie 5 13751 1/9/27
+dire
+imba 2 16695 4/5/10
+yak 4 15155 7/13/12
+de 3 19740 10/8/12
+katokan 5 10929 4/9/15
+gantz 1 20738 5/8/10
+
+
+
+2024-12-13 22:30
+62:10 35-42 radiant
+radiant
+fishscale 1 58349 15/3/7
+imba 5 18916 3/7/11
+toyota 3 23228 3/12/14
+starlight 2 37550 13/9/12
+sylphie 4 17318 1/11/18
+dire
+pizza 4 17059 2/6/23
+yak 2 36638 13/7/19
+de 5 15924 4/6/25
+p 3 23887 6/9/14
+gantz 1 38312 16/8/11
+
+
+2024-12-13 23:30
+40:48 21-40 dire
+radiant
+yak 3 19644 5/10/13
+n 4 11303 1/6/11
+p 5 9743 0/10/11
+gantz 1 22064 7/5/6
+starlight 2 16103 8/9/8
+dire
+fishscale 2 24705 10/3/17
+sylphie 4 12579 4/4/32
+toyota 3 18851 7/7/20
+imba 1 29677 15/2/11
+de 5 12766 4/5/26
+
+
+2024-12-14 00:43
+48:38 43-37 radiant
+radiant
+fishscale 2 31079 20/7/9
+imba 3 22764 3/4/18
+sylphie 5 11210 2/12/26
+starlight 1 33719 12/7/18
+de 5 13199 5/8/26
+dire
+yak 4 15111 6/12/11
+toyota 3 19685 6/7/11
+gantz 1 23760 11/7/14
+n 2 22322 12/7/12
+kebab 5 13096 2/10/16
+
+
+
+2024-12-20 23:33
+53:05  67-43 radiant
+radiant
+smile 2 35480 23/5/19
+sylphie 5 16361 6/11/35
+katokan 3 31860 13/8/28
+imba 4 27404 10/5/32
+gantz 1 28234 14/14/25
+dire
+bnc 1 30310 6/9/21
+yak 3 23966 17/15/21
+tadzhik 2 20912 7/11/14
+de 4 14131 9/15/19
+pizza 5 12946 4/17/22
+
+
+2024-12-21 00:32
+42:54 56-41 radiant
+radiant
+starlight 2 27643 14/7/16
+yak 3 28794 14/8/28
+tadzhik 2 25760 6/4/13
+kebab 5 16697 3/8/27
+de 4 12650 9/15/25
+dire
+katokan 4 9982 3/13/22
+imba 3 20823 9/7/22
+bnc 2 17337 11/10/18
+sylphie 5 11341 2/14/29
+gantz 3 20628 15/12/17
+
+
+2024-12-21 02:21
+33:46 30-30 dire
+radiant
+imba 2 14667 2/4/8
+de 5 8934 2/7/19
+gantz 1 22191 18/5/8
+kebab 4 9365 1/7/8
+yak 3 14259 7/8/13
+dire
+starlight 2 16955 9/6/11
+toyota 5 15463 9/6/13
+katokan 3 17760 4/7/16
+smile 1 30215 7/1/11
+sylphie 4 8054 1/11/16
+
+2024-12-21 02:30
+32:53 16-39 dire
+radiant
+smile 2 15542 2/5/6
+sylphie 5 6395 3/7/6
+katokan 4 5902 1/10/10
+bnc 1 10335 2/9/4
+toyota 3 11613 7/9/4
+dire
+yak 2 16580 2/3/24
+imba 3 19906 17/1/7
+kebab 4 10141 4/4/20
+de 5 9978 5/5/21
+gantz 1 27028 11/3/17
+
+
+2024-12-27 22:30
+39:02 19-42 dire
+radiant
+bnc 2 15051 11/6/4
+yak 3 14564 3/11/6
+kebab 5 6616 1/7/7
+armsup 4 7721 1/10/5
+ascendead 1 15744 3/6/2
+dire
+starlight 2 25488 19/0/16
+smile 1 24721 7/6/20
+toyota 3 20751 8/2/21
+pizza 4 12422 1/5/25
+sylphie 5 11942 7/6/20
+
+
+2024-12-27 23:20
+30:52 25-40 dire
+radiant
+katokan 2 11761 4/7/8
+smile 1 15583 5/4/5
+sylphie 3 11881 8/7/11
+kebab 4 7409 1/12/16
+ascendead 5 6418 7/10/12
+dire
+yak 1 17665 4/7/13
+bnc 2 21491 10/3/15
+toyota 3 22182 10/4/14
+pizza 5 11384 8/5/23
+armsup 4 12945 7/6/21
+
+
+2024-12-30 23:34
+34:57 24-34 dire
+radiant
+pizza 5 8222 3/6/13
+yak 3 12197 7/10/9
+bnc 1 18381 6/4/4
+yobaslav 2 12407 4/6/7
+palec 4 8003 3/9/13
+dire
+kebab 4 12013 1/6/26
+fishscale 1 26058 9/1/6
+katokan 3 17730 9/8/17
+starlight 2 17729 8/4/19
+elnino 5 12161 7/5/13
+
+
+2024-12-30 23:36
+49:29 38-54 dire
+radiant
+katokan 2 20763 9/11/12
+de 4 13296 3/12/21
+imba 3 19984 12/10/11
+toyota 1 27781 10/5/13
+palec 5 11848 3/17/20
+dire
+starlight 1 29515 5/8/17
+fishscale 4 21420 9/8/27
+yak 3 33177 13/11/24
+yobaslav 5 16839 7/7/22
+bnc 2 34184 18/4/19
+
+
+2024-12-30 23:37
+28:56 35-21 radiant
+radiant
+bnc 1 14780 5/4/7
+yak 3 19368 10/6/13
+fishscale 4 11469 4/4/16
+starlight 2 18489 13/1/8
+yobaslav 5 10935 3/6/17
+dire
+imba 1 12070 6/6/3
+de 5 4540 1/9/10
+katokan 2 10574 4/7/4
+toyota 3 10832 5/7/10
+palec 4 5886 4/6/6
+
+
+2024-12-31 00:13
+32:51 25-28 dire
+radiant
+starlight 2 12510 4/10/11
+fishscale 4 13948 4/4/16
+katokan 3 11910 5/3/5
+imba 1 16598 8/3/7
+palec 5 5196 3/8/9
+dire
+bnc 2 23055 8/1/8
+yak 1 23883 8/4/13
+pizza 5 11774 6/6/20
+de 4 9689 3/8/15
+elnino 3 17172 3/6/18
+
+
+2024-12-31 01:01
+34:40 27-45 dire
+radiant
+starlight 2 10380 5/11/7
+yak 3 14879 6/8/11
+imba 1 14458 1/5/7
+pizza 5 9580 5/10/9
+palec 4 8275 10/11/8
+dire
+fishscale 2 22726 17/1/17
+bnc 1 21866 12/3/15
+katokan 3 19235 9/6/10
+de 4 10419 3/7/19
+yobaslav 5 9989 4/10/20
+
+
+2025-01-06 22:15
+43:39 27-36 dire
+radiant
+fishscale 1 25977 8/5/5
+starlight 2 19243 5/6/8
+juwilie 3 16904 6/6/4
+palec 4 11658 2/7/10
+de 5 8891 6/12/10
+dire
+yak 3 27096 6/8/12
+bnc 1 31945 19/1/5
+smile 2 23834 6/2/13
+pizza 5 10769 5/12/21
+p 4 10493 0/4/17
+
+
+2025-01-06 23:11
+34:26 33-45 dire
+radiant
+pizza 5 5821 1/13/12
+fishscale 1 18003 5/7/7
+imba 4 12093 13/6/11
+de 3 10915 2/10/17
+smile 2 13941 9/9/12
+dire
+palec 5 8824 1/8/14
+bnc 2 28174 15/1/6
+yak 4 12388 7/11/24
+toyota 3 18733 14/8/15
+katokan 1 18173 8/5/8
+
+
+2025-01-07 0:09
+34:10 15-29 dire
+radiant
+fishscale 1 13740 1/3/7
+yak 1 17506 5/8/6
+de 5 7446 3/9/7
+toyota 3 14368 4/4/6
+palec 4 8318 2/5/9
+dire
+smile 1 26717 9/1/6
+katokan 2 17185 4/2/13
+kebab 4 9971 9/4/7
+imba 3 16930 6/2/15
+pizza 5 10403 1/6/19
+
+
+2025-01-09 00:08
+35:13 27-51 dire
+radiant
+katokan 5 7963 2/17/14
+rect 4 9158 3/13/14
+toyota 3 11351 6/10/5
+imba 1 15892 3/5/11
+fishscale 2 22863 13/6/6
+dire
+yak 3 20194 8/4/22
+pizza 5 13143 8/6/21
+wu3oud 1 28936 16/3/10
+de 4 9504 3/9/18
+gantz 2 19613 16/5/9
+
+
+2025-01-09 00:09
+46:18 36-29 radiant
+radiant
+starlight 5 16220 4/7/27
+smile 1 35191 14/2/13
+bnc 3 23417 7/3/18
+wu3oud 4 19095 5/8/25
+toyota 3 19301 6/9/17
+dire
+fishscale 2 19279 8/5/11
+rect 4 12324 2/6/14
+imba 3 14246 1/8/17
+gantz 1 27024 18/7/11
+de 5 9901 0/11/27
+
+
+2025-01-09 00:10
+38:01 47-27 radiant
+radiant
+wu3oud 5 12904 5/10/27
+bnc 1 25928 17/4/9
+toyota 3 19675 6/6/25
+fishscale 2 23436 12/3/12
+imba 4 15152 7/4/17
+dire
+smile 2 19184 4/7/14
+katokan 3 16715 6/10/13
+rect 4 10173 3/11/15
+de 5 11043 7/10/16
+gantz 1 14751 4/9/12
+
+
+2025-01-10 22:53
+45:39 37-32 dire
+radiant
+smile 2 21919 11/6/14
+usatik 3 19431 8/6/11
+4:20 5 12523 3/7/20
+gantz 1 25453 13/6/2
+katokan 4 12681 2/8/18
+dire
+i 1 32111 7/3/14
+starlight 2 27815 14/6/9
+bnc 3 23759 6/9/23
+de 5 11717 3/9/21
+palec 4 11571 1/10/18
+
+
+2025-01-10 23:40
+54:53 49-45 radiant
+radiant
+toyota 3 26956 19/5/19
+yak 5 23346 2/14/33
+smile 2 25856 9/10/24
+bnc 1 37986 16/5/16
+usatik 4 17143 3/12/36
+dire
+imba 3 22503 14/9/12
+katokan 2 20435 10/7/23
+albert 4 19858 7/13/32
+gantz 1 31270 9/5/19
+de 5 17898 5/15/31
+
+
+2025-01-11 02:17
+54:21 55-45 radiant
+radiant
+fishscale 4 27258 11/7/27
+smile 2 33855 13/7/17
+de 5 16546 4/16/29
+gantz 1 39473 25/6/20
+katokan 3 21519 1/9/23
+dire
+bnc 1 28339 5/7/5
+yak 4 17409 8/19/28
+toyota 3 24070 20/11/18
+i 2 26369 10/7/17
+usatik 5 15566 2/11/16
+
+2025-01-17 22:08
+39:11 43-26 radiant
+radiant
+starlight 3 19209 6/5/25
+smile 1 26128 13/5/16
+bnc 2 26383 12/4/11
+mugiwara 4 15886 6/7/24
+pizza 5 12400 6/5/26
+dire
+yak 3 16043 4/11/14
+de 4 8238 4/10/16
+katokan 2 17770 6/6/12
+yobaslav 5 10146 3/10/7
+gantz 1 20273 8/6/15
+
+
+2025-01-17 22:55
+24:10 32-11 radiant
+radiant
+pizza 5 6904 2/5/14
+smile 2 15142 8/0/8
+bnc 1 15992 3/0/4
+yak 4 7364 6/6/14
+starlight 3 13636 13/1/7
+dire
+poopy 2 6611 2/6/3
+katokan 3 7627 2/3/3
+yobaslav 3 4736 0/5/5
+de 5 2857 1/12/6
+gantz 3 7696 5/6/4
+
+
+2025-01-18 00:29
+70:06 60-43 dire
+radiant
+katokan 3 34468 11/9/28
+de 3 23472 6/10/35
+albert 2 50776 16/6/16
+neinneil 5 20352 10/11/27
+gantz 1 42369 17/7/12
+dire
+smile 2 48940 9/7/18
+starlight 3 40116 6/8/26
+pizza 5 23258 5/14/23
+yak 4 29517 10/21/20
+bnc 1 53539 13/10/6
+
+
+2025-01-18 01:33
+41:44 47-35 radiant
+radiant
+katokan 3 20093 13/8/14
+bnc 1 24538 1/6/19
+yak 4 15113 5/10/28
+starlight 2 26374 20/4/18
+pizza 5 17412 8/7/24
+dire
+imba 3 17051 5/8/19
+kebab 5 10071 0/10/19
+albert 2 17957 10/7/13
+de 4 11874 7/11/22
+gantz 1 23178 13/11/9
+
+
+2025-01-22 22:29
+58:54 37-40 dire
+radiant
+katokan 3 19851 3/6/23
+bnc 1 30432 16/9/12
+imba 2 27271 13/6/9
+pizza 5 12441 2/12/24
+de 4 17723 3/7/21
+dire
+wu3oud 4 22509 1/14/19
+dveskobki 5 18207 6/10/16
+smile 2 43507 16/6/11
+tadzhik 3 30620 9/3/10
+gantz 1 45946 8/4/14
+
+
+2025-01-22 23:55
+58:37 44-46 radiant
+radiant
+starlight 3 30705 10/6/22
+tadzhik 4 23598 4/11/15
+gantz 2 27406 6/12/15
+pizza 5 18198 4/13/31
+smile 1 52368 20/4/14
+dire
+bnc 1 38102 19/5/11
+yak 4 15140 3/16/33
+imba 3 40750 16/3/12
+de 5 14607 1/11/29
+katokan 3 25317 6/9/20
+
+
+
+2025-01-24 20:36
+23:16 6-19 dire
+radiant
+pizza 4 4555 3/5/2
+wu3oud 3 9370 1/5/2
+bnc 1 8243 0/3/3
+palec 5 3333 1/2/1
+fishscale 2 8317 1/4/2
+dire
+de 4 6434 4/4/10
+kebab 5 5982 0/0/5
+yak 3 9835 3/1/8
+starlight 2 13075 4/0/4
+gantz 1 15107 8/1/1
+
+
+2025-01-24 21:29
+29:42 39-21 radiant
+radiant
+bnc 2 19466 13/1/11
+pizza 4 10382 2/4/23
+yak 3 16372 7/8/8
+de 5 7516 5/8/14
+gantz 1 20538 11/1/9
+dire
+smile 2 13710 7/6/6
+imba 3 5923 0/11/9
+wu3oud 1 13162 10/5/9
+tadzhik 4 10009 1/8/8
+palec 5 6061 2/9/13
+
+
+2025-01-24 22:06
+18:14 7-33 dire
+radiant
+starlight 2 5370 1/5/2
+smile 1 6541 3/5/3
+wu3oud 3 5509 0/9/3
+imba 4 3201 1/7/4
+pizza 5 3388 2/7/1
+dire
+bnc 2 9905 3/0/7
+toyota 3 10357 9/0/8
+yak 4 4765 5/6/11
+de 5 4330 3/1/15
+gantz 1 13874 13/0/6
+
+
+2025-01-24 23:33
+55:24 50-36 radiant
+radiant
+starlight 5 16398 2/11/30
+smile 2 25975 8/7/28
+fishscale 3 36518 12/4/28
+wu3oud 1 37862 20/6/16
+pizza 4 18305 7/8/29
+dire
+bnc 1 32280 15/9/11
+imba 4 23281 2/7/28
+toyota 3 22724 6/10/18
+de 5 14730 0/13/22
+gantz 1 30385 12/11/9
+
+
+2025-01-31 22:07
+42:35 23-44 dire
+radiant
+fishscale 4 15071 1/7/3
+bnc 2 20377 9/2/8
+yak 3 21514 5/14/13
+palec 5 9597 1/15/16
+gantz 1 19479 7/9/7
+dire
+katokan 4 15595 5/5/24
+smile 1 38530 21/0/15
+starlight 3 19897 6/9/19
+de 5 11330 2/7/28
+imba 2 21538 10/2/16
+
+
+
+2025-01-31 23:31
+34:36 28-33 dire
+radiant
+bnc 2 17740 12/2/12
+yobaslav 4 9543 3/10/16
+imba 3 13344 5/6/10
+de 5 6966 4/6/14
+gantz 1 17213 3/9/4
+dire
+smile 1 26255 10/2/8
+fishscale 2 16420 3/3/7
+palec 5 11668 5/6/15
+katokan 3 15643 9/6/11
+yak 4 11375 6/11/17
+
+
+2025-02-01 00:20
+29:48 19-47 dire
+radiant
+smile 2 9935 2/8/8
+fishscale 1 13546 5/9/1
+mugiwara 4 8241 5/14/11
+katokan 3 11016 6/7/5
+palec 5 6647 1/9/10
+dire
+bnc 2 16446 9/3/17
+imba 3 16635 10/0/9
+de 5 9546 2/8/16
+gantz 1 24036 15/2/5
+yak 4 12668 11/6/8
+
+
+
+2025-02-01 02:20
+53:59 51-36 radiant
+radiant
+palec 5 12822 2/9/16
+smile 2 32264 14/8/20
+doyota 1 32174 5/7/15
+toyota 3 29320 18/5/11
+imba 5 24728 11/7/15
+dire
+kebab 4 15003 2/14/17
+katokan 3 24302 6/6/19
+de 5 13036 7/12/23
+mugiwara 2 23805 11/12/13
+gantz 1 34362 10/8/11
+
+
+
+
+2025-02-07 21:59
+35:21 45-39 radiant
+radiant
+wu3oud 4 13569 2/15/7
+bnc 2 19006 10/5/11
+tadzhik 3 18657 6/5/14
+callme 1 26791 22/5/13
+pizza 5 12051 5/9/21
+dire
+imba 2 18219 11/3/7
+yak 4 12628 10/10/12
+de 5 10823 5/12/14
+ranger228 3 13174 2/12/14
+gantz 1 17454 9/8/4
+
+
+2025-02-07 22:49
+29:01 16-24 dire
+radiant
+bnc 2 11157 2/5/3
+pizza 5 5332 2/6/6
+toyota 3 11909 5/4/4
+callme 1 13009 6/4/2
+de 4 6126 1/5/5
+dire
+starlight 3 14872 7/5/5
+tadzhik 2 15477 7/2/11
+katokan 5 7349 3/5/11
+imba 4 11154 0/2/17
+gantz 1 17281 6/2/6
+
+
+
+2025-02-07 23:54
+37:48 26-32 dire
+radiant
+yobaslav 5 10066 3/8/10
+toyota 4 8745 1/4/10
+callme 2 19184 14/7/8
+katokan 3 16381 5/6/10
+gantz 1 17542 2/7/6
+dire
+pizza 5 10762 1/4/25
+bnc 2 30823 21/2/7
+yak 3 16064 5/11/12
+imba 1 24051 2/2/16
+de 4 12582 3/7/20
+
+
+
+2025-02-14 22:51
+49:00 19-34 radiant
+radiant
+starlight 2 26804 6/9/8
+yak 3 21768 2/10/11
+palec 5 13738 0/6/15
+pizza 4 13343 3/6/9
+gantz 1 29925 8/3/8
+dire
+imba 1 32911 14/2/7
+poopy 3 18159 5/8/8
+de 5 10159 3/1/12
+bars 4 14555 1/5/15
+bnc 2 27380 11/3/13
+
+
+2025-02-21 22:11
+43:18 38-40 dire
+radiant
+koba 2 15730 12/9/8
+bnc 1 21535 11/6/12
+poopy 4 9616 5/9/15
+katokan 3 18015 6/7/18
+de 5 10371 3/9/18
+dire
+imba 2 25236 5/4/16
+pizza 4 16122 3/10/22
+p 5 13352 2/9/18
+yak 3 22699 12/9/21
+gantz 1 31221 18/6/7
+
+
+
+2025-02-21 23:13
+35:22 52-19 radiant
+radiant
+katokan 3 18927 13/2/26
+bnc 2 21392 16/1/23
+kebab 5 10685 6/7/29
+p 4 10960 3/5/25
+gantz 1 23437 14/4/4
+dire
+imba 1 16077 5/5/6
+yak 4 8686 4/13/7
+poopy 2 10237 2/14/6
+koba 3 15162 6/9/8
+de 5 6936 2/11/12
+
+
+2025-02-22 00:15
+40:17 46-28 radiant
+radiant
+imba 2 30693 13/3/12
+koba 3 20604 5/7/15
+gantz 1 28344 18/2/16
+kebab 4 12099 4/6/21
+de 5 11390 6/10/26
+dire
+katokan 3 13348 2/11/14
+bnc 2 23522 7/6/7
+yak 1 21147 6/7/11
+p 5 8535 2/12/14
+poopy 4 10726 7/10/11
+
+
+
+2025-02-23 23:57
+53:06 33-40 dire
+radiant
+fishscale 3 22839 13/10/12
+smile 1 33460 11/7/6
+katokan 4 13084 3/9/13
+kebab 5 12594 1/10/19
+imba 3 14325 5/5/16
+dire
+wu3oud 4 14947 7/10/16
+starlight 2 27833 4/6/23
+pizza 5 16054 2/8/26
+gantz 1 40454 19/2/14
+yak 3 28859 8/7/17
+
+
+
+
+2025-02-25 20:04
+46:29 47-38 radiant
+radiant
+starlight 3 24649 3/10/15
+bnc 1 32501 22/6/14
+maybibl 2 23194 12/8/16
+bars 4 11335 4/6/14
+poopy 5 18302 6/9/27
+dire
+gantz 2 22082 12/10/9
+imba 1 30967 16/5/11
+yak 3 16254 2/17/22
+rotta 4 13012 1/9/13
+kebab 5 10972 5/6/20
+
+
+2025-02-25 20:05
+43:55 23-33 dire
+radiant
+imba 2 15163 4/6/8
+rotta 4 9982 5/9/11
+de 5 12019 5/4/9
+yak 3 17847 4/8/11
+gantz 1 18072 5/6/4
+dire
+starlight 2 26369 6/3/15
+pizza 5 14916 5/4/17
+rect 1 33148 12/3/8
+maybibl 3 21251 4/6/18
+poopy 4 14502 5/7/15
+
+
+
+2025-02-25 21:04
+42:35 39-68 dire
+radiant
+rect 2 19339 13/11/15
+yak 3 15189 9/17/5
+imba 1 20194 13/9/18
+pizza 5 9734 2/17/18
+palec 4 12707 1/14/18
+dire
+poopy 4 16248 8/10/40
+de 3 21265 15/9/37
+maybibl 2 25113 25/7/19
+rotta 5 11499 6/10/23
+gantz 1 30086 13/3/21
+
+
+2025-02-25 21:46
+25:52 31-11 radiant
+radiant
+wu3oud 1 16572 13/0/6
+katokan 3 12639 6/2/11
+poopy 4 8169 2/5/14
+palec 5 6838 1/4/6
+bnc 2 17967 9/0/18
+dire
+yak 2 8112 1/9/2
+rotta 4 6227 2/2/3
+imba 3 8355 3/4/1
+gantz 1 9283 5/6/3
+de 5 3226 0/11/6
+
+
+
+2025-02-28 21:53
+31:07 35-11 radiant
+radiant
+bnc 2 15598 11/1/8
+imba 3 15412 6/1/14
+pizza 5 7713 1/5/15
+poopy 4 9637 5/2/13
+gantz 1 19134 12/2/10
+dire
+fishscale 1 15750 4/8/3
+katokan 3 8726 1/7/4
+tadzhik 2 10057 0/5/2
+palec 5 6306 3/8/2
+de 4 5472 3/7/4
+
+
+
+2025-02-28 23:00
+52:25 33-31 dire
+radiant
+bnc 2 23476 11/5/10
+imba 3 22539 1/4/18
+fishscale 1 34501 12/6/9
+palec 5 12535 5/7/12
+pizza 4 13283 4/9/16
+dire
+starlight 2 26182 5/7/18
+katokan 3 24223 12/6/19
+de 5 16840 2/8/16
+elnino 4 14618 1/7/23
+gantz 1 38475 11/5/9
+
+
+2025-03-01 00:12
+46:31 28-26 dire
+radiant
+starlight 1 22071 4/9/8
+fishscale 2 25657 9/3/9
+imba 3 19951 8/4/12
+katokan 4 18416 7/5/14
+pizza 5 11052 0/6/19
+dire
+gantz 1 28696 4/5/8
+bnc 2 24137 9/5/8
+tadzhik 3 32422 9/3/7
+de 5 10195 1/10/13
+palec 4 13738 3/5/13
+
+
+
+
+2025-03-02 21:59
+32:13 29-38 dire
+radiant
+katokan 4 8114 6/4/9
+tadzhik 3 12551 3/8/4
+bnc 2 15730 11/5/7
+palec 5 5319 1/12/11
+gantz 1 14172 7/9/8
+dire
+yak 3 16196 9/8/19
+wu3oud 2 20847 8/8/7
+smile 1 24833 11/0/11
+de 5 10815 2/6/19
+poopy 4 11258 7/7/17
+
+
+2025-03-02 22:04
+37:16 34-15 radiant
+radiant
+smile 1 35215 11/3/6
+yak 4 21876 5/4/20
+wu3oud 3 19421 6/4/7
+tadzhik 2 25754 11/2/8
+palec 5 16365 1/2/14
+dire
+poopy 5 7190 1/9/4
+bnc 2 17700 1/5/5
+katokan 3 14375 3/7/3
+de 5 6917 1/9/10
+gantz 1 22436 7/4/5
+
+
+
+2025-03-07 22:24
+52:15 35-36 radiant
+radiant
+imba 2 31023 11/3/11
+de 4 21347 8/7/21
+yak 3 23277 5/13/23
+pizza 5 11991 0/10/17
+gantz 1 35643 10/3/14
+dire
+katokan 3 20038 1/7/19
+smile 1 41567 1/7/19
+bnc 2 25060 13/6/14
+p 4 12132 1/7/21
+poopy 5 12106 2/11/24
+
+
+2025-03-07 23:48
+63:51 48-47 dire
+radiant
+smile 1 39972 16/11/14
+poopy 3 22173 4/9/24
+bnc 2 45076 18/9/15
+pizza 5 16519 3/13/28
+de 4 20165 6/5/27
+dire
+yak 4 23969 7/16/30
+katokan 3 23596 6/9/26
+imba 2 45745 15/5/23
+p 5 21956 7/15/26
+gantz 1 51423 13/3/18
+
+
+
+2025-03-08 01:11
+28:58 14-40 dire
+radiant
+fishscale 2 15604 7/4/4
+katokan 3 9501  2/8/7
+gantz 1 12582 0/8/6
+yak 4 6363 3/12/9
+p 5 5235 2/10/5
+dire
+bnc 2 18350 14/0/11
+smile 1 20432 6/2/10
+palec 4 8147 2/6/13
+pizza 5 10014 8/3/16
+de 3 15808 9/3/15
+
+
+2025-05-22 23:32
+46:36 41-36 radiant
+radiant
+starlight 3 27561 9/8/23
+bnc 1 36793 16/4/5
+poopy 2 25287 11/7/13
+pizza 4 17549 3/11/24
+palec 5 14262 2/8/13
+dire
+fishscale 1 23377 9/6/6
+tadzhik 2 23384 9/4/11
+mugiwara 3 23479 8/5/18
+kebab 5 9054 4/16/13
+yobaslav 4 11120 6/10/16
+
+
+2025-05-23 00:31
+42:30 26-54 dire
+radiant
+gantz 1 20595 13/8/8
+katokan 2 12620 7/11/3
+mugiwara 3 12198 3/12/18
+poopy 4 10656 3/11/16
+palec 5 9553 0/12/14
+dire
+fishscale 4 18766 4/4/37
+tadzhik 2 20523 4/4/22
+pizza 5 16037 5/8/38
+toyota 3 23423 22/5/17
+bnc 1 27958 19/6/23
+
+
+
+2025-05-23 22:25
+48:18 29-40 dire
+radiant
+gantz 1 21890 15/8/8
+imba 2 15054 6/7/15
+poopy 4 24458 2/6/9
+pizza 5 9902 0/14/19
+elnino 3 27111 6/5/11
+dire
+bnc 1 32059 8/4/15
+katokan 2 23799 11/6/15
+kebab 5 13445 9/11/19
+decreasedpower 3 27842 3/7/25
+palec 4 16006 8/1/10
+
+
+
+2025-05-23 23:23
+40:06 46-23 radiant
+radiant
+kebab 4 12641 3/6/28
+decreasedpower 3 18165 4/7/23
+bnc 1 32135 19/4/7
+palec 5 14251 5/5/30
+fishscale 2 29665 14/1/14
+dire
+katokan 3 15476 5/10/9
+gantz 1 17013 10/12/6
+imba 4 11047 3/7/17
+poopy 2 15134 2/8/14
+manashka 5 10255 2/9/14
+
+
+
+2025-05-24 00:25
+40:41 40-22 radiant
+radiant
+pizza 5 14811 6/7/24
+fishscale 2 27772 12/0/17
+manashka 3 20297 3/5/20
+imba 4 10304 3/5/12
+gantz 1 31753 16/5/12
+dire
+kebab 3 8550 3/12/14
+bnc 1 22864 4/4/4
+decreasedpower 5 12817 9/11/9
+palec 4 12763 2/7/9
+tadzhik 2 12915 4/6/4
+
+
+
+
+2025-05-24 20:27
+40:22 19-42 dire
+radiant
+starlight 2 13523 2/9/2
+bnc 1 17084 4/5/5
+kebab 5 8733 7/11/7
+palec 4 6528 0/9/6
+toyota 3 11919 6/9/11
+dire
+imba 4 16133 8/0/23
+yobaslav 2 24391 10/3/8
+gantz 1 26950 15/2/20
+katokan 3 17609 6/6/16
+yobaslav 5 12293 2/9/18
+
+
+2025-05-25 00:09
+65:19 62-59 dire
+radiant
+palec 4 23948 8/10/30
+katokan 3 28286 14/11/33
+bnc 1 35844 15/9/26
+mugiwara 2 29347 23/16/16
+yobaslav 5 17132 2/13/35
+dire
+poopy 2 36878 14/12/29
+pizza 5 24543 6/11/40
+toyota 3 29326 20/13/22
+imba 4 29281 9/10/32
+gantz 1 25503 9/16/32
+
+
+2025-05-25 00:10
+24:45 29-9 radiant
+radiant
+fishscale 2 14033 11/0/15
+jumays 3 11872 6/2/14
+gantz 1 11931 3/3/8
+imba 4 9086 5/0/15
+kebab 5 6218 1/4/16
+dire
+palec 5 4013 0/7/4
+katokan 4 4424 2/6/4
+bnc 1 8411 4/6/0
+toyota 3 7305 2/7/5
+poopy 2 6832 1/3/4
+
+
+2025-05-26 22:33
+47:30 46-31 radiant
+radiant
+pizza 5 11675 4/13/24
+katokan 2 26682 19/5/14
+imba 1 32546 11/0/12
+jumays 3 22660 6/6/27
+doge 4 14396 5/7/22
+dire
+kebab 5 14777 5/9/17
+toyota 3 20415 5/6/12
+poopy 2 12397 1/14/18
+palec 4 15007 2/6/14
+gantz 1 24398 16/9/10
+
+
+
+2025-05-26 23:38
+39:51 27-17 radiant
+radiant
+poopy 3 15723 3/2/13
+doge 5 9323 1/7/17
+fishscale 1 26358 12/2/7
+toyota 4 8942 4/4/12
+katokan 2 20402 7/3/9
+dire
+palec 4 6534 0/5/7
+kebab 5 8434 0/5/7
+jumays 3 15007 2/4/3
+imba 2 15159 7/6/4
+gantz 1 16957 6/5/3
+
+
+
+2025-05-28 23:06
+24:52 14-33 dire
+radiant
+pizza 5 3991 1/11/5
+fishscale 1 12212 3/3/3
+katokan 4 6243 4/4/9
+jumays 3 6939 1/8/6
+yobaslav 2 9358 5/7/2
+dire
+palec 5 6769 5/1/9
+bnc 2 15921 12/1/7
+albert 5 8615 8/7/12
+gantz 1 12104 5/3/14
+toyota 4 9719 2/2/9
+
+
+2025-05-28 23:47
+22:24 24-7 radiant
+radiant
+palec 5 5644 2/1/11
+bnc 1 10561 0/0/9
+albert 2 15952 11/2/8
+katokan 4 6878 6/4/6
+jumays 3 9704 5/0/9
+dire
+pizza 5 3216 1/7/4
+fishscale 2 8427 0/7/4
+imba 4 5753 6/3/0
+toyota 3 6672 0/4/2
+gantz 1 8540 0/3/6
+
+
+
+2025-05-29 23:34
+34:14 41-29 radiant
+radiant
+fishscale 2 17550 9/4/7
+bnc 1 26092 6/0/7
+starlight 3 17790 15/6/16
+pizza 5 9362 7/8/16
+kebab 4 7208 4/11/19
+dire
+katokan 3 11960 6/6/11
+gantz 1 19735 13/5/7
+imba 5 12522 6/8/12
+doge 2 7773 0/15/22
+palec 4 10142 3/7/18
+
+
+
+2025-05-30 00:58
+15:25 19-4 radiant
+radiant
+pizza 5 3300 0/2/10
+smile 2 7808 5/0/3
+starlight 3 8672 10/0/2
+palec 4 3561 2/1/9
+gantz 1 6355 2/1/3
+dire
+kebab 5 2063 0/5/2
+fishscale 2 4900 0/2/0
+bnc 1 5023 1/3/1
+katokan 3 3538 0/5/1
+imba 4 3010 3/4/0
+
+
+
+2025-05-30 00:59
+26:24 11-24 dire
+radiant
+pizza 5 4287 1/4/6
+smile 1 12349 2/4/3
+fishscale 4 12201 6/6/3
+starlight 3 11250 2/6/3
+kebab 4 3967 0/4/5
+dire
+palec 4 6527 1/5/15
+bnc 2 15619 12/2/8
+katokan 3 11648 2/2/8
+imba 5 7598 3/2/10
+gantz 1 17256 5/0/11
+
+
+
+2025-05-30 22:12
+44:23 32-36 dire
+radiant
+fishscale 2 18242 7/7/7
+smile 1 25059 13/5/7
+katokan 3 18256 2/6/19
+elnino 4 9255 4/10/18
+toyota 5 9385 6/8/6
+dire
+bnc 2 24805 11/4/14
+pizza 4 9782 3/9/15
+kebab 5 10855 4/9/14
+imba 3 20949 2/5/14
+gantz 1 33572 16/5/6
+
+
+2025-05-30 23:25
+47:42 7-41 dire
+radiant
+katokan 3 17307 1/8/5
+bnc 2 23778 1/4/6
+pizza 5 5109 0/9/3
+poopy 4 6690 2/12/5
+gantz 1 19742 3/8/4
+dire
+fishscale 1 37061 21/0/12
+smile 2 34725 9/0/20
+imba 4 14811 4/3/14
+toyota 3 24989 7/2/15
+kebab 5 12912 0/2/15
+
+
+2025-05-31 00:32
+36:34 40-19 radiant
+radiant
+fishscale 1 21609 11/3/12
+smile 2 23652 9/1/17
+kebab 4 9660 1/6/22
+imba 3 12549 8/4/22
+katokan 5 13750 10/6/15
+dire
+bnc 2 13509 6/6/9
+jumays 3 13370 2/6/12
+gantz 1 17810 8/5/6
+pizza 5 5934 1/14/13
+toyota 4 7945 2/9/7
+
+
+2025-05-31 01:43
+53:49 52-31 radiant
+radiant
+pizza 5 14902 4/8/25
+smile 2 41472 23/1/24
+imba 4 17132 1/9/31
+jumays 3 28492 10/5/29
+gantz 1 35898 14/9/13
+dire
+kebab 5 8111 2/11/14
+fishscale 2 17528 8/10/12
+bnc 1 23090 10/7/13
+katokan 2 19264 2/11/11
+toyota 3 19730 9/13/12
+
+2025-06-02 21:08
+45:51 48-30 radiant
+radiant
+pizza 5 12875 4/6/30
+bnc 1 31640 15/7/10
+smile 2 32051 7/3/10
+poopy 3 24885 13/5/17
+toyota 4 13457 8/10/18
+dire
+kebab 5 10596 6/12/15
+katokan 2 20910 5/6/16
+mugiwara 5 13805 7/8/14
+juwilie 4 9944 2/13/14
+gantz 1 25609 10/9/11
+
+
+2025-06-02 22:06
+27:07 38-13 radiant
+radiant
+starlight 3 12253 4/4/17
+albert 2 17916 19/2/4
+bnc 1 19480 6/2/8
+katokan 5 8518 5/3/12
+poopy 4 7058 3/3/21
+dire
+smile 2 10110 3/5/4
+mugiwara 4 4546 3/13/6
+toyota 3 10453 3/4/7
+juwilie 5 4318 1/11/5
+gantz 1 10523 3/5/3
+
+
+2025-06-02 23:16
+42:47 37-38 dire
+radiant
+kebab 5 8359 2/12/21
+albert 2 21371 13/5/15
+mugiwara 4 12550 8/9/26
+katokan 1 17781 2/8/13
+toyota 3 22198 12/4/17
+dire
+pizza 4 10273 1/8/17
+bnc 3 23043 13/7/12
+palec 5 16539 5/11/18
+starlight 2 22810 8/9/22
+gantz 1 27859 9/2/11
+
+
+2025-06-03 00:36
+58:03 35-48 dire
+radiant
+starlight 2 26307 7/10/22
+toyota 3 17424 4/10/18
+bnc 1 37307 18/3/9
+palec 5 12166 3/11/18
+mugiwara 4 13175 2/14/21
+dire
+fishscale 2 35215 16/3/18
+kebab 4 15110 3/12/22
+pizza 5 17159 6/9/28
+imba 3 36806 11/6/25
+gantz 1 30808 12/5/26
+
+
+2025-06-05 23:00
+45:35 33-45 dire
+radiant
+fishscale 2 21236 10/3/14
+gantz 1 25130 10/8/11
+mugiwara 3 16740 8/12/12
+juwilie 4 8110 3/13/15
+de 5 9522 2/10/22
+dire
+imba 4 15276 3/10/16
+bnc 1 32213 13/2/23
+smile 2 24017 5/8/18
+jumays 5 16057 11/5/22
+emperor 3 20724 12/8/11
+
+
+2025-06-06 00:05
+46:45 47-28 radiant
+radiant
+smile 2 33954 19/3/16
+mugiwara 5 11105 2/10/22
+imba 3 30365 11/2/25
+katokan 4 17117 4/9/28
+gantz 1 31962 11/4/21
+dire
+fishscale 2 28279 11/4/5
+bnc 1 24195 10/7/8
+emperor 3 13076 1/11/12
+de 4 9436 2/13/16
+jumays 5 13659 4/13/12
+
+
+2025-06-06 22:22
+44:19 37-33 radiant
+radiant
+starlight 3 21110 0/5/27
+albert 2 25814 12/3/14
+bnc 1 30475 18/5/14
+mugiwara 4 13118 4/11/23
+pizza 5 11657 2/9/25
+dire
+poopy 2 17057 2/8/16
+de 4 6991 2/10/21
+katokan 5 11337 7/7/14
+imba 3 17394 3/7/11
+gantz 1 25808 18/5/10
+
+
+2025-06-06 23:42
+47:27 27-48 dire
+radiant
+pizza 4 13214 3/10/19
+imba 1 24471 7/7/12
+poopy 3 15363 5/11/15
+fishscale 2 22340 5/9/14
+mugiwara 5 10275 5/11/20
+dire
+mordochka 4 18594 2/6/29
+de 5 13821 6/8/32
+gantz 1 31679 19/5/12
+katokan 3 24106 8/5/19
+toyota 2 21938 12/4/16
+
+
+2025-06-07 00:19
+19:22 17-11 radiant
+radiant
+imba 2 9037 8/0/4
+mordochka 4 4599 0/4/2
+de 5 4039 4/4/7
+katokan 3 7642 2/2/1
+gantz 1 10666 3/1/3
+dire
+fishscale 2 5700 3/3/3
+mugiwara 4 5790 2/5/0
+bnc 1 7603 2/4/3
+toyota 3 6444 0/3/3
+pizza 4 3521 3/2/3
+
+
+2025-06-07 01:13
+33:30 28-20 dire
+radiant
+pizza 5 9039 4/8/15
+bnc 1 25738 3/0/7
+katokan 3 16313 6/4/8
+mordochka 4 12247 2/4/10
+fishscale 2 22080 13/4/4
+dire
+de 5 8357 3/8/13
+toyota 3 13731 3/3/11
+imba 2 11855 3/7/5
+gantz 1 15480 5/4/8
+mugiwara 4 7354 5/6/10
+
+
+2025-06-08 21:57
+34:19 22-40 dire
+radiant
+starlight 2 16057 6/7/11
+bnc 1 16861 5/7/8
+de 3 11708 2/10/13
+juwilie 5 9742 5/9/11
+palec 4 7626 2/7/16
+dire
+imba 2 20955 15/2/13
+gantz 1 23707 13/3/14
+kebab 4 11731 2/3/18
+alister 5 12090 2/10/27
+mugiwara 3 19506 7/4/18
+
+
+2025-06-08 22:59
+40:21 51-27 radiant
+radiant
+starlight 3 20798 12/7/22
+katokan 2 21105 9/3/32
+imba 4 12877 7/7/20
+bnc 1 34376 17/2/12
+palec 5 13259 4/8/18
+dire
+kebab 4 7684 3/13/12
+de 3 13223 8/12/8
+mugiwara 2 14578 5/11/10
+alister 5 8908 3/10/8
+gantz 1 19815 8/5/7
+
+
+2025-06-09 02:34
+38:03 33-16 radiant
+radiant
+imba 2 22604 10/1/10
+katokan 3 15298 4/6/18
+mugiwara 4 12611 5/4/23
+alister 5 11123 4/4/19
+gantz 1 23300 9/1/14
+dire
+starlight 3 17965 6/6/6
+bnc 1 20333 4/6/2
+fishscale 2 16727 5/5/5
+palec 5 9485 0/7/10
+de 4 7784 0/9/7
+
+
+2025-06-15 22:58
+53:38 52-38 radiant
+radiant
+bnc 3 25078 12/6/17
+imba 4 16446 5/9/24
+albert 1 34181 10/6/16
+tj4k 2 35448 14/5/21
+katokan 5 16593 9/12/20
+dire
+smile 2 30540
+mugiwara 3 17063 5/12/17
+de 4 17076 5/9/22
+aizlkel 5 13675 1/18/24
+gantz 1 32218 15/7/9
+
+
+2025-06-15 23:54
+27:53 15-50 dire
+radiant
+gantz 1 11999 8/5/3
+imba 2 11574 2/5/3
+doge 3 5338 1/13/2
+aizlkel 5 4542 2/18/4
+de 4 5348 2/9/4
+dire
+tj4k 2 16521 16/2/10
+bnc 1 21386 11/1/8
+albert 3 16724
+mugiwara 4 8272 7/7/19
+pizza 5 8383 4/3/22
+
+
+2025-06-29 22:16
+44:36 44-21 radiant
+radiant
+gantz 1 38105 25/2/8
+poopy 2 20335 5/4/26
+bars 3 21326 8/5/15
+battery 4 13799 4/6/21
+poexali 5 16967 1/4/36
+dire
+pizza 5 9433 2/10/15
+imba 1 23414 5/3/9
+yobaslav 2 18373 4/8/7
+mordochka 4 8196 3/13/9
+toyota 3 15391 4/10/11
+
+
+2025-06-29 23:12
+30:37 46-17 radiant
+radiant
+pizza 4 11586 8/3/23
+battery 5 8149 3/8/26
+de 3 16479 6/4/26
+imba 2 19104 4/2/22
+gantz 1 22596 23/1/9
+dire
+poopy 2 11209 7/5/6
+bars 1 9380 1/9/14
+poexali 5 6265 2/17/11
+mordochka 3 8270 2/9/7
+toyota 4 7905 5/6/3
+
+
+2025-07-05 22:08
+34:55 52-25 radiant
+radiant
+starlight 1 26982 16/3/21
+imba 2 23085 17/2/14
+poopy 5 11245 1/4/22
+de 3 17015 10/9/18
+heart 4 15023 8/7/32
+dire
+pizza 4 9679 2/6/14
+tj4k 2 14796 5/6/4
+mugiwara 3 12572 7/17/10
+aizlkel 5 6944 2/15/10
+gantz 1 16574 9/8/6
+
+
+2025-07-05 23:08
+40:25 35-55 dire
+radiant
+lubittebya 3 14275 8/12/13
+bnc 1 20659 8/10/13
+imba 2 18225 13/9/18
+pizza 4 10960 3/9/21
+poopy 5 10435 3/15/19
+dire
+albert 2 26369 27/6/15
+aizlkel 5 11948 6/11/26
+de 3 18622 3/8/32
+gantz 1 29607 17/4/20
+mugiwara 4 14619 2/6/33
+
+
+2025-07-06 23:47
+34:15 38-25 radiant
+radiant
+starlight 2 19580 10/6/9
+gantz 1 27320 18/2/7
+suflyoha 3 14098 3/5/16
+imba 4 13479 6/6/18
+heart 5 8373 1/6/18
+dire
+babbinzz 1 14903 2/7/9
+katokan 3 13245 6/8/10
+de 4 7435 2/9/12
+mugiwara 2 11373 4/5/12
+microsha 5 8775 11/9/8
+
+
+2025-07-06 23:59
+58:24 52-55 dire
+radiant
+katokan 3 23573 11/11/17
+microsha 4 11178 6/15/29
+mugiwara 2 28446 14/8/28
+heart 5 26689 7/11/26
+gantz 1 29384 14/10/20
+dire
+imba 1 40605 19/5/16
+babbinzz 2 45875 20/9/23
+suflyoha 3 22700 8/11/20
+de 4 18411 6/11/32
+aizlkel 5 15610 1/17/19
+
+
+2025-07-09 21:02
+25:48 12-40 dire
+radiant
+starlight 3 8372 2/8/4
+aizlkel 5 3429 1/13/6
+imba 1 10762 1/4/4
+albert 2 8237 7/6/4
+de 4 3292 1/9/4
+dire
+lubittebya 5 9752 5/6/22
+bnc 2 19772 16/1/13
+katokan 3 9998 3/1/14
+mugiwara 4 8871 6/3/18
+gantz 1 14971 7/1/16
+
+
+2025-07-09 22:23
+36:18 38-21 radiant
+radiant
+starlight 2 24790 13/2/5
+gantz 1 25682 6/2/7
+mugiwara 4 13225 8/7/19
+bnc 3 20628 7/6/15
+imba 5 17648 4/4/25
+dire
+lubittebya 1 18132 6/5/9
+albert 4 8253 4/7/12
+poopy 2 13582 4/10/4
+katokan 3 11990 6/8/7
+de 5 6515 1/8/11
+
+
+2025-07-09 23:25
+34:01 56-24 radiant
+radiant
+katokan 3 17536 11/6/21
+jumays 5 9262 6/9/30
+mugiwara 4 10647 3/7/30
+albert 2 26193 27/1/6
+lubittebya 1 19917 9/2/15
+dire
+bnc 3 12791 8/11/10
+poopy 2 8669 2/13/6
+de 4 6249 5/14/15
+imba 5 8569 3/10/14
+gantz 1 15691 5/8/9
+
+
+2025-07-11 22:48
+44:40 43-35 radiant
+radiant
+imba 2 27411 12/5/15
+de 5 14651 4/5/29
+gantz 1 30974 22/2/6
+aizlkel 4 11617 2/14/16
+mugiwara 3 15256 2/10/19
+dire
+katokan 3 18514 8/10/10
+smile 1 28578 15/3/12
+yak 2 14061 8/14/14
+palec 4 9842 0/8/10
+jumays 5 9434 3/8/18
+
+
+2025-07-11 23:16
+19:15 28-8 radiant
+radiant
+smile 1 9808 6/2/10
+mugiwara 4 4376 0/2/18
+katokan 3 9208 7/0/10
+jumays 5 4596 3/3/14
+imba 2 9658 11/1/6
+dire
+aizlkel 4 4247 1/6/3
+kebab 5 3254 1/7/0
+de 3 6731 5/4/1
+yak 2 6264 1/6/2
+gantz 1 6261 0/5/2
+
+
+2025-07-12 00:10
+35:17 30-32 radiant
+radiant
+jumays 5 9777 2/11/24
+katokan 3 13465 3/5/16
+lubittebya 2 24205 10/3/13
+smile 1 25844 11/5/5
+mugiwara 4 9276 2/8/18
+dire
+kebab 5 9851 10/3/7
+aizlkel 4 6933 3/11/13
+de 3 14287 10/9/16
+imba 2 16738 3/3/14
+gantz 1 20513 6/4/12
+
+
+2025-07-12 01:29
+34:44 49-19 radiant
+radiant
+imba 3 22986 22/0/11
+aizlkel 4 8831 1/10/28
+gantz 1 21603 15/2/18
+mugiwara 2 14267 7/4/29
+de 5 9655 6/5/37
+dire
+katokan 3 9469 3/17/5
+smile 1 18108 10/5/5
+lubittebya 2 14059 3/3/11
+jumays 5 7437 3/10/9
+kebab 4 3891 0/14/6
+
+
+2025-07-13 21:48
+31:05 31-17 radiant
+radiant
+starlight 2 17247 10/6/12
+pizza 5 9190 7/3/15
+imba 4 10067 5/4/19
+lubittebya 3 15521 3/3/18
+grantz 1 21147 5/1/11
+dire
+smile 2 14951 4/4/8
+meta 1 17480 7/4/7
+aizlkel 3 8215 2/9/2
+jumays 5 7566 1/6/3
+palec 4 6735 2/8/11
+
+
+2025-07-13 22:44
+35:23 33-14 radiant
+radiant
+smile 2 19090 6/4/9
+meta 1 27531 9/1/12
+jumays 5 11736 7/4/19
+imba 3 20212 9/1/15
+palec 4 15978 2/4/17
+dire
+katokan 3 14055 3/7/5
+pizza 5 7185 0/9/3
+aizlkel 4 8063 1/11/12
+lubittebya 16720 1/1/6
+gantz 1 21438 9/5/4
+
+
+2025-07-13 23:52
+45:54 49-16 radiant
+radiant
+pizza 5 10642 4/3/22
+jumays 3 21103 4/5/25
+katokan 4 15323 3/7/26
+lubittebya 1 34247 9/0/8
+gantz 2 32969 28/1/15
+dire
+palec 5 7121 1/9/4
+smile 1 24508 3/6/7
+imba 3 16879 3/8/7
+aizlkel 4 7795 2/16/8
+mugiwara 2 17083 7/10/4
+
+
+2025-07-14 21:55
+43:30 39-26 radiant
+radiant
+pizza 5 11363 2/7/20
+meta 1 28164 13/4/12
+yak 2 22059 15/8/14
+imba 3 29961 4/2/9
+jumays 4 13604 5/5/23
+dire
+palec 5 8083 3/12/10
+lubittebya 2 27825 10/6/6
+mugiwara 4 11513 3/6/14
+de 3 13625 4/11/6
+gantz 1 23870 6/4/12
+
+
+2025-07-14 23:20
+59:27 57-61 radiant
+radiant
+pizza 5 22053 7/13/31
+jumays 3 31144 5/12/40
+yak 4 26843 12/19/28
+lubittebya 2 35227 23/6/20
+gantz 1 30577 10/11/20
+dire
+palec 5 12101 3/14/34
+starlight 3 22815 9/13/25
+imba 1 24449 19/11/13
+mugiwara 2 36815 16/6/21
+de 4 13947 13/14/24
+
+
+2025-07-18 23:22
+22:21 29-7 radiant
+radiant
+gantz 1 13519 6/2/2
+mugiwara 2 11439 8/2/13
+imba 3 11563 2/0/16
+jumays 4 7815 11/1/14
+aizlkel 5 5955 2/2/14
+dire
+katokan 1 8245 0/2/0
+yak 2 5802 5/9/2
+de 3 6611 0/7/3
+palec 5 3687 0/5/3
+poopy 4 4327 1/6/4
+
+
+2025-07-20 22:20
+36:59 43-26 radiant
+radiant
+starlight 2 25785 16/5/11
+toyota 3 18875 5/8/23
+katokan 4 13010 4/7/23
+de 5 11553 6/5/27
+gantz 1 28843 12/1/20
+dire
+smile 2 13798 4/9/5
+bnc 1 20976 7/10/14
+yak 3 14820 4/10/13
+funarik 4 10245 4/8/6
+jumays 5 11624 7/6/10
+
+
+2025-07-20 23:26
+34:05 43-31 radiant
+radiant
+yak 1 16883 10/9/13
+bnc 2 23304 12/5/14
+de 5 9025 8/8/19
+toyota 3 15339 10/3/16
+funarik 4 10607 3/8/15
+dire
+lubittebya 2 15157 8/7/15
+imba 3 16886 6/7/15
+mugiwara 4 8057 5/10/12
+jumays 5 6426 1/13/16
+gantz 1 18415 10/6/6
+
+
+2025-07-21 00:50
+36:44 42-16 radiant
+radiant
+starlight 5 17009 6/1/27
+bnc 1 27675 11/2/17
+toyota 3 17043 5/3/23
+lubittebya 2 24308 15/3/16
+mugiwara 4 11374 5/7/18
+dire
+imba 2 18605 6/6/6
+katokan 5 8499 0/12/8
+de 4 5028 1/10/12
+funarik 3 14082 3/7/5
+gantz 1 17444 4/7/6
+
+
+2025-07-26 00:04
+45:10 27-46 dire
+radiant
+lubittebya 2 22998 10/5/7
+microsha 4 9807 4/13/14
+suflyoha 3 17616 8/11/10
+bars 5 11458 3/6/14
+poexali 1 18907 2/11/10
+dire
+poopy 4 18096 2/5/27
+de 3 25257 15/7/18
+gantz 1 32864 12/3/27
+imba 2 26544 12/3/24
+heart 5 17281 4/10/29
+
+
+2025-07-26 01:04
+45:44 28-50 dire
+radiant
+starlight 1 23131 2/6/10
+imba 2 20137 13/8/13
+poopy 5 8642 3/13/17
+poexali 4 12242 6/12/13
+de 3 14435 4/11/18
+dire
+bars 3 20501 3/6/26
+microsha 4 16093 5/5/25
+heart 5 14512 4/9/28
+lubittebya 2 29543 13/4/19
+gantz 1 38155 25/4/13
+
+
+2025-07-26 02:04
+14:49 21-4 radiant
+radiant
+lubittebya 1 8447 5/0/2
+microsha 3 6429 4/0/4
+heart 5 3739 6/1/8
+poexali 4 3479 2/3/8
+gantz 2 7017 4/0/7
+dire
+starlight 1 4111 2/5/1
+imba 4 1934 0/7/1
+bars 3 4635 1/3/0
+de 5 2472 0/3/4
+mugiwara 2 4773 1/3/2
+
+
+2025-07-26 03:04
+35:33 22-45 dire
+radiant
+kebab 5 8009 2/8/10
+bars 1 16261 13/8/4
+gantz 2 13067 2/8/11
+heart 4 8107 2/10/18
+de 3 9711 1/11/11
+dire
+poexali 4 10108 4/9/24
+mugiwara 5 12687 7/7/25
+microsha 3 14998 5/4/26
+imba 2 26945 14/1/17
+lubittebya 1 21205 14/1/21
+
+
+2025-08-10 22:43
+28:28 37-13 radiant
+radiant
+pizza 5 7730 6/2/20
+lubittebya 1 25040 7/2/10
+katokan 3 14273 6/2/24
+palec 4 7976 3/5/26
+tj4k 2 15698 14/2/10
+dire
+gantz 2 12445 6/7/2
+de 1 11086 4/8/2
+farmila 4 4396 0/7/5
+bars 3 10777 3/6/5
+aizlkel 5 4877 0/9/8
+
+
+2025-08-10 23:49
+46:30 40-32 radiant
+radiant
+farmila 5 14789 8/9/17
+aizlkel 3 19977 4/10/22
+tj4k 2 25155 6/7/13
+lubittebya 1 37684 21/2/15
+palec 4 16045 1/4/28
+dire
+imba 1 25823 16/5/9
+gantz 2 16816 4/8/16
+pizza 5 8483 2/12/17
+bars 4 14250 4/8/16
+de 3 16949 5/7/14
