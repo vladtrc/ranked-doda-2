@@ -99,7 +99,7 @@ def parse_block(block: str) -> Match:
         if not pm:
             raise ValueError(f"bad player line '{raw}' (expected 'name pos net k/d/a')")
         players.append(PlayerStats(
-            player_name=pm.group('name'),
+            player_name=pm.group('name').lower(),
             team=current_team,
             position=int(pm.group('pos')),
             net_worth=int(pm.group('net')),

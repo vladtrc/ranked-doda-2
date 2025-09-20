@@ -140,5 +140,37 @@ conn.execute("""
              ORDER BY pr.team, role;
              """)
 conn.sql("SELECT * FROM audit_team_role").show(max_rows=50, max_width=200)
+conn.execute("""
+             CREATE OR REPLACE VIEW top_experts_by_role AS
+WITH agg AS (
+  SELECT
+    pr.position,
+    pr.player_name,
+    COUNT(*)                          AS match_cnt,
+    AVG(vip.impact)                   AS avg_impact
+  FROM player_result pr
+  JOIN v_impact_player vip USING (match_id, player_name)
+  GROUP BY pr.position, pr.player_name
+)
+             SELECT position, player_name, match_cnt, avg_impact, rn
+             FROM (
+                      SELECT
+                          a.*,
+                          ROW_NUMBER() OVER (
+      PARTITION BY a.position
+      ORDER BY a.avg_impact DESC, a.match_cnt DESC, a.player_name
+    ) AS rn
+                      FROM agg a
+                  )
+             WHERE rn <= 20
+             ORDER BY position, rn;
+             """)
+
+# show
+conn.sql("""
+         SELECT position, player_name, match_cnt, avg_impact
+         FROM top_experts_by_role
+         where match_cnt > 10 ORDER BY avg_impact desc 
+         """).show(max_rows=20, max_width=200)
 
 print("Audit complete.")

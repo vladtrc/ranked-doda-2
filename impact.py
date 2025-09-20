@@ -11,14 +11,6 @@ Exports:
   Creates helper DuckDB views and tables with prefix `v_impact_*`. Avoid relying on them.
 """
 
-"""
-Exports:
-- calculate_impacts(conn): creates table impact_result (match_id:int64, player_name:varchar, impact:double).
-  Creates helper DuckDB views/tables with prefix `v_impact_*`. Avoid relying on them.
-
-Impact:
-  impact = w_k*K + w_d*D + w_a*A + w_net*NW
-"""
 from dataclasses import dataclass
 from typing import List
 
@@ -39,11 +31,12 @@ class ImpactCoeffs:
     rows: List[RoleCoeff]
 
 
-DEFAULT_COEFFS = ImpactCoeffs(rows=[RoleCoeff(position=1, w_k=1.4, w_d=-8.5, w_a=2.3, w_n=0.00027),
-                                    RoleCoeff(position=2, w_k=1.7, w_d=-8.4, w_a=1.6, w_n=0.00085),
-                                    RoleCoeff(position=3, w_k=1.9, w_d=-6.4, w_a=1.1, w_n=0.00011),
-                                    RoleCoeff(position=4, w_k=1.3, w_d=-5.7, w_a=1.1, w_n=0.0016),
-                                    RoleCoeff(position=5, w_k=1.3, w_d=-2.2, w_a=2.1, w_n=0.00101)])
+DEFAULT_COEFFS = ImpactCoeffs(
+    rows=[RoleCoeff(position=1, w_k=1.3, w_d=-10.0, w_a=1.3, w_n=0.0009),
+          RoleCoeff(position=2, w_k=1.4, w_d=-6.9, w_a=1.7, w_n=0.00017),
+          RoleCoeff(position=3, w_k=2.2, w_d=-6.4, w_a=1.8, w_n=0.00019),
+          RoleCoeff(position=4, w_k=2.1, w_d=-5.0, w_a=1.1, w_n=0.00081),
+          RoleCoeff(position=5, w_k=1.2, w_d=-4.1, w_a=1.1, w_n=0.00116)])
 
 
 def _register_coeffs_table(conn: duckdb.DuckDBPyConnection, coeffs: ImpactCoeffs) -> None:
@@ -96,8 +89,14 @@ def init_impact_views(conn: duckdb.DuckDBPyConnection, coeffs: ImpactCoeffs) -> 
                         iw.w_d,
                         iw.w_a,
                         iw.w_net,
-                        (iw.w_k * s.kills) + (iw.w_d * s.deaths) + (iw.w_a * s.assists) +
-                        (iw.w_net * s.net_worth) as impact
+                        least(100,
+                              greatest(-100,
+                                       (iw.w_k * s.kills) +
+                                       (iw.w_d * s.deaths) +
+                                       (iw.w_a * s.assists) +
+                                       (iw.w_net * s.net_worth)
+                              )
+                        ) as impact
                  from src s
                           join v_impact_weights iw using (position);
                  """)

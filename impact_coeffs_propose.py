@@ -39,61 +39,103 @@ def weights_to_coeffs(trial: optuna.trial.Trial) -> ImpactCoeffs:
     return ImpactCoeffs(rows=rows)
 
 
-def metric_values(conn: duckdb.DuckDBPyConnection):
-    conn.sql("SELECT * FROM v_impact_player LIMIT 5")
+# ---- metrics ----
+METRIC_CNT = 13  # 5 role neutrality + 2 bounds + 2 dist + 1 batch + 1 overflow + 2 team neutrality
+
+def metric_values(conn):
+    # batches
     conn.execute("""
-                 CREATE
-                 OR REPLACE VIEW match_batches AS
-                WITH base AS (
-                  SELECT DISTINCT match_id FROM match
-                ),
-                ranked AS (
-                  SELECT
-                    b.batch,
-                    m.match_id,
-                    ROW_NUMBER() OVER (PARTITION BY b.batch ORDER BY random()) AS rn
-                  FROM range(1, 21) AS b(batch)
-                  CROSS JOIN base AS m
-                )
+                 CREATE OR REPLACE VIEW match_batches AS
+    WITH base AS (SELECT DISTINCT match_id FROM match),
+    ranked AS (
+      SELECT b.batch, m.match_id,
+             ROW_NUMBER() OVER (PARTITION BY b.batch ORDER BY random()) AS rn
+      FROM range(1,21) AS b(batch)
+      CROSS JOIN base m
+    )
                  SELECT batch, match_id
                  FROM ranked
                  WHERE rn <= 80
                  ORDER BY batch, match_id;
                  """)
+
+    # per-batch role averages
     conn.execute("""
                  CREATE OR REPLACE VIEW batch_role_impact AS
-                 SELECT mb.batch,
-                        pr.position AS position,
-                     AVG(vip.impact)  AS avg_impact,
-                     ABS(AVG(vip.impact))  AS avg_impact_abs,
-                     MIN(vip.impact)  AS min_impact,
-                     MAX(vip.impact)  AS max_impact,
-                     COUNT(*)         AS samples,
-                     COUNT(DISTINCT pr.player_name) AS unique_players,
-                     COUNT(DISTINCT pr.match_id)    AS unique_matches
-                 FROM match_batches AS mb
-                     JOIN v_impact_player AS vip USING (match_id)
-                     JOIN player_result AS pr USING (match_id, player_name)
-                 GROUP BY mb.batch, pr.position
-                 ORDER BY mb.batch, pr.position;
+                 SELECT mb.batch, pr.position AS position, AVG(vip.impact) AS avg_impact
+                 FROM match_batches mb
+                     JOIN v_impact_player vip USING (match_id)
+                     JOIN player_result pr USING (match_id, player_name)
+                 GROUP BY mb.batch, pr.position;
                  """)
-    row = conn.sql("""
-                   WITH role_max AS (SELECT position, MAX(avg_impact_abs) AS max_avg_abs
-                                     FROM batch_role_impact
-                                     GROUP BY position)
-                   SELECT MAX(CASE WHEN position = 1 THEN max_avg_abs END) AS role1,
-                          MAX(CASE WHEN position = 2 THEN max_avg_abs END) AS role2,
-                          MAX(CASE WHEN position = 3 THEN max_avg_abs END) AS role3,
-                          MAX(CASE WHEN position = 4 THEN max_avg_abs END) AS role4,
-                          MAX(CASE WHEN position = 5 THEN max_avg_abs END) AS role5
-                   FROM role_max
-                   """).fetchone()
-    if row is None or (len(row) != 5) or any(v is None for v in row):
-        raise ValueError(f"Expected 5 doubles, got: {row}")
-    return tuple(float(v) for v in row)
+
+    # 1–5 role neutrality
+    role_row = conn.sql("""
+                        SELECT
+                            COALESCE(ABS(AVG(CASE WHEN pr.position=1 THEN ir.impact END)), 0.0),
+                            COALESCE(ABS(AVG(CASE WHEN pr.position=2 THEN ir.impact END)), 0.0),
+                            COALESCE(ABS(AVG(CASE WHEN pr.position=3 THEN ir.impact END)), 0.0),
+                            COALESCE(ABS(AVG(CASE WHEN pr.position=4 THEN ir.impact END)), 0.0),
+                            COALESCE(ABS(AVG(CASE WHEN pr.position=5 THEN ir.impact END)), 0.0)
+                        FROM player_result pr
+                                 JOIN v_impact_player ir USING (match_id, player_name);
+                        """).fetchone()
+
+    # 6–7 boundedness
+    bounds_row = conn.sql("""
+                          WITH base AS (SELECT impact FROM v_impact_player)
+                          SELECT
+                              COALESCE(MAX(ABS(impact)), 0.0),
+                              100.0 * AVG(CASE WHEN impact < -100 OR impact > 100 THEN 1 ELSE 0 END)
+                          FROM base;
+                          """).fetchone()
+
+    # 8–9 distribution
+    dist_row = conn.sql("""
+                        WITH base AS (SELECT impact FROM v_impact_player),
+                             stats AS (SELECT AVG(impact) AS mu, STDDEV_SAMP(impact) AS sigma FROM base)
+                        SELECT
+                            COALESCE(MAX(s.sigma), 0.0),
+                            100.0 * AVG(CASE
+                                            WHEN NULLIF(s.sigma,0) IS NULL THEN 0
+                                            WHEN ABS((b.impact - s.mu)/s.sigma) > 3 THEN 1 ELSE 0
+                                END)
+                        FROM base b, stats s;
+                        """).fetchone()
+
+    # 10 batch stability
+    batch_row = conn.sql("""
+                         WITH per_role AS (
+                             SELECT position, STDDEV_SAMP(avg_impact) AS s
+                             FROM batch_role_impact
+                             GROUP BY position
+                         )
+                         SELECT COALESCE(MAX(s), 0.0) FROM per_role;
+                         """).fetchone()
+
+    # 11 overflow hinge
+    overflow_row = conn.sql("""
+                            WITH base AS (SELECT ABS(impact) AS a FROM v_impact_player)
+                            SELECT AVG(GREATEST(a - 100.0, 0.0)) FROM base;
+                            """).fetchone()
+
+    # 12–13 team neutrality
+    team_row = conn.sql("""
+                        SELECT
+                            COALESCE(ABS(AVG(CASE WHEN pr.team='radiant' THEN ir.impact END)), 0.0),
+                            COALESCE(ABS(AVG(CASE WHEN pr.team='dire'    THEN ir.impact END)), 0.0)
+                        FROM player_result pr
+                                 JOIN v_impact_player ir USING (match_id, player_name);
+                        """).fetchone()
+
+    row = tuple(map(float, role_row + bounds_row + dist_row + batch_row + overflow_row + team_row))
+    if len(row) != METRIC_CNT or any(v is None for v in row):
+        raise ValueError(f"Expected {METRIC_CNT} metrics, got: {row}")
+    return row
 
 
-def optimize_multi(conn: duckdb.DuckDBPyConnection, n_trials=12000) -> ImpactCoeffs:
+
+def optimize_multi(conn: duckdb.DuckDBPyConnection, n_trials) -> ImpactCoeffs:
     def objective(trial: optuna.trial.Trial):
         coeffs = weights_to_coeffs(trial)
         wds = {rc.position: rc.w_d for rc in coeffs.rows}
@@ -110,7 +152,7 @@ def optimize_multi(conn: duckdb.DuckDBPyConnection, n_trials=12000) -> ImpactCoe
     sampler = NSGAIISampler(seed=42)
 
     study = optuna.create_study(
-        directions=["minimize"] * 5,
+        directions=["minimize"] * METRIC_CNT,
         sampler=sampler,
         storage=None,  # in-memory
         load_if_exists=False,  # ensure fresh study
@@ -120,42 +162,44 @@ def optimize_multi(conn: duckdb.DuckDBPyConnection, n_trials=12000) -> ImpactCoe
     if not pareto:
         raise RuntimeError("No Pareto trials.")
 
+    N = 5  # number of leading metrics to sum (roles)
+
     rows = []
+    K = len(pareto[0].values)
     for t in pareto:
         vals = tuple(float(v) for v in t.values)
-        rows.append({
-            "trial": t.number, "r1": vals[0], "r2": vals[1], "r3": vals[2],
-            "r4": vals[3], "r5": vals[4], "sum": sum(vals)
-        })
+        rec = {"trial": t.number}
+        rec.update({f"m{i+1}": v for i, v in enumerate(vals)})
+        rec["role_sum"] = sum(vals[:min(N, K)])
+        rows.append(rec)
 
-    df = pd.DataFrame(rows).sort_values("sum").reset_index(drop=True)
-    print("\nPareto trials sorted by sum (lower is better):")
-    print(df[["trial","r1","r2","r3","r4","r5","sum"]].to_string(
-        index=False, float_format=lambda x: f"{x:.6f}"))
+    df = pd.DataFrame(rows).sort_values("role_sum").reset_index(drop=True)
 
-    # Print ImpactCoeffs for top-k trials
+    cols = ["trial"] + [f"m{i+1}" for i in range(K)] + ["role_sum"]
+    print("\nPareto trials sorted by sum of first N metrics (lower is better):")
+    print(df[cols].to_string(index=False, float_format=lambda x: f"{x:.6f}"))
+
+    # print ImpactCoeffs for top-k
     top_k = 5
     print(f"\nTop {top_k} trials as ImpactCoeffs:")
-    for i, rec in df.head(top_k).iterrows():
+    for _, rec in df.head(top_k).iterrows():
         t = next(tt for tt in pareto if tt.number == rec.trial)
         coeffs = params_to_coeffs(t.params)
-        print(f"\nTrial {rec.trial}  sum={rec['sum']:.6f}  "
-              f"objectives=({rec.r1:.6f}, {rec.r2:.6f}, {rec.r3:.6f}, {rec.r4:.6f}, {rec.r5:.6f})")
-        # pretty table
+        metrics_str = ", ".join(f"{rec[f'm{i+1}']:.6f}" for i in range(K))
+        print(f"\nTrial {int(rec.trial)}  role_sum={rec['role_sum']:.6f}  metrics=({metrics_str})")
         pprint(coeffs)
 
-    # Optionally set the best-by-sum as return value
-    best_trial_num = int(df.iloc[0].trial)
+    # return best-by-role_sum
+    best_trial_num = int(df.iloc[0]["trial"])
     best_trial = next(tt for tt in pareto if tt.number == best_trial_num)
     best_coeffs = params_to_coeffs(best_trial.params)
     return best_coeffs
-
 
 
 # run
 if __name__ == "__main__":
     matches = parse_dota_file()
     conn = load_matches_into_duckdb(matches)
-    coeffs = optimize_multi(conn)
+    coeffs = optimize_multi(conn, n_trials=25000)
     pprint(coeffs)
     print(coeffs)
