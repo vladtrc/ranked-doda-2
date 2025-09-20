@@ -1,5 +1,3 @@
-import logging
-
 from data_to_duckdb import load_matches_into_duckdb
 from impact import calculate_impacts
 from parse_data import parse_dota_file
