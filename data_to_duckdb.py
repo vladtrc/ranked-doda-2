@@ -7,26 +7,26 @@ from parse_data import Match
 def load_matches_into_duckdb(matches: List[Match]) -> duckdb.DuckDBPyConnection:
     conn = duckdb.connect(database=':memory:')
     conn.execute("""
-                 CREATE TABLE matches (
-                                          match_id    BIGINT PRIMARY KEY,
-                                          date_time   TIMESTAMP,
-                                          duration    VARCHAR,
-                                          duration_sec INTEGER,
-                                          radiant_kills INTEGER,
-                                          dire_kills    INTEGER,
-                                          winning_team  VARCHAR
+                 CREATE TABLE match (
+                                        match_id    BIGINT PRIMARY KEY,
+                                        date_time   TIMESTAMP,
+                                        duration    VARCHAR,
+                                        duration_sec INTEGER,
+                                        radiant_kills INTEGER,
+                                        dire_kills    INTEGER,
+                                        winning_team  VARCHAR
                  );
                  """)
     conn.execute("""
-                 CREATE TABLE players (
-                                          match_id   BIGINT,
-                                          player_name VARCHAR,
-                                          team        VARCHAR,
-                                          position    INTEGER,
-                                          net_worth   INTEGER,
-                                          kills       INTEGER,
-                                          deaths      INTEGER,
-                                          assists     INTEGER
+                 CREATE TABLE player_result (
+                                                match_id   BIGINT,
+                                                player_name VARCHAR,
+                                                team        VARCHAR,
+                                                position    INTEGER,
+                                                net_worth   INTEGER,
+                                                kills       INTEGER,
+                                                deaths      INTEGER,
+                                                assists     INTEGER
                  );
                  """)
 
@@ -57,19 +57,19 @@ def load_matches_into_duckdb(matches: List[Match]) -> duckdb.DuckDBPyConnection:
 
     # Bulk insert
     conn.executemany("""
-                     INSERT INTO matches
+                     INSERT INTO match
                      (match_id, date_time, duration, duration_sec, radiant_kills, dire_kills, winning_team)
                      VALUES (?, ?, ?, ?, ?, ?, ?)
                      """, match_rows)
 
     conn.executemany("""
-                     INSERT INTO players
+                     INSERT INTO player_result
                      (match_id, player_name, team, position, net_worth, kills, deaths, assists)
                      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                      """, player_rows)
 
     # Useful indexes
-    conn.execute("CREATE INDEX players_match_idx ON players(match_id);")
-    conn.execute("CREATE INDEX players_name_idx ON players(player_name);")
+    conn.execute("CREATE INDEX player_result_match_idx ON player_result(match_id);")
+    conn.execute("CREATE INDEX player_result_name_idx ON player_result(player_name);")
 
     return conn
