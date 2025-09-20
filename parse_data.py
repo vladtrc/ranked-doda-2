@@ -119,7 +119,7 @@ def parse_block(block: str) -> Match:
     )
 
 
-def parse_dota_file(filename: str) -> List[Match]:
+def parse_dota_file(filename: str='data.txt') -> List[Match]:
     with open(filename, 'r') as f:
         content = f.read()
 
