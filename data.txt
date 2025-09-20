@@ -25,7 +25,7 @@ imba 1 17387 12/4/8
 itnon 4 6408 1/12/10
 dextron 3 8620 2/10/9
 starlight 2 11519 2/9/10
-dire:
+dire
 poopy 2 16602 10/3/19
 palec 4 12165 0/5/24
 fishscale 1 28020 25/1/8
@@ -41,7 +41,7 @@ kebab 4 12194 3/4/12
 starlight 1 19571 5/9/13
 itnon 5 9359 1/8/11
 imba 2 23902 14/4/4
-dire:
+dire
 egor 4 17498 4/7/14
 fishscale 1 36597 22/1/2
 poopy 2 17861 4/6/14
@@ -57,7 +57,7 @@ yak 2 11632 8/10/6
 kebab 4 8943 3/9/4
 aizlkel 3 6208 1/13/10
 toyota 1 12755 5/4/9
-dire:
+dire
 fishscale 1 26127 24/1/10
 itnon 4 9482 4/7/18
 egor 3 13509 2/4/19
@@ -72,7 +72,7 @@ palandirka 4 13747 4/9/24
 egor 3 25277 8/4/17
 fishscale 1 45383 27/1/10
 emperor 2 21012 9/3/38
-dire:
+dire
 toyota 1 16246 12/6/8
 starlight 2 18554 4/13/6
 pizza 5 6633 0/12/7
@@ -88,7 +88,7 @@ palec 4 11599 1/11/19
 katokan 1 31834 24/6/9
 fishscale 5 14914 7/5/26
 aizlkel 3 12525 1/10/25
-dire:
+dire
 itnon 5 6320 2/11/20
 emperor 2 17950 14/3/18
 dextron 3 12339 3/9/9
@@ -106,7 +106,7 @@ fishscale 3 50484 22/3/18
 palec 4 16703 3/10/22
 aizlkel 1 20917 3/13/9
 katokan 2 31196 17/6/21
-dire:
+dire
 toyota 5 11938 2/12/15
 emperor 1 30677 23/11/10
 egor 2 20248 8/12/16
@@ -121,7 +121,7 @@ palec 4 18822 4/10/12
 aizlkel 5 11636 3/18/16
 rubius 3 17352 1/9/19
 katokan 2 23793 7/2/10
-dire:
+dire
 fishscale 1 34375 13/2/12
 dextron 3 20512 10/5/15
 pizza 5 10363 2/8/18
@@ -229,7 +229,7 @@ fishscale 1 17657 8/5/3
 koba 2 12117 4/8/8
 kebab 4 6924 3/12/5
 dextron 3 7127 0/10/9
-dire:
+dire
 aizlkel 4 13240 8/6/25
 imba 1 25267 5/2/14
 pizza 5 9188 0/5/17
