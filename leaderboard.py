@@ -161,8 +161,6 @@ from presentation
 order by WL desc;
 """)
 
-# --- per-position extremes leaderboard (Spark parity) ---
-
 # team net worth
 conn.sql("""
 create or replace table _team_networth as

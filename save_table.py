@@ -17,12 +17,12 @@ def save_tables_tailwind_html(conn, sections: list[ReportSection], save_as: str,
         q = s.sql or f'SELECT * FROM "{s.table}"'
         df = conn.sql(f"{q} LIMIT {limit}").df()
 
-        # Minimal table with luxury spacing
+        # Minimal table with luxury spacing, compact width
         tbl = df.to_html(
             index=False,
             border=0,
             classes=(
-                "w-full text-sm font-light tracking-wide "
+                "text-sm font-light tracking-wide "
                 "border-separate border-spacing-0"
             ),
         )
@@ -30,27 +30,27 @@ def save_tables_tailwind_html(conn, sections: list[ReportSection], save_as: str,
         # Clean up default styles
         tbl = tbl.replace(' style="text-align: center;"', '')
 
-        # Luxury header styling - uppercase, letter-spacing
+        # Luxury header styling - uppercase, letter-spacing, compact padding
         tbl = tbl.replace(
             "<th>",
-            '<th class="px-6 py-4 text-[10px] font-medium uppercase tracking-[0.2em] '
-            'text-amber-200/60 text-left border-b border-amber-200/10">'
+            '<th class="px-3 py-2 text-[10px] font-medium uppercase tracking-[0.2em] '
+            'text-red-200/50 text-left border-b border-red-900/20">'
         )
         tbl = tbl.replace(
             "<th",
-            '<th class="px-6 py-4 text-[10px] font-medium uppercase tracking-[0.2em] '
-            'text-amber-200/60 text-left border-b border-amber-200/10"'
+            '<th class="px-3 py-2 text-[10px] font-medium uppercase tracking-[0.2em] '
+            'text-red-200/50 text-left border-b border-red-900/20"'
         )
 
-        # Luxury cell styling - generous padding, subtle borders
+        # Luxury cell styling - compact padding, same text size
         tbl = tbl.replace(
             "<td>",
-            '<td class="px-6 py-4 text-gray-300 font-light '
+            '<td class="px-3 py-1.5 text-gray-300 font-light '
             'border-b border-white/[0.02] transition-colors duration-300">'
         )
         tbl = tbl.replace(
             "<td",
-            '<td class="px-6 py-4 text-gray-300 font-light '
+            '<td class="px-3 py-1.5 text-gray-300 font-light '
             'border-b border-white/[0.02] transition-colors duration-300"'
         )
 
@@ -58,11 +58,13 @@ def save_tables_tailwind_html(conn, sections: list[ReportSection], save_as: str,
         tbl = tbl.replace("<thead>", '<thead class="backdrop-blur-sm">')
         tbl = tbl.replace(
             "<tbody>",
-            '<tbody class="[&>tr:hover]:bg-white/[0.02] [&>tr]:transition-all [&>tr]:duration-500">'
+            '<tbody class="[&>tr:nth-child(odd)]:bg-red-950/30 '
+            '[&>tr:nth-child(even)]:bg-black/40 '
+            '[&>tr:hover]:bg-red-950/20 [&>tr]:transition-all [&>tr]:duration-500">'
         )
 
         note_html = (
-            f'<p class="text-[11px] text-amber-200/40 mt-3 font-light tracking-wide uppercase">'
+            f'<p class="text-[11px] text-red-200/30 mt-3 font-light tracking-wide uppercase">'
             f'{escape(s.note)}</p>'
             if s.note else ""
         )
@@ -73,11 +75,11 @@ def save_tables_tailwind_html(conn, sections: list[ReportSection], save_as: str,
     <h2 class="text-lg font-extralight text-white tracking-wider mb-1">
       {escape(s.title)}
     </h2>
-    <div class="h-px bg-gradient-to-r from-amber-200/20 via-amber-200/5 to-transparent w-32"></div>
+    <div class="h-px bg-gradient-to-r from-red-900/40 via-red-950/20 to-transparent w-32"></div>
     {note_html}
   </div>
   <div class="overflow-x-auto scrollbar-thin scrollbar-thumb-amber-200/10 scrollbar-track-transparent">
-    <div class="min-w-full backdrop-blur-sm bg-white/[0.01] rounded-sm">
+    <div class="inline-block min-w-min backdrop-blur-sm bg-white/[0.01] rounded-sm">
       {tbl}
     </div>
   </div>
@@ -99,12 +101,12 @@ def save_tables_tailwind_html(conn, sections: list[ReportSection], save_as: str,
   <style>
     * {{ font-family: 'Inter', sans-serif; }}
     body {{ 
-      background: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
+      background: linear-gradient(180deg, #000000 0%, #0a0000 50%, #000000 100%);
       min-height: 100vh;
     }}
-    /* Subtle glow effect on hover */
+    /* Subtle blood-red glow effect on hover */
     tr:hover td {{
-      text-shadow: 0 0 20px rgba(251, 191, 36, 0.1);
+      text-shadow: 0 0 30px rgba(127, 29, 29, 0.15);
     }}
     /* Custom scrollbar */
     ::-webkit-scrollbar {{
@@ -115,11 +117,11 @@ def save_tables_tailwind_html(conn, sections: list[ReportSection], save_as: str,
       background: transparent;
     }}
     ::-webkit-scrollbar-thumb {{
-      background: rgba(251, 191, 36, 0.1);
+      background: rgba(127, 29, 29, 0.2);
       border-radius: 3px;
     }}
     ::-webkit-scrollbar-thumb:hover {{
-      background: rgba(251, 191, 36, 0.2);
+      background: rgba(127, 29, 29, 0.3);
     }}
   </style>
 </head>
@@ -128,12 +130,12 @@ def save_tables_tailwind_html(conn, sections: list[ReportSection], save_as: str,
   <header class="px-8 lg:px-12 py-12 border-b border-white/[0.05]">
     <div class="max-w-7xl mx-auto">
       <div class="flex items-center gap-3">
-        <div class="w-1 h-8 bg-gradient-to-b from-amber-200/60 to-amber-200/10"></div>
+        <div class="w-1 h-8 bg-gradient-to-b from-red-800/40 to-red-950/20"></div>
         <h1 class="text-2xl font-extralight tracking-wider text-white">
           {page_title}
         </h1>
       </div>
-      <p class="text-[10px] uppercase tracking-[0.3em] text-amber-200/40 mt-2 ml-4">
+      <p class="text-[10px] uppercase tracking-[0.3em] text-red-200/30 mt-2 ml-4">
         Data Intelligence Report
       </p>
     </div>
@@ -149,13 +151,13 @@ def save_tables_tailwind_html(conn, sections: list[ReportSection], save_as: str,
   <!-- Minimal footer -->
   <footer class="px-8 lg:px-12 py-8 mt-20 border-t border-white/[0.02]">
     <div class="max-w-7xl mx-auto flex justify-between items-center">
-      <p class="text-[10px] uppercase tracking-[0.3em] text-amber-200/30">
+      <p class="text-[10px] uppercase tracking-[0.3em] text-red-200/20">
         Generated from DuckDB
       </p>
       <div class="flex gap-1">
-        <div class="w-1 h-1 rounded-full bg-amber-200/20"></div>
-        <div class="w-1 h-1 rounded-full bg-amber-200/30"></div>
-        <div class="w-1 h-1 rounded-full bg-amber-200/20"></div>
+        <div class="w-1 h-1 rounded-full bg-red-900/30"></div>
+        <div class="w-1 h-1 rounded-full bg-red-900/40"></div>
+        <div class="w-1 h-1 rounded-full bg-red-900/30"></div>
       </div>
     </div>
   </footer>
