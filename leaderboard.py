@@ -151,7 +151,7 @@ thresholds as (
   from generate_series(1, (select coalesce(max(games),1) from per_player)) as t(n)
 ),
 chosen as (
-  select coalesce( (select N from thresholds where players <= 50 order by N asc limit 1), 1 ) as N
+  select coalesce( (select N from thresholds where players <= 65 order by N asc limit 1), 1 ) as N
 ),
 presentation as (
   select
@@ -162,15 +162,11 @@ presentation as (
       when length(pos) = 1 then printf(' %s ', pos)
       else pos
     end as pos,
-    printf('%2i/%2i/%2i %s',
+    printf('%2i/%2i/%2i %ik',
       cast(round(avg_k) as int),
       cast(round(avg_d) as int),
       cast(round(avg_a) as int),
-      case
-        when gold <= 5000 then '3k'
-        when gold <= 15000 then '10k'
-        else '20k'
-      end
+      cast(gold/1000 as int)
     ) as kda_gold,
     printf('%i%%/%i', cast(round(100.0 * w / nullif(g, 0)) as int), g) as wins,
     case
@@ -183,7 +179,7 @@ presentation as (
   where g >= (select N from chosen)
 )
 select 
-    rank() over (order by WL desc) as n,
+    dense_rank() over (order by WL desc) as n,
     case 
       when WL > 0 then concat('+', cast(WL as varchar))
       else cast(WL as varchar)
@@ -416,9 +412,12 @@ conn.sql("""
          order by pos
          """).show(max_rows=50, max_width=500)
 
+count_overall = conn.sql("select count(distinct(player_name)) from player_result").fetchone()[0]
+count_shown = conn.sql("select count(*) as c from leaderboard").fetchone()[0]
+
 sections = [
     ReportSection(
-        title="Топ игроков по статам",
+        title=f"Топ игроков по статам (всего {count_overall}, показано {count_overall})",
         sql="SELECT * FROM leaderboard ORDER BY n"
     ),
     ReportSection(
