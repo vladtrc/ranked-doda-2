@@ -16,6 +16,7 @@ calculate_impacts(conn)
 
 calculate_ranked_mmr(conn)
 # rating_result(match_id:int64, player_name:varchar, pool:double, th_skew:double, pr_skew:double, rating_before:double, rating_after:double, rating_diff:double)
+
 conn.sql("""
 create or replace table leaderboard as
 with latest_rating as (
@@ -81,6 +82,36 @@ per_match as (
   from player_result pr
   join "match" m using (match_id)
 ),
+ordered as (
+  select
+    player_name,
+    date_time,
+    r,
+    row_number() over (partition by player_name order by date_time desc) as rn,
+    lag(r) over (partition by player_name order by date_time desc) as prev_r
+  from per_match
+),
+chg as (
+  select *,
+         case when rn = 1 or r <> prev_r then 1 else 0 end as changed
+  from ordered
+),
+grp as (
+  select *,
+         sum(changed) over (
+           partition by player_name
+           order by date_time desc
+           rows between unbounded preceding and current row
+         ) as grp_id
+  from chg
+),
+current_streak as (
+  select player_name,
+         max(r) filter (where grp_id = 1) as cur_r,
+         count(*)  filter (where grp_id = 1) as streak_len
+  from grp
+  group by player_name
+),
 ranked as (
   select player_name, date_time, r,
          row_number() over (partition by player_name order by date_time desc) as rn
@@ -100,12 +131,15 @@ assembled as (
          kg.avg_k, kg.avg_d, kg.avg_a,
          ws.wins as w,
          ws.games as g,
-         f.form
+         f.form,
+         cs.cur_r,
+         cs.streak_len
   from latest_rating lr
   left join pos_mode pm on pm.player_name = lr.player_name
   left join agg_kda_gold kg on kg.player_name = lr.player_name
   left join agg_win_stats ws on ws.player_name = lr.player_name
   left join agg_form_10 f on f.player_name = lr.player_name
+  left join current_streak cs on cs.player_name = lr.player_name
 ),
 -- compute threshold N*
 per_player as (
@@ -117,7 +151,6 @@ thresholds as (
   from generate_series(1, (select coalesce(max(games),1) from per_player)) as t(n)
 ),
 chosen as (
-  -- smallest N where players <= 50; if none, default to 1
   select coalesce( (select N from thresholds where players <= 50 order by N asc limit 1), 1 ) as N
 ),
 presentation as (
@@ -140,25 +173,24 @@ presentation as (
       end
     ) as kda_gold,
     printf('%i%%/%i', cast(round(100.0 * w / nullif(g, 0)) as int), g) as wins,
+    case
+      when cur_r = 'W' then printf('+%i', streak_len)
+      when cur_r = 'L' then printf('-%i', streak_len)
+      else ''
+    end as streak,
     coalesce(form, '') as last10
   from assembled
   where g >= (select N from chosen)
 )
 select 
-    row_number() over (order by WL desc) as n, 
+    rank() over (order by WL desc) as n,
     case 
-        when WL >= 0 
-            then concat('+', cast(WL as varchar))
-        else cast(WL as varchar)
+      when WL > 0 then concat('+', cast(WL as varchar))
+      else cast(WL as varchar)
     end as WL,
-    rating,
-    name,
-    pos,
-    kda_gold,
-    wins,
-    last10
+    rating, name, pos, kda_gold, wins, streak, last10
 from presentation
-order by WL desc;
+order by WL desc, name;
 """)
 
 # team net worth
@@ -280,16 +312,13 @@ from _per_player_metrics pm
 left join _streaks st on st.player_name = pm.player_name and st.match_id = pm.match_id
 left join rating_result rr on rr.player_name = pm.player_name and rr.match_id = pm.match_id;
 """)
-
-# Aggregate max/min per position and pick latest occurrence on ties
+# Aggregate max/min per position and pick latest occurrence on ties (no carried/ruined/rating_diff)
 conn.sql("""
 create or replace table leaderboard_pos_extremes as
 with p as (select distinct pos from _raw_extremes),
 agg as (
   select
     pos,
-    max(rating_diff) as max_rating_diff,
-    min(rating_diff) as min_rating_diff,
     max(winstreak)   as max_winstreak,
     max(losestreak)  as max_losestreak,
     max(kill)        as max_kill,
@@ -299,28 +328,13 @@ agg as (
     min(death)       as min_death,
     max(death)       as max_death,
     max(networth)    as max_networth,
-    min(networth)    as min_networth,
-    max(carried)     as max_carried,
-    min(carried)     as min_carried,
-    min(ruined)      as min_ruined,
-    max(ruined)      as max_ruined
+    min(networth)    as min_networth
   from _raw_extremes
   group by pos
 ),
 pick as (
   select
     a.pos,
-
-    -- helpers to format "name | value | result | date"
-    (select name || ' | ' || a.max_rating_diff || ' | ' || r.result || ' | ' || cast(r.finished_at as varchar)
-     from _raw_extremes r
-     where r.pos=a.pos and r.rating_diff=a.max_rating_diff
-     order by r.finished_at desc limit 1) as max_rating_diff,
-
-    (select name || ' | ' || a.min_rating_diff || ' | ' || r.result || ' | ' || cast(r.finished_at as varchar)
-     from _raw_extremes r
-     where r.pos=a.pos and r.rating_diff=a.min_rating_diff
-     order by r.finished_at desc limit 1) as min_rating_diff,
 
     (select name || ' | ' || a.max_winstreak || ' | ' || r.result || ' | ' || cast(r.finished_at as varchar)
      from _raw_extremes r
@@ -370,27 +384,7 @@ pick as (
     (select name || ' | ' || a.min_networth || ' | ' || r.result || ' | ' || cast(r.finished_at as varchar)
      from _raw_extremes r
      where r.pos=a.pos and r.networth=a.min_networth
-     order by r.finished_at desc limit 1) as min_networth,
-
-    (select name || ' | ' || a.max_carried || ' | ' || r.result || ' | ' || cast(r.finished_at as varchar)
-     from _raw_extremes r
-     where r.pos=a.pos and r.carried=a.max_carried
-     order by r.finished_at desc limit 1) as max_carried,
-
-    (select name || ' | ' || a.min_carried || ' | ' || r.result || ' | ' || cast(r.finished_at as varchar)
-     from _raw_extremes r
-     where r.pos=a.pos and r.carried=a.min_carried
-     order by r.finished_at desc limit 1) as min_carried,
-
-    (select name || ' | ' || a.min_ruined || ' | ' || r.result || ' | ' || cast(r.finished_at as varchar)
-     from _raw_extremes r
-     where r.pos=a.pos and r.ruined=a.min_ruined
-     order by r.finished_at desc limit 1) as min_ruined,
-
-    (select name || ' | ' || a.max_ruined || ' | ' || r.result || ' | ' || cast(r.finished_at as varchar)
-     from _raw_extremes r
-     where r.pos=a.pos and r.ruined=a.max_ruined
-     order by r.finished_at desc limit 1) as max_ruined
+     order by r.finished_at desc limit 1) as min_networth
 
   from agg a
 )
@@ -398,21 +392,14 @@ select * from pick
 order by pos;
 """)
 
-# Pretty prints similar to Spark sections
-print("Топ игроков по статам:")
-conn.sql("SELECT * FROM leaderboard ORDER BY n").show(max_rows=50, max_width=200)
-
 print("Особо отличившиеся")
 conn.sql("""
          select pos,
-                max_rating_diff,
                 max_winstreak,
                 max_kill,
                 max_assist,
                 min_death,
-                max_networth,
-                max_carried,
-                min_ruined
+                max_networth
          from leaderboard_pos_extremes
          order by pos
          """).show(max_rows=50, max_width=500)
@@ -420,14 +407,11 @@ conn.sql("""
 print("Не особо отличившиеся...")
 conn.sql("""
          select pos,
-                min_rating_diff,
                 max_losestreak,
                 min_kill,
                 min_assist,
                 max_death,
-                min_networth,
-                min_carried,
-                max_ruined
+                min_networth
          from leaderboard_pos_extremes
          order by pos
          """).show(max_rows=50, max_width=500)
@@ -435,21 +419,17 @@ conn.sql("""
 sections = [
     ReportSection(
         title="Топ игроков по статам",
-        sql="SELECT * FROM leaderboard ORDER BY n",
-        note="Sorted by WL. Dynamic N threshold."
+        sql="SELECT * FROM leaderboard ORDER BY n"
     ),
     ReportSection(
         title="Особо отличившиеся",
         sql="""
             select pos,
-                   max_rating_diff,
                    max_winstreak,
                    max_kill,
                    max_assist,
                    min_death,
-                   max_networth,
-                   max_carried,
-                   min_ruined
+                   max_networth
             from leaderboard_pos_extremes
             order by pos
             """
@@ -458,14 +438,11 @@ sections = [
         title="Не особо отличившиеся...",
         sql="""
             select pos,
-                   min_rating_diff,
                    max_losestreak,
                    min_kill,
                    min_assist,
                    max_death,
-                   min_networth,
-                   min_carried,
-                   max_ruined
+                   min_networth
             from leaderboard_pos_extremes
             order by pos
             """
