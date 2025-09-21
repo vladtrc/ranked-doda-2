@@ -412,12 +412,10 @@ conn.sql("""
          order by pos
          """).show(max_rows=50, max_width=500)
 
-count_overall = conn.sql("select count(distinct(player_name)) from player_result").fetchone()[0]
-count_shown = conn.sql("select count(*) as c from leaderboard").fetchone()[0]
 
 sections = [
     ReportSection(
-        title=f"Топ игроков по статам (всего {count_overall}, показано {count_overall})",
+        title=f"Топ игроков по статам",
         sql="SELECT * FROM leaderboard ORDER BY n"
     ),
     ReportSection(
