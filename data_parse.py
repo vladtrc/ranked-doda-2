@@ -2,6 +2,7 @@ import re
 from dataclasses import dataclass
 from typing import List
 from datetime import datetime
+from collections import defaultdict
 
 
 @dataclass
@@ -108,6 +109,16 @@ def parse_block(block: str) -> Match:
             assists=int(pm.group('a')),
         ))
 
+    # Roster validation: each team must have exactly positions 1..5
+    positions_by_team = defaultdict(list)
+    for p in players:
+        positions_by_team[p.team].append(p.position)
+
+    for team in ('radiant', 'dire'):
+        pos_sorted = sorted(positions_by_team.get(team, []))
+        if pos_sorted != [1, 2, 3, 4, 5]:
+            raise ValueError(f"invalid roster for {team}: positions {pos_sorted} (expected 1..5)")
+
     return Match(
         date_time=date_time,
         duration=duration,
@@ -119,15 +130,20 @@ def parse_block(block: str) -> Match:
     )
 
 
-def parse_dota_file(filename: str='data.txt') -> List[Match]:
+def parse_dota_file(filename: str = 'data.txt') -> List[Match]:
     with open(filename, 'r') as f:
         content = f.read()
 
     matches: List[Match] = []
+    seen_dt = set()
     success = fail = 0
     for block in split_into_blocks(content):
         try:
-            matches.append(parse_block(block))
+            match = parse_block(block)
+            if match.date_time in seen_dt:
+                raise ValueError(f"duplicate match datetime {match.date_time}")
+            seen_dt.add(match.date_time)
+            matches.append(match)
             success += 1
         except Exception as e:
             fail += 1
@@ -138,3 +154,4 @@ def parse_dota_file(filename: str='data.txt') -> List[Match]:
     total = success + fail
     print(f"Parsed {success}/{total} matches successfully")
     return matches
+
