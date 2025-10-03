@@ -3721,3 +3721,64 @@ de 3 25584 5/12/26
 palec 5 19236 1/10/28
 fishscale 2 36330 14/4/22
 zavod 4 23955 7/18/19
+
+2025-10-03 22:32
+46:45 25-46 dire
+radiant
+starlight 5 14903 5/9/12
+toyota 4 8197 3/16/13
+gantz 2 2501 6/8/9
+ponchik 3 17773 1/9/9
+imba 1 29373 9/4/7
+dire
+bnc 1 38328 19/2/10
+jumays 3 22572 1/7/13
+de 4 14322 3/8/15
+fishscale 2 31761 19/2/11
+pizza 5 13545 4/6/21
+
+2025-10-03 23:38
+41:54 45-29 radiant
+radiant
+starlight 4 14534 3/10/25
+imba 1 30694 12/1/16
+fishscale 2 26998 13/2/12
+toyota 3 20791 11/8/15
+doge 5 10758 5/8/19
+dire
+tj4k 2 19969 10/3/6
+jumays 4 10141 1/10/11
+velidarint 3 19123 8/6/5
+de 5 6481 1/16/13
+gantz 1 21681 8/10/9
+
+2025-10-04 00:30
+33:41 7-31 dire
+radiant
+starlight 2 12812 4/7/2
+meta 1 17480 0/5/0
+toyota 3 11159 1/6/2
+doge 5 6058 0/8/2
+imba 4 5959 2/5/3
+dire
+tj4k 4 13203 3/2/19
+de 5 7801 0/3/12
+fishscale 2 23270 10/1/7
+velidarint 3 18145 13/1/9
+gantz 1 23483 5/0/6
+
+
+2025-10-04 01:41
+43:58 38-20 radiant
+radiant
+pizza 5 13566 2/5/27
+bnc 1 44737 17/1/11
+fishscale 2 29966 12/1/14
+velidarint 3 21875 6/7/21
+doge 4 11063 0/6/20
+dire
+palec 4 8973 1/8/14
+imba 3 18222 7/7/8
+tj4k 2 17572 8/6/7
+de 5 8027 0/9/8
+gantz 1 19923 4/8/2
