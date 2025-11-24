@@ -1,5 +1,6 @@
 import csv
 import re
+import uuid
 from dataclasses import dataclass
 from typing import List
 from datetime import datetime
@@ -156,22 +157,36 @@ def parse_dota_file(filename: str = 'data.txt') -> List[Match]:
     print(f"Parsed {success}/{total} matches successfully")
     return matches
 
+def make_match_id(dt: datetime) -> str:
+    """
+    Deterministic match id based on datetime.
+    If you ever change the ID logic, do it here.
+    """
+    return uuid.uuid5(uuid.NAMESPACE_DNS, dt.isoformat()).hex
+
 
 def save_to_csv(
         matches: List[Match],
         matches_filename: str = 'matches.csv',
-        players_filename: str = 'players.csv',
+        scores_filename: str = 'match_player_scores.csv',
 ) -> None:
     """
-    Save parsed data to two CSV files (both with headers):
-      - matches.csv: one row per match
-      - players.csv: one row per player, including match-level info
+    Normalized export into two CSV files with less duplication:
+
+      - matches.csv:
+          match_id, match_datetime, duration, duration_sec,
+          radiant_kills, dire_kills, winning_team
+
+      - match_player_scores.csv:
+          match_id, player_name, team, position,
+          net_worth, kills, deaths, assists
     """
 
     # 1) Per-match CSV
     with open(matches_filename, 'w', newline='', encoding='utf-8') as fm:
         mw = csv.writer(fm)
         mw.writerow([
+            'match_id',
             'match_datetime',
             'duration',
             'duration_sec',
@@ -179,8 +194,11 @@ def save_to_csv(
             'dire_kills',
             'winning_team',
         ])
+
         for m in matches:
+            match_id = make_match_id(m.date_time)
             mw.writerow([
+                match_id,
                 m.date_time.strftime('%Y-%m-%d %H:%M'),
                 m.duration,
                 m.duration_sec,
@@ -189,13 +207,11 @@ def save_to_csv(
                 m.winning_team,
             ])
 
-    # 2) Per-player CSV
-    with open(players_filename, 'w', newline='', encoding='utf-8') as fp:
+    # 2) Per-player scores CSV
+    with open(scores_filename, 'w', newline='', encoding='utf-8') as fp:
         pw = csv.writer(fp)
         pw.writerow([
-            'match_datetime',
-            'duration_sec',
-            'winning_team',
+            'match_id',
             'player_name',
             'team',
             'position',
@@ -204,13 +220,12 @@ def save_to_csv(
             'deaths',
             'assists',
         ])
+
         for m in matches:
-            match_dt = m.date_time.strftime('%Y-%m-%d %H:%M')
+            match_id = make_match_id(m.date_time)
             for p in m.players:
                 pw.writerow([
-                    match_dt,
-                    m.duration_sec,
-                    m.winning_team,
+                    match_id,
                     p.player_name,
                     p.team,
                     p.position,
