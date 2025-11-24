@@ -1,3 +1,4 @@
+import csv
 import re
 from dataclasses import dataclass
 from typing import List
@@ -155,3 +156,66 @@ def parse_dota_file(filename: str = 'data.txt') -> List[Match]:
     print(f"Parsed {success}/{total} matches successfully")
     return matches
 
+
+def save_to_csv(
+        matches: List[Match],
+        matches_filename: str = 'matches.csv',
+        players_filename: str = 'players.csv',
+) -> None:
+    """
+    Save parsed data to two CSV files (both with headers):
+      - matches.csv: one row per match
+      - players.csv: one row per player, including match-level info
+    """
+
+    # 1) Per-match CSV
+    with open(matches_filename, 'w', newline='', encoding='utf-8') as fm:
+        mw = csv.writer(fm)
+        mw.writerow([
+            'match_datetime',
+            'duration',
+            'duration_sec',
+            'radiant_kills',
+            'dire_kills',
+            'winning_team',
+        ])
+        for m in matches:
+            mw.writerow([
+                m.date_time.strftime('%Y-%m-%d %H:%M'),
+                m.duration,
+                m.duration_sec,
+                m.radiant_kills,
+                m.dire_kills,
+                m.winning_team,
+            ])
+
+    # 2) Per-player CSV
+    with open(players_filename, 'w', newline='', encoding='utf-8') as fp:
+        pw = csv.writer(fp)
+        pw.writerow([
+            'match_datetime',
+            'duration_sec',
+            'winning_team',
+            'player_name',
+            'team',
+            'position',
+            'net_worth',
+            'kills',
+            'deaths',
+            'assists',
+        ])
+        for m in matches:
+            match_dt = m.date_time.strftime('%Y-%m-%d %H:%M')
+            for p in m.players:
+                pw.writerow([
+                    match_dt,
+                    m.duration_sec,
+                    m.winning_team,
+                    p.player_name,
+                    p.team,
+                    p.position,
+                    p.net_worth,
+                    p.kills,
+                    p.deaths,
+                    p.assists,
+                ])
