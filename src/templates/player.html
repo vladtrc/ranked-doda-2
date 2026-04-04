@@ -46,7 +46,11 @@
         </thead>
         <tbody>
           {% for g in recent_games %}
-          <tr class="hover">
+          <tr class="hover cursor-pointer"
+              hx-get="/api/game/{{ g.match_id }}"
+              hx-target="#game-modal-body"
+              hx-swap="innerHTML"
+              onclick="document.getElementById('game-modal').showModal()">
             <td class="tabular-nums text-sm">{{ g.date_time.strftime('%Y-%m-%d %H:%M') if g.date_time else '—' }}</td>
             <td class="tabular-nums text-sm">{{ g.duration }}</td>
             <td class="text-center">
@@ -72,6 +76,18 @@
       </table>
     </div>
   </div>
+
+  <dialog id="game-modal" class="modal modal-bottom sm:modal-middle">
+    <div class="modal-box max-w-2xl p-4">
+      <div id="game-modal-body" class="min-h-[100px] flex items-center justify-center text-base-content/30 text-sm">
+        Loading...
+      </div>
+      <div class="modal-action mt-3">
+        <form method="dialog"><button class="btn btn-sm btn-ghost">Close</button></form>
+      </div>
+    </div>
+    <form method="dialog" class="modal-backdrop"><button>close</button></form>
+  </dialog>
 
 </div>
 {% else %}

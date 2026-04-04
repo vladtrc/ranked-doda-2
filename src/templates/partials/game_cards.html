@@ -50,7 +50,7 @@
 </div>
 {% endfor %}
 
-{% if games %}
+{% if games and offset is not none %}
 <div hx-get="/api/games?offset={{ offset }}"
      hx-trigger="revealed"
      hx-swap="outerHTML"

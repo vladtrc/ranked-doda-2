@@ -2,12 +2,14 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI, Request, Query
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from .db import init_db, get_conn
 
 TEMPLATES_DIR = Path(__file__).parent / "templates"
+STATIC_DIR = Path(__file__).parent / "static"
 templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
 templates.env.filters["nw"] = lambda v: f"{v:,}".replace(",", "\u202f") if v else "—"
 
@@ -64,6 +66,7 @@ def _fetch_recent_games(name: str, limit: int = 30) -> list[dict]:
     conn = get_conn()
     sql = """
     SELECT
+        m.match_id,
         m.date_time,
         m.duration,
         pr.team,
@@ -80,13 +83,38 @@ def _fetch_recent_games(name: str, limit: int = 30) -> list[dict]:
     LIMIT ?
     """
     rows = conn.execute(sql, [name, limit]).fetchall()
-    cols = ["date_time", "duration", "team", "winning_team", "position", "kills", "deaths", "assists", "net_worth"]
+    cols = ["match_id", "date_time", "duration", "team", "winning_team", "position", "kills", "deaths", "assists", "net_worth"]
     result = []
     for r in rows:
         d = dict(zip(cols, r))
         d["won"] = d["team"] == d["winning_team"]
         result.append(d)
     return result
+
+
+def _fetch_game(match_id: str) -> dict | None:
+    conn = get_conn()
+    row = conn.execute(
+        'SELECT match_id, date_time, duration, radiant_kills, dire_kills, winning_team FROM "match" WHERE match_id = ?',
+        [match_id],
+    ).fetchone()
+    if not row:
+        return None
+    cols = ["match_id", "date_time", "duration", "radiant_kills", "dire_kills", "winning_team"]
+    game = dict(zip(cols, row))
+    player_rows = conn.execute(
+        "SELECT match_id, player_name, team, position, kills, deaths, assists, net_worth FROM player_result WHERE match_id = ? ORDER BY team, position",
+        [match_id],
+    ).fetchall()
+    player_cols = ["match_id", "player_name", "team", "position", "kills", "deaths", "assists", "net_worth"]
+    from collections import defaultdict
+    sides: dict[str, list] = defaultdict(list)
+    for r in player_rows:
+        p = dict(zip(player_cols, r))
+        sides[p["team"]].append(p)
+    game["radiant_players"] = sides["radiant"]
+    game["dire_players"] = sides["dire"]
+    return game
 
 
 _PAGE_SIZE = 20
@@ -138,6 +166,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 
 @app.get("/", response_class=RedirectResponse)
@@ -173,6 +202,14 @@ def players_page(request: Request):
     )
 
 
+@app.get("/api/suggest")
+def player_suggest(q: str = Query(default="")):
+    if not q:
+        return JSONResponse([])
+    players = _fetch_players(q, sort_by="games", sort_dir="desc")
+    return JSONResponse([p["name"] for p in players[:8]])
+
+
 @app.get("/api/players", response_class=HTMLResponse)
 def players_partial(
     request: Request,
@@ -184,6 +221,14 @@ def players_partial(
     return templates.TemplateResponse(
         request, "partials/players_rows.html", {"players": players}
     )
+
+
+@app.get("/api/game/{match_id}", response_class=HTMLResponse)
+def game_card(request: Request, match_id: str):
+    game = _fetch_game(match_id)
+    if not game:
+        return HTMLResponse("<p>Game not found.</p>", status_code=404)
+    return templates.TemplateResponse(request, "partials/game_cards.html", {"games": [game], "offset": None})
 
 
 @app.get("/player", response_class=RedirectResponse)
