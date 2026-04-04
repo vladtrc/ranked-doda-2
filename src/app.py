@@ -5,6 +5,7 @@ from fastapi import FastAPI, Request, Query
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from starlette.middleware.gzip import GZipMiddleware
 
 from .db import init_db, get_conn
 
@@ -170,6 +171,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+app.add_middleware(GZipMiddleware, minimum_size=500, compresslevel=6)
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 
