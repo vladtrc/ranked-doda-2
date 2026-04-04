@@ -63,6 +63,14 @@
     <form method="dialog" class="modal-backdrop"><button>close</button></form>
   </dialog>
 
+  <script>
+    window.openGameModal = function () {
+      const body = document.getElementById("game-modal-body");
+      body.textContent = "Loading...";
+      document.getElementById("game-modal").showModal();
+    };
+  </script>
+
 </div>
 {% else %}
 <div class="text-center py-20">

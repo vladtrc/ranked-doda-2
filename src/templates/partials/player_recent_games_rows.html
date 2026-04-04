@@ -3,7 +3,7 @@
     hx-get="/api/game/{{ g.match_id }}"
     hx-target="#game-modal-body"
     hx-swap="innerHTML"
-    onclick="document.getElementById('game-modal').showModal()">
+    onclick="window.openGameModal()">
   <td class="tabular-nums text-sm">{{ g.date_time.strftime('%Y-%m-%d %H:%M') if g.date_time else '—' }}</td>
   <td class="tabular-nums text-sm">{{ g.duration }}</td>
   <td class="text-center">
