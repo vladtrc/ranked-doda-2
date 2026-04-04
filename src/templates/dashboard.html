@@ -28,8 +28,8 @@
         @mouseenter="activeLine = '{{ line.player_name }}'"
         @mouseleave="activeLine = null"
         :class="activeLine && activeLine !== '{{ line.player_name }}' ? 'dashboard-series-faded' : ''">
-        <path d="{{ line.path }}" fill="none" stroke="{{ line.color }}" stroke-width="3.25" stroke-linecap="round" stroke-linejoin="round"></path>
-        <circle cx="{{ line.end_x }}" cy="{{ line.end_y }}" r="3.2" fill="{{ line.color }}"></circle>
+        <path d="{{ line.path }}" fill="none" stroke="{{ line.color }}" stroke-width="3.25" stroke-linecap="round" stroke-linejoin="round" style="animation-delay: {{ loop.index0 * 0.15 }}s"></path>
+        <circle cx="{{ line.end_x }}" cy="{{ line.end_y }}" r="3.2" fill="{{ line.color }}" style="animation-delay: {{ 2.3 + loop.index0 * 0.15 }}s"></circle>
       </g>
       {% endfor %}
     </svg>
