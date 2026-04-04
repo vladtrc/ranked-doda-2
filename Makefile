@@ -1,4 +1,4 @@
-.PHONY: csv leaderboard main info personal players optimize sync serve lint type
+.PHONY: csv leaderboard main info personal players optimize rank-trueskill rank-bt rank-all sync serve lint type
 
 # rebuild CSV exports from data.txt
 csv:
@@ -27,6 +27,16 @@ players:
 # run multi-objective impact coefficient optimization
 optimize:
 	uv run python -m src.impact_coeffs_propose
+
+rank-trueskill:
+	env UV_CACHE_DIR=/tmp/uv-cache uv run python -m src.ranked.trueskill_like
+
+rank-bt:
+	env UV_CACHE_DIR=/tmp/uv-cache uv run python -m src.ranked.bradley_terry
+
+rank-all:
+	env UV_CACHE_DIR=/tmp/uv-cache uv run python -m src.ranked.trueskill_like
+	env UV_CACHE_DIR=/tmp/uv-cache uv run python -m src.ranked.bradley_terry
 
 serve:
 	uv run uvicorn src.app:app --reload
