@@ -21,7 +21,7 @@
       <a href="/players" class="btn btn-ghost btn-sm border {% if active_page == 'players' %}border-base-content/18 bg-base-300 text-base-content shadow-sm{% else %}border-transparent text-base-content/72{% endif %}">Players</a>
       <a href="/dashboard" class="btn btn-ghost btn-sm border {% if active_page == 'dashboard' %}border-base-content/18 bg-base-300 text-base-content shadow-sm{% else %}border-transparent text-base-content/72{% endif %}">Dashboard</a>
     </div>
-    <div class="navbar-end">
+    <div class="navbar-end hidden sm:flex">
       <div x-data="{
         q: '',
         suggestions: [],

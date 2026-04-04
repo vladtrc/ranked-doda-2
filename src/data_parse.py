@@ -121,6 +121,15 @@ def parse_block(block: str) -> Match:
         if pos_sorted != [1, 2, 3, 4, 5]:
             raise ValueError(f"invalid roster for {team}: positions {pos_sorted} (expected 1..5)")
 
+    # Duplicate player check
+    seen: dict[str, str] = {}
+    for p in players:
+        if p.player_name in seen:
+            raise ValueError(
+                f"duplicate player '{p.player_name}': appears on {seen[p.player_name]} and {p.team}"
+            )
+        seen[p.player_name] = p.team
+
     return Match(
         date_time=date_time,
         duration=duration,
