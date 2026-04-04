@@ -8,8 +8,16 @@ from fastapi.templating import Jinja2Templates
 from starlette.middleware.gzip import GZipMiddleware
 
 from .db import init_db
-from .duckdb import fetch_dashboard_trends, fetch_game, fetch_games, fetch_player, fetch_players, fetch_recent_games
-from .duckdb.players import DEFAULT_SORT
+from .duckdb import (
+    fetch_dashboard_lane_stats,
+    fetch_dashboard_trends,
+    fetch_game,
+    fetch_games,
+    fetch_player,
+    fetch_players,
+    fetch_recent_games,
+)
+from .duckdb.players import DEFAULT_SORT, fetch_player_positions, fetch_player_stats
 
 TEMPLATES_DIR = Path(__file__).parent / "templates"
 STATIC_DIR = Path(__file__).parent / "static"
@@ -21,6 +29,7 @@ _PLAYER_GAMES_PAGE_SIZE = 20
 
 
 _PAGE_SIZE = 20
+_DASHBOARD_WINDOWS: dict[str, int | None] = {"40": 40, "100": 100, "all": None}
 
 
 @asynccontextmanager
@@ -68,16 +77,23 @@ def players_page(request: Request):
 
 
 @app.get("/dashboard", response_class=HTMLResponse)
-def dashboard_page(request: Request):
-    leader_chart = fetch_dashboard_trends(match_window=30, direction="desc")
-    loser_chart = fetch_dashboard_trends(match_window=40, direction="asc")
+def dashboard_page(request: Request, window: str = Query(default="40")):
+    if window not in _DASHBOARD_WINDOWS:
+        window = "40"
+    match_window = _DASHBOARD_WINDOWS[window]
+    leader_chart = fetch_dashboard_trends(match_window=match_window, direction="desc")
+    loser_chart = fetch_dashboard_trends(match_window=match_window, direction="asc")
+    lane_tables = fetch_dashboard_lane_stats(match_window=match_window)
     return templates.TemplateResponse(
         request,
         "dashboard.html",
         {
             "active_page": "dashboard",
+            "window": window,
+            "window_label": "All time" if match_window is None else f"Last {match_window} matches",
             "leader_chart": leader_chart,
             "loser_chart": loser_chart,
+            "lane_tables": lane_tables,
         },
     )
 
@@ -111,14 +127,19 @@ def game_card(request: Request, match_id: str):
     return templates.TemplateResponse(request, "partials/game_cards.html", {"games": [game], "offset": None})
 
 
+def _parse_positions(positions: str) -> list[int]:
+    return [int(p) for p in positions.split(",") if p.strip().isdigit() and 1 <= int(p) <= 5]
+
+
 @app.get("/api/player/{name}/games", response_class=HTMLResponse)
-def player_games_partial(request: Request, name: str, offset: int = Query(default=0)):
-    recent_games = fetch_recent_games(name, limit=_PLAYER_GAMES_PAGE_SIZE, offset=offset)
+def player_games_partial(request: Request, name: str, offset: int = Query(default=0), positions: str = Query(default="")):
+    selected = _parse_positions(positions)
+    recent_games = fetch_recent_games(name, limit=_PLAYER_GAMES_PAGE_SIZE, offset=offset, positions=selected or None)
     next_offset = offset + _PLAYER_GAMES_PAGE_SIZE
     return templates.TemplateResponse(
         request,
         "partials/player_recent_games_rows.html",
-        {"recent_games": recent_games, "player_name": name, "offset": next_offset},
+        {"recent_games": recent_games, "player_name": name, "offset": next_offset, "positions": positions},
     )
 
 
@@ -128,17 +149,24 @@ def player_search(name: str = Query(default="")):
 
 
 @app.get("/player/{name}", response_class=HTMLResponse)
-def player_profile(request: Request, name: str):
+def player_profile(request: Request, name: str, positions: str = Query(default="")):
+    selected = _parse_positions(positions)
     player = fetch_player(name)
-    recent_games = fetch_recent_games(name, limit=_PLAYER_GAMES_PAGE_SIZE, offset=0) if player else []
+    position_counts = fetch_player_positions(name) if player else {pos: 0 for pos in range(1, 6)}
+    stats = fetch_player_stats(name, selected or None) if player else None
+    recent_games = fetch_recent_games(name, limit=_PLAYER_GAMES_PAGE_SIZE, offset=0, positions=selected or None) if player else []
     return templates.TemplateResponse(
         request,
         "player.html",
         {
             "player": player,
+            "stats": stats,
             "recent_games": recent_games,
             "player_name": name,
             "offset": _PLAYER_GAMES_PAGE_SIZE,
             "active_page": None,
+            "positions": positions,
+            "selected_positions": selected,
+            "position_counts": position_counts,
         },
     )

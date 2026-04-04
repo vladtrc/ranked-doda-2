@@ -1,5 +1,5 @@
 {% for p in players %}
-<tr class="hover">
+<tr class="transition-colors hover:bg-base-300">
   <td class="text-right tabular-nums">
     <span class="{% if p.wl > 0 %}text-success{% elif p.wl < 0 %}text-error{% else %}text-base-content/50{% endif %}">
       {{ '+' if p.wl > 0 else '' }}{{ p.wl }}

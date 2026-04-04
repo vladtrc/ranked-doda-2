@@ -11,8 +11,8 @@
 
     <div class="game-card-sides flex flex-col sm:flex-row items-stretch gap-2">
 
-      <div class="flex-1 rounded-lg p-3 flex flex-col gap-1.5
-        {{ 'bg-success/8 border border-success/25' if radiant_won else 'bg-base-300/40 border border-transparent' }}">
+      <div class="flex-1 p-3 flex flex-col gap-1.5
+        {{ 'rounded-lg border border-success/25 bg-success/8' if radiant_won else '' }}">
         <div class="flex items-center justify-between mb-1">
           <span class="text-xs font-bold uppercase tracking-wider {{ 'text-success' if radiant_won else 'text-base-content/40' }}">Radiant</span>
           <span class="tabular-nums font-bold text-sm {{ 'text-success' if radiant_won else 'text-base-content/60' }}">{{ g.radiant_kills }}</span>
@@ -20,7 +20,7 @@
         {% for p in g.radiant_players %}
         <div class="game-player-row game-player-row-radiant grid items-center gap-x-2 text-xs">
           <span class="text-base-content/25 text-right">{{ p.position }}</span>
-          <a href="/player/{{ p.player_name }}" class="link link-hover font-medium text-sm text-right truncate">{{ p.player_name }}</a>
+          <a href="/player/{{ p.player_name | urlencode }}?positions={{ p.position }}" class="link link-hover font-medium text-sm text-right truncate">{{ p.player_name }}</a>
           <span class="flex items-center gap-0.5 tabular-nums text-base-content/40 justify-end whitespace-nowrap"><span class="text-yellow-500/60 text-[10px]">🪙</span>{{ p.net_worth | nw }}</span>
           <span class="tabular-nums text-base-content/60 w-14 text-right">{{ p.kills }}/{{ p.deaths }}/{{ p.assists }}</span>
         </div>
@@ -29,8 +29,8 @@
 
       <div class="game-card-divider h-px w-full sm:h-auto sm:w-px bg-base-300 self-stretch"></div>
 
-      <div class="flex-1 rounded-lg p-3 flex flex-col gap-1.5
-        {{ 'bg-error/8 border border-error/25' if not radiant_won else 'bg-base-300/40 border border-transparent' }}">
+      <div class="flex-1 p-3 flex flex-col gap-1.5
+        {{ 'rounded-lg border border-error/25 bg-error/8' if not radiant_won else '' }}">
         <div class="flex items-center justify-between mb-1">
           <span class="tabular-nums font-bold text-sm {{ 'text-error' if not radiant_won else 'text-base-content/60' }}">{{ g.dire_kills }}</span>
           <span class="text-xs font-bold uppercase tracking-wider {{ 'text-error' if not radiant_won else 'text-base-content/40' }}">Dire</span>
@@ -39,7 +39,7 @@
         <div class="game-player-row game-player-row-dire grid items-center gap-x-2 text-xs">
           <span class="tabular-nums text-base-content/60 w-14">{{ p.kills }}/{{ p.deaths }}/{{ p.assists }}</span>
           <span class="flex items-center gap-0.5 tabular-nums text-base-content/40 justify-start whitespace-nowrap"><span class="text-yellow-500/60 text-[10px]">🪙</span>{{ p.net_worth | nw }}</span>
-          <a href="/player/{{ p.player_name }}" class="link link-hover font-medium text-sm truncate">{{ p.player_name }}</a>
+          <a href="/player/{{ p.player_name | urlencode }}?positions={{ p.position }}" class="link link-hover font-medium text-sm truncate">{{ p.player_name }}</a>
           <span class="text-base-content/25 text-left">{{ p.position }}</span>
         </div>
         {% endfor %}

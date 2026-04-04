@@ -1,66 +1,165 @@
 {% extends "base.html" %}
 {% block title %}Dashboard – Dota Ranked{% endblock %}
 
-{% macro trend_chart(title, subtitle, chart) %}
-<section class="card border border-base-300" x-data="{ activeLine: null }">
-  <div class="card-body gap-4 p-4">
-    <div>
-      <h2 class="text-lg font-semibold">{{ title }}</h2>
-      <p class="text-sm text-base-content/60">{{ subtitle }}</p>
-    </div>
+{% macro trend_chart_inner(title, chart, title_class='text-base-content/50') %}
+<div class="flex flex-col gap-3" x-data="{ activeLine: null }">
+  <p class="text-xs font-semibold uppercase tracking-wider {{ title_class }}">{{ title }}</p>
+  <div>
+    <svg viewBox="0 0 {{ chart.width }} {{ chart.height }}" class="dashboard-chart" role="img" aria-label="{{ title }}">
+      <rect x="0" y="0" width="{{ chart.width }}" height="{{ chart.height }}" rx="20" fill="transparent"></rect>
 
-    <div class="overflow-x-auto rounded-box border border-base-300 bg-base-200/60">
-      <svg viewBox="0 0 {{ chart.width }} {{ chart.height }}" class="dashboard-chart min-w-[680px] sm:min-w-[780px]" role="img" aria-label="{{ title }}">
-        <rect x="0" y="0" width="{{ chart.width }}" height="{{ chart.height }}" rx="20" class="fill-base-200"></rect>
+      {% for tick in chart.y_ticks %}
+      <line
+        x1="56"
+        y1="{{ tick.y }}"
+        x2="{{ chart.width - 28 }}"
+        y2="{{ tick.y }}"
+        class="dashboard-gridline {{ 'dashboard-gridline-zero' if tick.value == 0 else '' }}"></line>
+      <text x="12" y="{{ tick.y + 4 }}" class="dashboard-axis-label">{{ tick.value }}</text>
+      {% endfor %}
 
-        {% for tick in chart.y_ticks %}
-        <line
-          x1="56"
-          y1="{{ tick.y }}"
-          x2="{{ chart.width - 28 }}"
-          y2="{{ tick.y }}"
-          class="dashboard-gridline {{ 'dashboard-gridline-zero' if tick.value == 0 else '' }}"></line>
-        <text x="12" y="{{ tick.y + 4 }}" class="dashboard-axis-label">{{ tick.value }}</text>
-        {% endfor %}
+      {% for tick in chart.x_ticks %}
+      <line x1="{{ tick.x }}" y1="24" x2="{{ tick.x }}" y2="{{ chart.height - 42 }}" class="dashboard-gridline dashboard-gridline-vertical"></line>
+      <text x="{{ tick.x }}" y="{{ chart.height - 16 }}" text-anchor="{{ tick.anchor }}" class="dashboard-axis-label">{{ tick.label }}</text>
+      {% endfor %}
 
-        {% for tick in chart.x_ticks %}
-        <line x1="{{ tick.x }}" y1="24" x2="{{ tick.x }}" y2="{{ chart.height - 42 }}" class="dashboard-gridline dashboard-gridline-vertical"></line>
-        <text x="{{ tick.x }}" y="{{ chart.height - 16 }}" text-anchor="{{ tick.anchor }}" class="dashboard-axis-label">{{ tick.label }}</text>
-        {% endfor %}
-
-        {% for line in chart.lines %}
-        <g
-          @mouseenter="activeLine = '{{ line.player_name }}'"
-          @mouseleave="activeLine = null"
-          :class="activeLine && activeLine !== '{{ line.player_name }}' ? 'dashboard-series-faded' : ''">
-          <path d="{{ line.path }}" fill="none" stroke="{{ line.color }}" stroke-width="3.25" stroke-linecap="round" stroke-linejoin="round"></path>
-          <circle cx="{{ line.end_x }}" cy="{{ line.end_y }}" r="3.2" fill="{{ line.color }}"></circle>
-        </g>
-        {% endfor %}
-      </svg>
-    </div>
-
-    <div class="dashboard-legend">
       {% for line in chart.lines %}
-      <div class="dashboard-legend-item rounded-box border border-base-300 bg-base-300/60 px-3 py-2 text-xs"
+      <g
         @mouseenter="activeLine = '{{ line.player_name }}'"
         @mouseleave="activeLine = null"
-        :class="activeLine && activeLine !== '{{ line.player_name }}' ? 'dashboard-legend-item-faded' : ''">
-        <span class="dashboard-legend-swatch" style="--swatch: {{ line.color }}"></span>
-        <span class="dashboard-legend-name">{{ line.player_name }}</span>
-        <span class="dashboard-legend-value">{{ "%+d"|format(line.latest_value|int) }}</span>
-      </div>
+        :class="activeLine && activeLine !== '{{ line.player_name }}' ? 'dashboard-series-faded' : ''">
+        <path d="{{ line.path }}" fill="none" stroke="{{ line.color }}" stroke-width="3.25" stroke-linecap="round" stroke-linejoin="round"></path>
+        <circle cx="{{ line.end_x }}" cy="{{ line.end_y }}" r="3.2" fill="{{ line.color }}"></circle>
+      </g>
       {% endfor %}
+    </svg>
+  </div>
+
+  <div class="dashboard-legend">
+    {% for line in chart.lines %}
+    <div class="dashboard-legend-item px-1 py-1 text-xs"
+      @mouseenter="activeLine = '{{ line.player_name }}'"
+      @mouseleave="activeLine = null"
+      :class="activeLine && activeLine !== '{{ line.player_name }}' ? 'dashboard-legend-item-faded' : ''">
+      <span class="dashboard-legend-swatch" style="--swatch: {{ line.color }}"></span>
+      <span class="dashboard-legend-name">{{ line.player_name }}</span>
+      <span class="dashboard-legend-value">{{ "%+d"|format(line.latest_value|int) }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endmacro %}
+
+{% macro lane_rows(rows, positions) %}
+{% for row in rows %}
+<tr>
+  <td class="font-medium align-top">
+    {% set lineup_parts = row.lineup.split(' + ') %}
+    {% if lineup_parts|length == 2 %}
+    <span class="dashboard-lane-lineup dashboard-lane-lineup-duo" title="{{ row.lineup }}">
+      <a href="/player/{{ lineup_parts[0] | urlencode }}?positions={{ positions[0] }}" class="link link-hover">{{ lineup_parts[0] }}</a>
+      <span class="dashboard-lane-lineup-plus">+</span>
+      <a href="/player/{{ lineup_parts[1] | urlencode }}?positions={{ positions[1] }}" class="link link-hover">{{ lineup_parts[1] }}</a>
+    </span>
+    {% else %}
+    <a href="/player/{{ row.lineup | urlencode }}?positions={{ positions[0] }}" class="dashboard-lane-lineup link link-hover" title="{{ row.lineup }}">{{ row.lineup }}</a>
+    {% endif %}
+  </td>
+  <td class="text-right tabular-nums">{{ "%.1f"|format(row.win_pct) }}%</td>
+  <td class="text-right tabular-nums">{{ row.wins }}-{{ row.losses }}</td>
+  <td class="text-right tabular-nums">{{ row.games }}</td>
+</tr>
+{% else %}
+<tr>
+  <td colspan="4" class="py-4 text-center text-sm text-base-content/50">Not enough data.</td>
+</tr>
+{% endfor %}
+{% endmacro %}
+
+{% macro lane_card(title, subtitle, best, worst, positions) %}
+<section class="card h-full border border-base-300 bg-base-200">
+  <div class="card-body gap-4 p-4">
+    <div class="flex items-baseline justify-between gap-4">
+      <h2 class="text-lg font-semibold shrink-0">{{ title }}</h2>
+      <p class="text-sm text-base-content/40 text-right">{{ subtitle }}</p>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <div>
+        <p class="mb-2 text-xs font-semibold uppercase tracking-wider text-success/70">Best</p>
+        <div class="overflow-x-auto">
+          <table class="table table-sm w-full table-fixed dashboard-lane-table">
+            <thead>
+              <tr class="text-xs uppercase tracking-wider text-base-content/55">
+                <th>Line</th>
+                <th class="text-right">Win%</th>
+                <th class="text-right">W-L</th>
+                <th class="text-right">Games</th>
+              </tr>
+            </thead>
+            <tbody>{{ lane_rows(best, positions) }}</tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <p class="mb-2 text-xs font-semibold uppercase tracking-wider text-error/70">Worst</p>
+        <div class="overflow-x-auto">
+          <table class="table table-sm w-full table-fixed dashboard-lane-table">
+            <thead>
+              <tr class="text-xs uppercase tracking-wider text-base-content/55">
+                <th>Line</th>
+                <th class="text-right">Win%</th>
+                <th class="text-right">W-L</th>
+                <th class="text-right">Games</th>
+              </tr>
+            </thead>
+            <tbody>{{ lane_rows(worst, positions) }}</tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 {% endmacro %}
 
 {% block content %}
-<div class="mx-auto max-w-6xl">
-  <div class="grid gap-4 xl:grid-cols-2">
-    {{ trend_chart('Leaders by cumulative W-L', 'Last 30 matches. W-L resets at the start of the window.', leader_chart) }}
-    {{ trend_chart('Losers by cumulative W-L', 'Last 40 matches. W-L resets at the start of the window.', loser_chart) }}
+<div class="mx-auto flex max-w-6xl flex-col gap-6">
+  <section class="card border border-base-300 bg-base-200">
+    <div class="card-body gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex flex-col gap-1">
+        <h1 class="text-xl font-semibold">Dashboard</h1>
+        <p class="text-sm text-base-content/60">All analytics below are recalculated for {{ window_label|lower }}.</p>
+      </div>
+
+      <div class="join self-start sm:self-auto">
+        <a href="/dashboard?window=40" class="btn btn-sm join-item border-base-300 {{ 'btn-active bg-base-300 text-base-content' if window == '40' else 'btn-ghost text-base-content/70' }}">40 matches</a>
+        <a href="/dashboard?window=100" class="btn btn-sm join-item border-base-300 {{ 'btn-active bg-base-300 text-base-content' if window == '100' else 'btn-ghost text-base-content/70' }}">100 matches</a>
+        <a href="/dashboard?window=all" class="btn btn-sm join-item border-base-300 {{ 'btn-active bg-base-300 text-base-content' if window == 'all' else 'btn-ghost text-base-content/70' }}">All time</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="card border border-base-300 bg-base-200">
+    <div class="card-body gap-4 p-4">
+      <div class="flex items-baseline justify-between gap-4">
+        <h2 class="text-lg font-semibold shrink-0">Cumulative W-L</h2>
+        <p class="text-sm text-base-content/40 text-right">{{ window_label }}. W-L resets at the start of the window.</p>
+      </div>
+      <div class="grid gap-6 grid-cols-1 lg:grid-cols-[1fr_1px_1fr]">
+        {{ trend_chart_inner('Best', leader_chart, 'text-success/70') }}
+        <div class="hidden lg:block bg-base-300"></div>
+        {{ trend_chart_inner('Worst', loser_chart, 'text-error/70') }}
+      </div>
+    </div>
+  </section>
+
+  <div class="grid gap-4 xl:grid-cols-3">
+    {{ lane_card('Safe Lane', 'Position 1 + 5 duos.', lane_tables.safe.best, lane_tables.safe.worst, [1, 5]) }}
+    {{ lane_card('Mid', 'Position 2 players.', lane_tables.mid.best, lane_tables.mid.worst, [2]) }}
+    {{ lane_card('Hard Lane', 'Position 3 + 4 duos.', lane_tables.hard.best, lane_tables.hard.worst, [3, 4]) }}
   </div>
+
+  <p class="text-xs text-base-content/40">Rankings account for sample size — the fewer games played, the closer a duo's score is pulled toward average, so fluky results don't take the top spots.</p>
 </div>
 {% endblock %}

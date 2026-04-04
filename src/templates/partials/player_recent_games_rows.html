@@ -1,5 +1,5 @@
 {% for g in recent_games %}
-<tr class="hover cursor-pointer"
+<tr class="cursor-pointer transition-colors hover:bg-base-300"
     hx-get="/api/game/{{ g.match_id }}"
     hx-target="#game-modal-body"
     hx-swap="innerHTML"
@@ -25,7 +25,7 @@
 {% endfor %}
 
 {% if recent_games and offset is not none %}
-<tr hx-get="/api/player/{{ player_name | urlencode }}/games?offset={{ offset }}"
+<tr hx-get="/api/player/{{ player_name | urlencode }}/games?offset={{ offset }}{% if positions %}&positions={{ positions }}{% endif %}"
     hx-trigger="revealed"
     hx-swap="outerHTML">
   <td colspan="9" class="py-4 text-center text-base-content/30 text-sm">

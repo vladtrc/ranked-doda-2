@@ -1,34 +1,55 @@
 {% extends "base.html" %}
-{% block title %}{{ player.name }} – Dota Ranked{% endblock %}
+{% block title %}{{ player.name if player else 'Player not found' }} – Dota Ranked{% endblock %}
 
 {% block content %}
 {% if player %}
-<div class="space-y-6">
+<div class="flex flex-col gap-6">
 
-  <div>
+  <div class="flex flex-col gap-1">
     <h1 class="text-2xl font-bold">{{ player.name }}</h1>
-    <p class="text-base-content/60 text-sm mt-1">{{ player.games }} games tracked</p>
+    <p class="text-base-content/60 text-sm">{{ player.games }} games tracked</p>
   </div>
 
-  <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
+  <div class="overflow-x-auto">
+    <div class="stats stats-vertical lg:stats-horizontal w-full border border-base-300 bg-base-200">
     {% macro stat(label, value, color='') %}
-    <div class="stat bg-base-200 rounded-box p-4">
+    <div class="stat">
       <div class="stat-title text-xs">{{ label }}</div>
       <div class="stat-value text-xl {{ color }}">{{ value }}</div>
     </div>
     {% endmacro %}
 
-    {{ stat('Games', player.games) }}
-    {{ stat('Wins', player.wins) }}
-    {{ stat('Win%', player.win_pct ~ '%', 'text-success' if player.win_pct >= 50 else 'text-error') }}
-    {{ stat('Avg K', player.avg_k) }}
-    {{ stat('Avg D', player.avg_d) }}
-    {{ stat('Avg A', player.avg_a) }}
-    {{ stat('Avg Gold', "{:,}".format(player.avg_gold)) }}
+    {{ stat('Games', stats.games) }}
+    {{ stat('Wins', stats.wins) }}
+    {{ stat('Win%', stats.win_pct ~ '%', 'text-success' if stats.win_pct >= 50 else 'text-error') }}
+    {{ stat('Avg K', stats.avg_k) }}
+    {{ stat('Avg D', stats.avg_d) }}
+    {{ stat('Avg A', stats.avg_a) }}
+    {{ stat('Avg Gold', "{:,}".format(stats.avg_gold)) }}
+    </div>
   </div>
 
   <div>
-    <h2 class="text-lg font-semibold mb-3">Recent Games</h2>
+    <div class="mb-3 flex items-center gap-4">
+      <h2 class="text-lg font-semibold">Recent Games</h2>
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-base-content/40 uppercase tracking-wider">Pos</span>
+        <div class="flex gap-1">
+          {% set no_filter = selected_positions | length == 0 %}
+          {% for pos in range(1, 6) %}
+          {% set active = pos in selected_positions %}
+          {% set has_games = position_counts[pos] > 0 %}
+          {% set lit = has_games and (active or no_filter) %}
+          <button
+            onclick="togglePos({{ pos }})"
+            class="btn btn-xs border-base-300 {{ 'btn-neutral' if lit else ('btn-ghost' if has_games else 'btn-ghost text-base-content/30') }} {{ 'pointer-events-none' if not has_games else '' }}"
+            {{ 'disabled' if not has_games }}>
+            {{ pos }}
+          </button>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
     <div class="overflow-x-auto rounded-box border border-base-300">
       <table class="table table-zebra table-sm w-full">
         <thead>
@@ -68,6 +89,24 @@
       const body = document.getElementById("game-modal-body");
       body.textContent = "Loading...";
       document.getElementById("game-modal").showModal();
+    };
+
+    const _selectedPositions = new Set({{ selected_positions | tojson }});
+
+    window.togglePos = function(pos) {
+      if (_selectedPositions.has(pos)) {
+        _selectedPositions.delete(pos);
+      } else {
+        _selectedPositions.add(pos);
+      }
+      const url = new URL(window.location);
+      const sorted = Array.from(_selectedPositions).sort();
+      if (sorted.length > 0) {
+        url.searchParams.set('positions', sorted.join(','));
+      } else {
+        url.searchParams.delete('positions');
+      }
+      window.location = url.toString();
     };
   </script>
 

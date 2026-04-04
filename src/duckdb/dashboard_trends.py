@@ -2,7 +2,32 @@ from ..db import get_conn
 
 LEADER_TREND_COLORS = ["#7dd3fc", "#2dd4bf", "#a78bfa", "#facc15", "#f472b6"]
 LOSER_TREND_COLORS = ["#fb7185", "#ef4444", "#f97316", "#f59e0b", "#dc2626"]
-TREND_PLAYER_LIMIT = 4
+TREND_PLAYER_LIMIT = 3
+LANE_ENTRY_LIMIT = 3
+
+
+def _recent_matches(match_window: int | None) -> tuple[str, list[int]]:
+    if match_window is None:
+        return (
+            """
+            recent_matches AS (
+                SELECT match_id, date_time
+                FROM "match"
+            )
+            """,
+            [],
+        )
+    return (
+        """
+        recent_matches AS (
+            SELECT match_id, date_time
+            FROM "match"
+            ORDER BY date_time DESC
+            LIMIT ?
+        )
+        """,
+        [match_window],
+    )
 
 
 def _build_smooth_path(points: list[tuple[float, float]]) -> str:
@@ -32,13 +57,28 @@ def _build_smooth_path(points: list[tuple[float, float]]) -> str:
     return " ".join(commands)
 
 
+def _smooth_zigzag(points: list[dict]) -> list[dict]:
+    """Average out alternating local extrema (zigzag noise) with a few passes."""
+    if len(points) < 3:
+        return points
+    values = [p["value"] for p in points]
+    for _ in range(4):
+        new = list(values)
+        for i in range(1, len(values) - 1):
+            prev, curr, nxt = values[i - 1], values[i], values[i + 1]
+            if (curr > prev and curr > nxt) or (curr < prev and curr < nxt):
+                new[i] = (prev + nxt) / 2
+        values = new
+    return [{"date_time": p["date_time"], "value": v} for p, v in zip(points, values)]
+
+
 def _build_trend_chart(lines: list[dict], palette: list[str]) -> dict:
-    width = 980
-    height = 360
-    pad_left = 56
-    pad_right = 28
+    width = 760
+    height = 320
+    pad_left = 52
+    pad_right = 22
     pad_top = 24
-    pad_bottom = 42
+    pad_bottom = 38
     inner_width = width - pad_left - pad_right
     inner_height = height - pad_top - pad_bottom
 
@@ -129,14 +169,10 @@ def fetch_dashboard_trends(match_window: int, direction: str = "desc") -> dict:
     conn = get_conn()
     order_dir = "desc" if direction == "desc" else "asc"
     palette = LEADER_TREND_COLORS if direction == "desc" else LOSER_TREND_COLORS
+    recent_matches_cte, params = _recent_matches(match_window)
     rows = conn.execute(
         f"""
-        WITH recent_matches AS (
-            SELECT match_id, date_time
-            FROM "match"
-            ORDER BY date_time DESC
-            LIMIT ?
-        ),
+        WITH {recent_matches_cte},
         player_trend AS (
             SELECT
                 pr.player_name,
@@ -179,7 +215,7 @@ def fetch_dashboard_trends(match_window: int, direction: str = "desc") -> dict:
         JOIN leaders l USING (player_name)
         ORDER BY pt.date_time ASC, l.cumulative_wl {order_dir}, pt.player_name ASC
         """,
-        [match_window],
+        params,
     ).fetchall()
 
     by_player: dict[str, list[dict]] = {}
@@ -188,16 +224,141 @@ def fetch_dashboard_trends(match_window: int, direction: str = "desc") -> dict:
         by_player.setdefault(player_name, []).append({"date_time": date_time, "value": cumulative_wl})
         latest_scores[player_name] = latest_score
 
+    reverse_scores = direction == "desc"
     lines = []
-    for player_name, points in sorted(by_player.items(), key=lambda item: (-latest_scores[item[0]], item[0])):
+    for player_name, points in sorted(
+        by_player.items(),
+        key=lambda item: (latest_scores[item[0]], item[0]),
+        reverse=reverse_scores,
+    ):
         if points:
             points = [{"date_time": points[0]["date_time"], "value": 0}] + points
         lines.append(
             {
                 "player_name": player_name,
-                "points": points,
+                "points": _smooth_zigzag(points),
                 "latest_value": round(latest_scores[player_name], 1),
             }
         )
 
     return _build_trend_chart(lines, palette)
+
+
+def fetch_dashboard_lane_stats(match_window: int | None) -> dict[str, dict[str, list[dict]]]:
+    conn = get_conn()
+    recent_matches_cte, params = _recent_matches(match_window)
+    rows = conn.execute(
+        f"""
+        WITH {recent_matches_cte},
+        lane_entries AS (
+            SELECT
+                'safe' AS lane,
+                p1.player_name || ' + ' || p5.player_name AS lineup,
+                p1.team,
+                m.winning_team
+            FROM recent_matches rm
+            JOIN "match" m USING (match_id)
+            JOIN player_result p1 ON p1.match_id = rm.match_id AND p1.position = 1
+            JOIN player_result p5 ON p5.match_id = rm.match_id AND p5.team = p1.team AND p5.position = 5
+
+            UNION ALL
+
+            SELECT
+                'mid' AS lane,
+                p2.player_name AS lineup,
+                p2.team,
+                m.winning_team
+            FROM recent_matches rm
+            JOIN "match" m USING (match_id)
+            JOIN player_result p2 ON p2.match_id = rm.match_id AND p2.position = 2
+
+            UNION ALL
+
+            SELECT
+                'hard' AS lane,
+                p3.player_name || ' + ' || p4.player_name AS lineup,
+                p3.team,
+                m.winning_team
+            FROM recent_matches rm
+            JOIN "match" m USING (match_id)
+            JOIN player_result p3 ON p3.match_id = rm.match_id AND p3.position = 3
+            JOIN player_result p4 ON p4.match_id = rm.match_id AND p4.team = p3.team AND p4.position = 4
+        ),
+        lane_summary AS (
+            SELECT
+                lane,
+                lineup,
+                count(*) AS games,
+                sum(CASE WHEN team = winning_team THEN 1 ELSE 0 END) AS wins,
+                round(100.0 * sum(CASE WHEN team = winning_team THEN 1 ELSE 0 END) / count(*), 1) AS win_pct
+            FROM lane_entries
+            GROUP BY lane, lineup
+        ),
+        ranked AS (
+            SELECT
+                lane,
+                lineup,
+                games,
+                wins,
+                games - wins AS losses,
+                win_pct,
+                row_number() OVER (
+                    PARTITION BY lane
+                    ORDER BY (wins + 8.0) / (games + 16.0) ASC, games DESC, lineup ASC
+                ) AS worst_rn,
+                row_number() OVER (
+                    PARTITION BY lane
+                    ORDER BY (wins + 8.0) / (games + 16.0) DESC, games DESC, lineup ASC
+                ) AS best_rn
+            FROM lane_summary
+        )
+        SELECT
+            lane,
+            'best' AS bucket,
+            lineup,
+            games,
+            wins,
+            losses,
+            win_pct,
+            best_rn,
+            worst_rn
+        FROM ranked
+        WHERE best_rn <= {LANE_ENTRY_LIMIT}
+
+        UNION ALL
+
+        SELECT
+            lane,
+            'worst' AS bucket,
+            lineup,
+            games,
+            wins,
+            losses,
+            win_pct,
+            best_rn,
+            worst_rn
+        FROM ranked
+        WHERE worst_rn <= {LANE_ENTRY_LIMIT}
+        ORDER BY lane ASC, bucket ASC, best_rn ASC, worst_rn ASC
+        """,
+        params,
+    ).fetchall()
+
+    result = {
+        "safe": {"best": [], "worst": []},
+        "mid": {"best": [], "worst": []},
+        "hard": {"best": [], "worst": []},
+    }
+    for lane, bucket, lineup, games, wins, losses, win_pct, _best_rn, _worst_rn in rows:
+        if bucket is None:
+            continue
+        result[lane][bucket].append(
+            {
+                "lineup": lineup,
+                "games": games,
+                "wins": wins,
+                "losses": losses,
+                "win_pct": win_pct,
+            }
+        )
+    return result
