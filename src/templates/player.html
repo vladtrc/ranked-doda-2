@@ -37,13 +37,12 @@
         <div class="flex gap-1">
           {% set no_filter = selected_positions | length == 0 %}
           {% for pos in range(1, 6) %}
-          {% set active = pos in selected_positions %}
-          {% set has_games = position_counts[pos] > 0 %}
-          {% set lit = has_games and (active or no_filter) %}
+          {% set lit = position_counts[pos] > 0 and (pos in selected_positions or no_filter) %}
+          {% set available = position_counts[pos] > 0 %}
           <button
             onclick="togglePos({{ pos }})"
-            class="btn btn-xs border-base-300 {{ 'btn-neutral' if lit else ('btn-ghost' if has_games else 'btn-ghost text-base-content/30') }} {{ 'pointer-events-none' if not has_games else '' }}"
-            {{ 'disabled' if not has_games }}>
+            class="btn btn-xs border-base-300 {{ 'bg-base-content text-base-100 border-base-content' if lit else 'btn-ghost ' ~ ('text-base-content/55' if available else 'text-base-content/25 pointer-events-none') }}"
+            {{ 'disabled' if not available }}>
             {{ pos }}
           </button>
           {% endfor %}
@@ -91,16 +90,24 @@
       document.getElementById("game-modal").showModal();
     };
 
-    const _selectedPositions = new Set({{ selected_positions | tojson }});
+    const _available = {{ position_counts.items() | selectattr('1', '>', 0) | map(attribute='0') | list | tojson }};
+    const _selected = new Set({{ selected_positions | tojson }});
+    const _noFilter = _selected.size === 0;
 
     window.togglePos = function(pos) {
-      if (_selectedPositions.has(pos)) {
-        _selectedPositions.delete(pos);
+      let next;
+      if (_noFilter) {
+        // все активны → клик исключает одну, остальные остаются
+        next = new Set(_available.filter(p => p !== pos));
+      } else if (_selected.has(pos)) {
+        next = new Set([..._selected].filter(p => p !== pos));
       } else {
-        _selectedPositions.add(pos);
+        next = new Set([..._selected, pos]);
       }
+      // если осталось всё доступное — сброс в no_filter
+      if (_available.every(p => next.has(p))) next = new Set();
       const url = new URL(window.location);
-      const sorted = Array.from(_selectedPositions).sort();
+      const sorted = Array.from(next).sort();
       if (sorted.length > 0) {
         url.searchParams.set('positions', sorted.join(','));
       } else {
