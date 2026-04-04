@@ -18,10 +18,10 @@
           <span class="tabular-nums font-bold text-sm {{ 'text-success' if radiant_won else 'text-base-content/60' }}">{{ g.radiant_kills }}</span>
         </div>
         {% for p in g.radiant_players %}
-        <div class="grid items-center gap-x-2 text-xs" style="grid-template-columns: 1rem 1fr auto auto">
+        <div class="grid items-center gap-x-2 text-xs" style="grid-template-columns: 1rem minmax(0, 7.5rem) 5.5rem 4.25rem">
           <span class="text-base-content/25 text-right">{{ p.position }}</span>
-          <a href="/player/{{ p.player_name }}" class="link link-hover font-medium text-sm text-right">{{ p.player_name }}</a>
-          <span class="flex items-center gap-0.5 tabular-nums text-base-content/40 justify-end"><span class="text-yellow-500/60 text-[10px]">🪙</span>{{ p.net_worth | nw }}</span>
+          <a href="/player/{{ p.player_name }}" class="link link-hover font-medium text-sm text-right truncate">{{ p.player_name }}</a>
+          <span class="flex items-center gap-0.5 tabular-nums text-base-content/40 justify-end whitespace-nowrap"><span class="text-yellow-500/60 text-[10px]">🪙</span>{{ p.net_worth | nw }}</span>
           <span class="tabular-nums text-base-content/60 w-14 text-right">{{ p.kills }}/{{ p.deaths }}/{{ p.assists }}</span>
         </div>
         {% endfor %}
@@ -36,10 +36,10 @@
           <span class="text-xs font-bold uppercase tracking-wider {{ 'text-error' if not radiant_won else 'text-base-content/40' }}">Dire</span>
         </div>
         {% for p in g.dire_players %}
-        <div class="grid items-center gap-x-2 text-xs" style="grid-template-columns: auto auto 1fr 1rem">
+        <div class="grid items-center gap-x-2 text-xs" style="grid-template-columns: 4.25rem 5.5rem minmax(0, 7.5rem) 1rem">
           <span class="tabular-nums text-base-content/60 w-14">{{ p.kills }}/{{ p.deaths }}/{{ p.assists }}</span>
-          <span class="flex items-center gap-0.5 tabular-nums text-base-content/40 justify-start"><span class="text-yellow-500/60 text-[10px]">🪙</span>{{ p.net_worth | nw }}</span>
-          <a href="/player/{{ p.player_name }}" class="link link-hover font-medium text-sm">{{ p.player_name }}</a>
+          <span class="flex items-center gap-0.5 tabular-nums text-base-content/40 justify-start whitespace-nowrap"><span class="text-yellow-500/60 text-[10px]">🪙</span>{{ p.net_worth | nw }}</span>
+          <a href="/player/{{ p.player_name }}" class="link link-hover font-medium text-sm truncate">{{ p.player_name }}</a>
           <span class="text-base-content/25 text-left">{{ p.position }}</span>
         </div>
         {% endfor %}
