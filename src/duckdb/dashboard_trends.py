@@ -69,10 +69,10 @@ def _smooth_zigzag(points: list[dict]) -> list[dict]:
             if (curr > prev and curr > nxt) or (curr < prev and curr < nxt):
                 new[i] = (prev + nxt) / 2
         values = new
-    return [{"date_time": p["date_time"], "value": v} for p, v in zip(points, values)]
+    return [{**p, "value": v} for p, v in zip(points, values)]
 
 
-def _build_trend_chart(lines: list[dict], palette: list[str]) -> dict:
+def _build_trend_chart(lines: list[dict], palette: list[str], total_matches: int = 0) -> dict:
     width = 760
     height = 320
     pad_left = 52
@@ -82,11 +82,11 @@ def _build_trend_chart(lines: list[dict], palette: list[str]) -> dict:
     inner_width = width - pad_left - pad_right
     inner_height = height - pad_top - pad_bottom
 
-    all_values = [point["value"] for line in lines for point in line["points"]]
-    max_points = max((len(line["points"]) for line in lines), default=0)
-    if max_points == 0 or not all_values:
+    all_points = [point for line in lines for point in line["points"]]
+    if not all_points:
         return {"width": width, "height": height, "lines": [], "y_ticks": [], "x_ticks": []}
 
+    all_values = [p["value"] for p in all_points]
     min_value = min(all_values)
     max_value = max(all_values)
     if min_value == max_value:
@@ -97,10 +97,10 @@ def _build_trend_chart(lines: list[dict], palette: list[str]) -> dict:
     chart_min = min_value - value_padding
     chart_max = max_value + value_padding
     value_span = chart_max - chart_min
-    max_index = max(max_points - 1, 1)
+    max_idx = max(total_matches, 1)
 
-    def scale_x(index: int) -> float:
-        return pad_left + ((index / max_index) * inner_width)
+    def scale_x(match_idx: int) -> float:
+        return pad_left + (match_idx / max_idx) * inner_width
 
     def scale_y(value: float) -> float:
         return pad_top + (1 - ((value - chart_min) / value_span)) * inner_height
@@ -108,21 +108,17 @@ def _build_trend_chart(lines: list[dict], palette: list[str]) -> dict:
     rendered_lines: list[dict] = []
     for idx, line in enumerate(lines):
         points = line["points"]
-        scaled_points = [
-            (scale_x(point_idx), scale_y(point["value"]))
-            for point_idx, point in enumerate(points)
-        ]
+        scaled_points = [(scale_x(p["match_idx"]), scale_y(p["value"])) for p in points]
         polyline = " ".join(f"{x:.1f},{y:.1f}" for x, y in scaled_points)
         path = _build_smooth_path(scaled_points)
-        last_index = len(points) - 1
-        last_point = points[last_index]
+        last_point = points[-1]
         rendered_lines.append(
             {
                 **line,
                 "color": palette[idx % len(palette)],
                 "polyline": polyline,
                 "path": path,
-                "end_x": round(scale_x(last_index), 1),
+                "end_x": round(scale_x(last_point["match_idx"]), 1),
                 "end_y": round(scale_y(last_point["value"]), 1),
             }
         )
@@ -137,24 +133,18 @@ def _build_trend_chart(lines: list[dict], palette: list[str]) -> dict:
         value = round(tick_start + ((tick_end - tick_start) * idx / (tick_count - 1)))
         y_ticks.append({"value": int(value), "y": round(scale_y(value), 1)})
 
-    longest_line = max(lines, key=lambda line: len(line["points"]))
-    x_tick_count = min(5, max_points)
+    # X ticks: 5 evenly spaced match indices labelled by date
+    idx_to_date = {}
+    for p in all_points:
+        idx_to_date[p["match_idx"]] = p["date_time"]
+    sorted_indices = sorted(idx_to_date)
+    x_tick_count = min(5, len(sorted_indices))
     x_ticks = []
-    for idx in range(x_tick_count):
-        point_index = round(idx * max_index / (x_tick_count - 1)) if x_tick_count > 1 else 0
-        tick_date = longest_line["points"][point_index]["date_time"]
-        anchor = "middle"
-        if idx == 0:
-            anchor = "start"
-        elif idx == x_tick_count - 1:
-            anchor = "end"
-        x_ticks.append(
-            {
-                "label": tick_date.strftime("%Y-%m-%d"),
-                "x": round(scale_x(point_index), 1),
-                "anchor": anchor,
-            }
-        )
+    for i in range(x_tick_count):
+        si = round(i * (len(sorted_indices) - 1) / max(x_tick_count - 1, 1))
+        midx = sorted_indices[si]
+        anchor = "start" if i == 0 else ("end" if i == x_tick_count - 1 else "middle")
+        x_ticks.append({"label": idx_to_date[midx].strftime("%Y-%m-%d"), "x": round(scale_x(midx), 1), "anchor": anchor})
 
     return {
         "width": width,
@@ -173,56 +163,69 @@ def fetch_dashboard_trends(match_window: int, direction: str = "desc") -> dict:
     rows = conn.execute(
         f"""
         WITH {recent_matches_cte},
+        match_seq AS (
+            SELECT match_id, date_time,
+                row_number() OVER (ORDER BY date_time ASC, match_id ASC) AS match_idx
+            FROM recent_matches
+        ),
         player_trend AS (
             SELECT
                 pr.player_name,
-                rm.date_time,
-                sum(case when pr.team = m.winning_team then 1 else -1 end) OVER (
+                ms.match_id,
+                ms.match_idx,
+                ms.date_time,
+                sum(CASE WHEN pr.team = m.winning_team THEN 1 ELSE -1 END) OVER (
                     PARTITION BY pr.player_name
-                    ORDER BY rm.date_time, rm.match_id
+                    ORDER BY ms.match_idx
                     ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
                 ) AS cumulative_wl,
                 count(*) OVER (PARTITION BY pr.player_name) AS total_games
             FROM player_result pr
-            JOIN recent_matches rm USING (match_id)
+            JOIN match_seq ms USING (match_id)
             JOIN "match" m USING (match_id)
         ),
-        latest AS (
-            SELECT
-                player_name,
-                cumulative_wl,
-                total_games,
-                row_number() OVER (
-                    PARTITION BY player_name
-                    ORDER BY date_time DESC
-                ) AS rn
+        leaders AS (
+            SELECT player_name, cumulative_wl AS latest_cumulative_wl
             FROM player_trend
             WHERE total_games >= 5
-        ),
-        leaders AS (
-            SELECT player_name, cumulative_wl
-            FROM latest
-            WHERE rn = 1
-            ORDER BY cumulative_wl {order_dir}, player_name ASC
+            QUALIFY row_number() OVER (PARTITION BY player_name ORDER BY match_idx DESC) = 1
+            ORDER BY latest_cumulative_wl {order_dir}, player_name ASC
             LIMIT {TREND_PLAYER_LIMIT}
+        ),
+        filled AS (
+            SELECT
+                ms.match_idx,
+                ms.date_time,
+                l.player_name,
+                COALESCE(
+                    last_value(pt.cumulative_wl IGNORE NULLS) OVER (
+                        PARTITION BY l.player_name ORDER BY ms.match_idx
+                        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+                    ),
+                    0
+                ) AS cumulative_wl,
+                l.latest_cumulative_wl
+            FROM match_seq ms
+            CROSS JOIN leaders l
+            LEFT JOIN player_trend pt
+                ON pt.match_id = ms.match_id AND pt.player_name = l.player_name
         )
-        SELECT
-            pt.player_name,
-            pt.date_time,
-            pt.cumulative_wl,
-            l.cumulative_wl AS latest_cumulative_wl
-        FROM player_trend pt
-        JOIN leaders l USING (player_name)
-        ORDER BY pt.date_time ASC, l.cumulative_wl {order_dir}, pt.player_name ASC
+        SELECT player_name, date_time, match_idx, cumulative_wl, latest_cumulative_wl
+        FROM filled
+        ORDER BY match_idx ASC, latest_cumulative_wl {order_dir}, player_name ASC
         """,
         params,
     ).fetchall()
 
     by_player: dict[str, list[dict]] = {}
     latest_scores: dict[str, float] = {}
-    for player_name, date_time, cumulative_wl, latest_score in rows:
-        by_player.setdefault(player_name, []).append({"date_time": date_time, "value": cumulative_wl})
+    total_matches = 0
+
+    for player_name, date_time, match_idx, cumulative_wl, latest_score in rows:
+        by_player.setdefault(player_name, []).append({"match_idx": match_idx, "date_time": date_time, "value": cumulative_wl})
         latest_scores[player_name] = latest_score
+        if match_idx > total_matches:
+            total_matches = match_idx
 
     reverse_scores = direction == "desc"
     lines = []
@@ -231,17 +234,17 @@ def fetch_dashboard_trends(match_window: int, direction: str = "desc") -> dict:
         key=lambda item: (latest_scores[item[0]], item[0]),
         reverse=reverse_scores,
     ):
-        if points:
-            points = [{"date_time": points[0]["date_time"], "value": 0}] + points
+        # prepend true zero at match_idx=0
+        full_points = [{"match_idx": 0, "date_time": points[0]["date_time"], "value": 0}] + points
         lines.append(
             {
                 "player_name": player_name,
-                "points": _smooth_zigzag(points),
+                "points": _smooth_zigzag(full_points),
                 "latest_value": round(latest_scores[player_name], 1),
             }
         )
 
-    return _build_trend_chart(lines, palette)
+    return _build_trend_chart(lines, palette, total_matches)
 
 
 def fetch_dashboard_lane_stats(match_window: int | None) -> dict[str, dict[str, list[dict]]]:
