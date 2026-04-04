@@ -62,7 +62,10 @@ def _fetch_player(name: str) -> dict | None:
     return exact[0] if exact else (players[0] if len(players) == 1 else None)
 
 
-def _fetch_recent_games(name: str, limit: int = 30) -> list[dict]:
+_PLAYER_GAMES_PAGE_SIZE = 20
+
+
+def _fetch_recent_games(name: str, limit: int = _PLAYER_GAMES_PAGE_SIZE, offset: int = 0) -> list[dict]:
     conn = get_conn()
     sql = """
     SELECT
@@ -81,8 +84,9 @@ def _fetch_recent_games(name: str, limit: int = 30) -> list[dict]:
     WHERE lower(pr.player_name) = lower(?)
     ORDER BY m.date_time DESC
     LIMIT ?
+    OFFSET ?
     """
-    rows = conn.execute(sql, [name, limit]).fetchall()
+    rows = conn.execute(sql, [name, limit, offset]).fetchall()
     cols = ["match_id", "date_time", "duration", "team", "winning_team", "position", "kills", "deaths", "assists", "net_worth"]
     result = []
     for r in rows:
@@ -231,6 +235,17 @@ def game_card(request: Request, match_id: str):
     return templates.TemplateResponse(request, "partials/game_cards.html", {"games": [game], "offset": None})
 
 
+@app.get("/api/player/{name}/games", response_class=HTMLResponse)
+def player_games_partial(request: Request, name: str, offset: int = Query(default=0)):
+    recent_games = _fetch_recent_games(name, offset=offset)
+    next_offset = offset + _PLAYER_GAMES_PAGE_SIZE
+    return templates.TemplateResponse(
+        request,
+        "partials/player_recent_games_rows.html",
+        {"recent_games": recent_games, "player_name": name, "offset": next_offset},
+    )
+
+
 @app.get("/player", response_class=RedirectResponse)
 def player_search(name: str = Query(default="")):
     return RedirectResponse(url=f"/player/{name}")
@@ -243,5 +258,11 @@ def player_profile(request: Request, name: str):
     return templates.TemplateResponse(
         request,
         "player.html",
-        {"player": player, "recent_games": recent_games, "active_page": None},
+        {
+            "player": player,
+            "recent_games": recent_games,
+            "player_name": name,
+            "offset": _PLAYER_GAMES_PAGE_SIZE,
+            "active_page": None,
+        },
     )

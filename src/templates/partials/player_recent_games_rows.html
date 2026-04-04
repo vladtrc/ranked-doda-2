@@ -1,0 +1,39 @@
+{% for g in recent_games %}
+<tr class="hover cursor-pointer"
+    hx-get="/api/game/{{ g.match_id }}"
+    hx-target="#game-modal-body"
+    hx-swap="innerHTML"
+    onclick="document.getElementById('game-modal').showModal()">
+  <td class="tabular-nums text-sm">{{ g.date_time.strftime('%Y-%m-%d %H:%M') if g.date_time else '—' }}</td>
+  <td class="tabular-nums text-sm">{{ g.duration }}</td>
+  <td class="text-center">
+    <span class="badge badge-sm badge-ghost">{{ g.team }}</span>
+  </td>
+  <td class="text-center">
+    {% if g.won %}
+    <span class="badge badge-sm badge-success">W</span>
+    {% else %}
+    <span class="badge badge-sm badge-error">L</span>
+    {% endif %}
+  </td>
+  <td class="text-center">{{ g.position }}</td>
+  <td class="text-right tabular-nums">{{ g.kills }}</td>
+  <td class="text-right tabular-nums">{{ g.deaths }}</td>
+  <td class="text-right tabular-nums">{{ g.assists }}</td>
+  <td class="text-right tabular-nums text-base-content/70">{{ "{:,}".format(g.net_worth) }}</td>
+</tr>
+{% endfor %}
+
+{% if recent_games and offset is not none %}
+<tr hx-get="/api/player/{{ player_name | urlencode }}/games?offset={{ offset }}"
+    hx-trigger="revealed"
+    hx-swap="outerHTML">
+  <td colspan="9" class="py-4 text-center text-base-content/30 text-sm">
+    loading...
+  </td>
+</tr>
+{% elif not recent_games and offset == 0 %}
+<tr>
+  <td colspan="9" class="text-center text-base-content/40 py-8">No games.</td>
+</tr>
+{% endif %}

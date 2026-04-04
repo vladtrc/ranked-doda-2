@@ -44,34 +44,8 @@
             <th class="text-right">Gold</th>
           </tr>
         </thead>
-        <tbody>
-          {% for g in recent_games %}
-          <tr class="hover cursor-pointer"
-              hx-get="/api/game/{{ g.match_id }}"
-              hx-target="#game-modal-body"
-              hx-swap="innerHTML"
-              onclick="document.getElementById('game-modal').showModal()">
-            <td class="tabular-nums text-sm">{{ g.date_time.strftime('%Y-%m-%d %H:%M') if g.date_time else '—' }}</td>
-            <td class="tabular-nums text-sm">{{ g.duration }}</td>
-            <td class="text-center">
-              <span class="badge badge-sm badge-ghost">{{ g.team }}</span>
-            </td>
-            <td class="text-center">
-              {% if g.won %}
-              <span class="badge badge-sm badge-success">W</span>
-              {% else %}
-              <span class="badge badge-sm badge-error">L</span>
-              {% endif %}
-            </td>
-            <td class="text-center">{{ g.position }}</td>
-            <td class="text-right tabular-nums">{{ g.kills }}</td>
-            <td class="text-right tabular-nums">{{ g.deaths }}</td>
-            <td class="text-right tabular-nums">{{ g.assists }}</td>
-            <td class="text-right tabular-nums text-base-content/70">{{ "{:,}".format(g.net_worth) }}</td>
-          </tr>
-          {% else %}
-          <tr><td colspan="9" class="text-center text-base-content/40 py-8">No games.</td></tr>
-          {% endfor %}
+        <tbody id="recent-games-tbody">
+          {% include "partials/player_recent_games_rows.html" %}
         </tbody>
       </table>
     </div>
