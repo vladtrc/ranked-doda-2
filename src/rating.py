@@ -1,7 +1,7 @@
 import duckdb
 
-import rating_complex
-import rating_simple25
+from . import rating_complex
+from . import rating_simple25
 
 algs = {
     '25': rating_simple25.calculate_ranked_mmr,

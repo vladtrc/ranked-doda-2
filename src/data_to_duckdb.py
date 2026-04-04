@@ -1,7 +1,7 @@
 from typing import List
 import duckdb
 
-from data_parse import Match
+from .data_parse import Match
 
 
 def load_matches_into_duckdb(matches: List[Match]) -> duckdb.DuckDBPyConnection:

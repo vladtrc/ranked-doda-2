@@ -5,9 +5,9 @@ import optuna
 import pandas as pd
 from optuna.samplers import NSGAIISampler
 
-from data_to_duckdb import load_matches_into_duckdb
-from impact import ImpactCoeffs, RoleCoeff, _register_coeffs_table, init_impact_views
-from parse_data import parse_dota_file
+from .data_to_duckdb import load_matches_into_duckdb
+from .impact import ImpactCoeffs, RoleCoeff, _register_coeffs_table, init_impact_views
+from .data_parse import parse_dota_file
 
 ROLES = [1, 2, 3, 4, 5]
 

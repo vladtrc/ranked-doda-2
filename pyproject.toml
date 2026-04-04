@@ -1,19 +1,11 @@
-[tool.poetry]
+[project]
 name = "ranked-doda-2"
 version = "0.1.0"
-description = ""
-authors = ["vtroc7 <vtroc7@gmail.com >"]
-readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.12"
-duckdb = "^1.4.0"
-numpy = "^2.3.3"
-pandas = "^2.3.2"
-scipy = "^1.16.2"
-optuna = "^4.5.0"
-
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires-python = ">=3.12"
+dependencies = [
+    "duckdb>=1.4.0",
+    "numpy>=2.3.3",
+    "pandas>=2.3.2",
+    "scipy>=1.16.2",
+    "optuna>=4.5.0",
+]

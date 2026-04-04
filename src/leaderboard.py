@@ -1,8 +1,8 @@
-from data_parse import parse_dota_file
-from data_to_duckdb import load_matches_into_duckdb
-from impact import calculate_impacts
-from rating import calculate_ranked_mmr
-from save_table import ReportSection, save_tables_tailwind_html
+from .data_parse import parse_dota_file
+from .data_to_duckdb import load_matches_into_duckdb
+from .impact import calculate_impacts
+from .rating import calculate_ranked_mmr
+from .save_table import ReportSection, save_tables_tailwind_html
 
 matches = parse_dota_file('data.txt')
 print(f"Parsed {len(matches)} matches")

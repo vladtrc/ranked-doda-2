@@ -1,9 +1,9 @@
 import pandas as pd
-from data_to_duckdb import load_matches_into_duckdb
-from impact import calculate_impacts
-from data_parse import parse_dota_file
+from .data_to_duckdb import load_matches_into_duckdb
+from .impact import calculate_impacts
+from .data_parse import parse_dota_file
 
-from rating import calculate_ranked_mmr
+from .rating import calculate_ranked_mmr
 
 matches = parse_dota_file('data.txt')
 print(f"Parsed {len(matches)} matches")
