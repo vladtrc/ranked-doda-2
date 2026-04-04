@@ -187,6 +187,14 @@ h3 {
   backdrop-filter: blur(6px);
 }
 
+.game-player-row-radiant {
+  grid-template-columns: 1rem minmax(0, 7.5rem) 5.5rem 4.25rem;
+}
+
+.game-player-row-dire {
+  grid-template-columns: 4.25rem 5.5rem minmax(0, 7.5rem) 1rem;
+}
+
 @media (max-width: 640px) {
   .app-navbar {
     padding-inline: 1rem;
@@ -195,5 +203,30 @@ h3 {
   main.container {
     padding-inline: 1rem;
     padding-top: 1.25rem;
+  }
+
+  .game-card-sides {
+    gap: 0.75rem;
+  }
+
+  .game-card-divider {
+    opacity: 0.6;
+  }
+
+  .game-player-row-radiant {
+    grid-template-columns: 0.85rem minmax(0, 1fr) auto auto;
+  }
+
+  .game-player-row-dire {
+    grid-template-columns: auto auto minmax(0, 1fr) 0.85rem;
+  }
+
+  .game-player-row > :nth-child(3),
+  .game-player-row > :nth-child(4) {
+    font-size: 0.7rem;
+  }
+
+  .game-player-row > :nth-child(4) {
+    width: auto;
   }
 }
