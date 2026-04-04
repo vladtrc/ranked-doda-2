@@ -1,4 +1,4 @@
-.PHONY: csv leaderboard main info personal players optimize sync
+.PHONY: csv leaderboard main info personal players optimize sync serve lint type
 
 # rebuild CSV exports from data.txt
 csv:
@@ -28,5 +28,14 @@ players:
 optimize:
 	uv run python -m src.impact_coeffs_propose
 
+serve:
+	uv run uvicorn src.app:app --reload
+
+lint:
+	uv run ruff check src/ && uv run ruff format --check src/
+
+type:
+	uv run basedpyright src/
+
 sync:
-	uv sync
+	uv sync --all-groups

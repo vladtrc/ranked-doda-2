@@ -1,0 +1,60 @@
+{% for g in games %}
+{% set radiant_won = g.winning_team == 'radiant' %}
+<div class="card bg-base-200 border border-base-300 w-full">
+  <div class="card-body p-4 gap-3">
+
+    <div class="flex items-center justify-center gap-2 text-xs text-base-content/40 tabular-nums">
+      <span>{{ g.date_time.strftime('%Y-%m-%d %H:%M') if g.date_time else '—' }}</span>
+      <span class="text-base-content/20">·</span>
+      <span>{{ g.duration }}</span>
+    </div>
+
+    <div class="flex items-stretch gap-2">
+
+      <div class="flex-1 rounded-lg p-3 flex flex-col gap-1.5
+        {{ 'bg-success/8 border border-success/25' if radiant_won else 'bg-base-300/40 border border-transparent' }}">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-xs font-bold uppercase tracking-wider {{ 'text-success' if radiant_won else 'text-base-content/40' }}">Radiant</span>
+          <span class="tabular-nums font-bold text-sm {{ 'text-success' if radiant_won else 'text-base-content/60' }}">{{ g.radiant_kills }}</span>
+        </div>
+        {% for p in g.radiant_players %}
+        <div class="grid items-center gap-x-2 text-xs" style="grid-template-columns: 1rem 1fr auto auto">
+          <span class="text-base-content/25 text-right">{{ p.position }}</span>
+          <a href="/player/{{ p.player_name }}" class="link link-hover font-medium text-sm text-right">{{ p.player_name }}</a>
+          <span class="flex items-center gap-0.5 tabular-nums text-base-content/40 justify-end"><span class="text-yellow-500/60 text-[10px]">🪙</span>{{ p.net_worth | nw }}</span>
+          <span class="tabular-nums text-base-content/60 w-14 text-right">{{ p.kills }}/{{ p.deaths }}/{{ p.assists }}</span>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="w-px bg-base-300 self-stretch"></div>
+
+      <div class="flex-1 rounded-lg p-3 flex flex-col gap-1.5
+        {{ 'bg-error/8 border border-error/25' if not radiant_won else 'bg-base-300/40 border border-transparent' }}">
+        <div class="flex items-center justify-between mb-1">
+          <span class="tabular-nums font-bold text-sm {{ 'text-error' if not radiant_won else 'text-base-content/60' }}">{{ g.dire_kills }}</span>
+          <span class="text-xs font-bold uppercase tracking-wider {{ 'text-error' if not radiant_won else 'text-base-content/40' }}">Dire</span>
+        </div>
+        {% for p in g.dire_players %}
+        <div class="grid items-center gap-x-2 text-xs" style="grid-template-columns: auto auto 1fr 1rem">
+          <span class="tabular-nums text-base-content/60 w-14">{{ p.kills }}/{{ p.deaths }}/{{ p.assists }}</span>
+          <span class="flex items-center gap-0.5 tabular-nums text-base-content/40 justify-start"><span class="text-yellow-500/60 text-[10px]">🪙</span>{{ p.net_worth | nw }}</span>
+          <a href="/player/{{ p.player_name }}" class="link link-hover font-medium text-sm">{{ p.player_name }}</a>
+          <span class="text-base-content/25 text-left">{{ p.position }}</span>
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+{% if games %}
+<div hx-get="/api/games?offset={{ offset }}"
+     hx-trigger="revealed"
+     hx-swap="outerHTML"
+     class="flex justify-center py-4 text-base-content/30 text-sm">
+  loading...
+</div>
+{% endif %}

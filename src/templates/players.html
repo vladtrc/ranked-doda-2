@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Players – Dota Ranked{% endblock %}
+
+{% block content %}
+<div
+  x-data="{
+    sortBy: '{{ sort_by }}',
+    sortDir: '{{ sort_dir }}',
+    sort(col) {
+      if (this.sortBy === col) {
+        this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        this.sortBy = col;
+        this.sortDir = 'desc';
+      }
+    }
+  }"
+>
+
+
+  <div class="overflow-x-auto rounded-box border border-base-300">
+    <table class="table table-zebra table-sm w-full">
+      <thead>
+        <tr class="bg-base-200 text-base-content/70 text-xs uppercase tracking-wider">
+
+          {% macro th(col, label) %}
+          <th>
+            <button
+              class="flex items-center gap-1 hover:text-base-content transition-colors"
+              @click="sort('{{ col }}')"
+              hx-get="/api/players"
+              hx-target="#players-tbody"
+              hx-swap="innerHTML"
+
+              :hx-vals='JSON.stringify({ sort_by: sortBy, sort_dir: sortDir })'
+              hx-trigger="click"
+            >
+              {{ label }}
+              <span class="w-3 text-center">
+                <template x-if="sortBy === '{{ col }}' && sortDir === 'asc'">
+                  <span>↑</span>
+                </template>
+                <template x-if="sortBy === '{{ col }}' && sortDir === 'desc'">
+                  <span>↓</span>
+                </template>
+                <template x-if="sortBy !== '{{ col }}'">
+                  <span class="opacity-20">↕</span>
+                </template>
+              </span>
+            </button>
+          </th>
+          {% endmacro %}
+
+          {{ th('wl',        'W-L') }}
+          {{ th('name',      'Player') }}
+          {{ th('top_pos',   'Pos') }}
+          {{ th('games',     'Games') }}
+          {{ th('wins',      'Wins') }}
+          {{ th('win_pct',   'Win%') }}
+          {{ th('avg_k',     'Avg K') }}
+          {{ th('avg_d',     'Avg D') }}
+          {{ th('avg_a',     'Avg A') }}
+          {{ th('avg_gold',  'Avg Gold') }}
+          {{ th('last_game', 'Last Game') }}
+        </tr>
+      </thead>
+      <tbody id="players-tbody">
+        {% include "partials/players_rows.html" %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}

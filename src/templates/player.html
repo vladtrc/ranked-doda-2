@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}{{ player.name }} – Dota Ranked{% endblock %}
+
+{% block content %}
+{% if player %}
+<div class="space-y-6">
+
+  <div>
+    <h1 class="text-2xl font-bold">{{ player.name }}</h1>
+    <p class="text-base-content/60 text-sm mt-1">{{ player.games }} games tracked</p>
+  </div>
+
+  <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
+    {% macro stat(label, value, color='') %}
+    <div class="stat bg-base-200 rounded-box p-4">
+      <div class="stat-title text-xs">{{ label }}</div>
+      <div class="stat-value text-xl {{ color }}">{{ value }}</div>
+    </div>
+    {% endmacro %}
+
+    {{ stat('Games', player.games) }}
+    {{ stat('Wins', player.wins) }}
+    {{ stat('Win%', player.win_pct ~ '%', 'text-success' if player.win_pct >= 50 else 'text-error') }}
+    {{ stat('Avg K', player.avg_k) }}
+    {{ stat('Avg D', player.avg_d) }}
+    {{ stat('Avg A', player.avg_a) }}
+    {{ stat('Avg Gold', "{:,}".format(player.avg_gold)) }}
+  </div>
+
+  <div>
+    <h2 class="text-lg font-semibold mb-3">Recent Games</h2>
+    <div class="overflow-x-auto rounded-box border border-base-300">
+      <table class="table table-zebra table-sm w-full">
+        <thead>
+          <tr class="bg-base-200 text-base-content/70 text-xs uppercase tracking-wider">
+            <th>Date</th>
+            <th>Duration</th>
+            <th class="text-center">Team</th>
+            <th class="text-center">Result</th>
+            <th class="text-center">Pos</th>
+            <th class="text-right">K</th>
+            <th class="text-right">D</th>
+            <th class="text-right">A</th>
+            <th class="text-right">Gold</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for g in recent_games %}
+          <tr class="hover">
+            <td class="tabular-nums text-sm">{{ g.date_time.strftime('%Y-%m-%d %H:%M') if g.date_time else '—' }}</td>
+            <td class="tabular-nums text-sm">{{ g.duration }}</td>
+            <td class="text-center">
+              <span class="badge badge-sm badge-ghost">{{ g.team }}</span>
+            </td>
+            <td class="text-center">
+              {% if g.won %}
+              <span class="badge badge-sm badge-success">W</span>
+              {% else %}
+              <span class="badge badge-sm badge-error">L</span>
+              {% endif %}
+            </td>
+            <td class="text-center">{{ g.position }}</td>
+            <td class="text-right tabular-nums">{{ g.kills }}</td>
+            <td class="text-right tabular-nums">{{ g.deaths }}</td>
+            <td class="text-right tabular-nums">{{ g.assists }}</td>
+            <td class="text-right tabular-nums text-base-content/70">{{ "{:,}".format(g.net_worth) }}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="9" class="text-center text-base-content/40 py-8">No games.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% else %}
+<div class="text-center py-20">
+  <p class="text-base-content/40 text-lg">Player not found.</p>
+  <a href="/players" class="btn btn-ghost btn-sm mt-4">← Back to Players</a>
+</div>
+{% endif %}
+{% endblock %}
