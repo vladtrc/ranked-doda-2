@@ -1,53 +1,47 @@
 [data-theme="ranked"] {
   color-scheme: dark;
 
-  --p: 0.61 0.05 244;
-  --pc: 0.96 0.01 244;
-  --s: 0.56 0.03 240;
-  --sc: 0.96 0.01 240;
-  --a: 0.74 0.04 205;
-  --ac: 0.16 0.02 205;
-  --n: 0.23 0.01 255;
-  --nc: 0.95 0.01 255;
+  --color-primary: oklch(61% 0.05 244);
+  --color-primary-content: oklch(96% 0.01 244);
+  --color-secondary: oklch(56% 0.03 240);
+  --color-secondary-content: oklch(96% 0.01 240);
+  --color-accent: oklch(74% 0.04 205);
+  --color-accent-content: oklch(16% 0.02 205);
+  --color-neutral: oklch(23% 0.01 255);
+  --color-neutral-content: oklch(95% 0.01 255);
 
-  --b1: 0.15 0.01 255;
-  --b2: 0.18 0.012 255;
-  --b3: 0.22 0.014 255;
-  --bc: 0.9 0.01 255;
+  --color-base-100: oklch(15% 0.01 255);
+  --color-base-200: oklch(18% 0.012 255);
+  --color-base-300: oklch(22% 0.014 255);
+  --color-base-content: oklch(90% 0.01 255);
 
-  --in: 0.66 0.03 230;
-  --inc: 0.15 0.01 230;
-  --su: 0.72 0.08 160;
-  --suc: 0.18 0.02 160;
-  --wa: 0.8 0.08 85;
-  --wac: 0.21 0.02 85;
-  --er: 0.66 0.09 22;
-  --erc: 0.96 0.01 22;
+  --color-info: oklch(66% 0.03 230);
+  --color-info-content: oklch(15% 0.01 230);
+  --color-success: oklch(72% 0.08 160);
+  --color-success-content: oklch(18% 0.02 160);
+  --color-warning: oklch(80% 0.08 85);
+  --color-warning-content: oklch(21% 0.02 85);
+  --color-error: oklch(66% 0.09 22);
+  --color-error-content: oklch(96% 0.01 22);
 
-  --rounded-box: 0.9rem;
-  --rounded-btn: 0.7rem;
-  --rounded-badge: 9999px;
-  --tab-radius: 0.7rem;
+  --radius-selector: 9999px;
+  --radius-field: 0.7rem;
+  --radius-box: 0.9rem;
 
-  --animation-btn: 0.2s;
-  --animation-input: 0.2s;
-  --btn-focus-scale: 0.99;
-  --border-btn: 1px;
-  --border-input: 1px;
-  --btn-text-case: none;
-  --navbar-padding: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
 }
 
 :root {
   --app-bg: linear-gradient(180deg, #0d1119 0%, #101521 100%);
-  --panel-border: color-mix(in oklab, oklch(var(--b3)), white 5%);
-  --panel-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
-  --panel-bg: color-mix(in oklab, oklch(var(--b2)) 94%, black);
-  --panel-bg-strong: color-mix(in oklab, oklch(var(--b3)) 92%, black);
 }
 
 html {
-  background: oklch(var(--b1));
+  background: var(--color-base-100);
 }
 
 body {
@@ -64,111 +58,24 @@ body {
   backdrop-filter: blur(12px);
 }
 
-.btn {
-  font-weight: 600;
-  letter-spacing: 0;
-}
-
-.btn-ghost:hover,
-.btn-ghost.btn-active {
-  background: color-mix(in oklab, oklch(var(--b3)) 78%, white 3%);
-  color: oklch(var(--bc));
-}
-
-.input,
-.modal-box,
-.card,
-.stat,
-.table :where(thead, tbody tr),
-.badge {
-  border-color: var(--panel-border);
-}
-
-.input,
-.modal-box,
-.card,
-.stat,
-.table,
-.table :where(thead tr),
-.table :where(tbody tr:hover) {
-  box-shadow: var(--panel-shadow);
-}
-
-.input,
-.modal-box,
-.card,
-.stat {
-  background: var(--panel-bg);
-}
-
-.input {
-  backdrop-filter: blur(8px);
-}
-
-.input:focus,
-.input:focus-within {
-  outline: none;
-  border-color: color-mix(in oklab, oklch(var(--p)) 38%, white 8%);
-  box-shadow:
-    0 0 0 1px color-mix(in oklab, oklch(var(--p)) 24%, transparent),
-    0 0 0 4px color-mix(in oklab, oklch(var(--p)) 10%, transparent);
-}
-
-.card,
-.stat,
-.modal-box {
-  backdrop-filter: blur(10px);
-}
-
-.table {
-  border-radius: 0.9rem;
-  overflow: hidden;
-  background: var(--panel-bg);
-}
-
-.table :where(thead tr) {
-  background: var(--panel-bg-strong);
-}
-
-.table-zebra tbody tr:nth-child(even) {
-  background: color-mix(in oklab, oklch(var(--b2)) 84%, black);
-}
-
-.table tbody tr:hover {
-  background: color-mix(in oklab, oklch(var(--b3)) 78%, white 2%);
-}
-
-.badge {
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
-.badge-ghost {
-  background: color-mix(in oklab, oklch(var(--b3)) 88%, black);
-}
-
-.badge-success {
-  background: color-mix(in oklab, oklch(var(--su)) 22%, oklch(var(--b2)));
-  color: oklch(var(--su));
-  border-color: color-mix(in oklab, oklch(var(--su)) 36%, transparent);
-}
-
-.badge-error {
-  background: color-mix(in oklab, oklch(var(--er)) 22%, oklch(var(--b2)));
-  color: oklch(var(--er));
-  border-color: color-mix(in oklab, oklch(var(--er)) 36%, transparent);
-}
-
 .tabular-nums,
 .stat-value,
 .badge,
-thead {
+thead,
+.dashboard-axis-label,
+.dashboard-legend-item {
   font-family: "JetBrains Mono", monospace;
 }
 
 .stat-title,
 thead {
   letter-spacing: 0.02em;
+}
+
+.btn-ghost:hover,
+.btn-ghost.btn-active {
+  background: color-mix(in oklab, var(--color-base-300) 78%, white 3%);
+  color: var(--color-base-content);
 }
 
 h1,
@@ -185,6 +92,76 @@ h3 {
 .modal::backdrop {
   background: rgba(7, 10, 16, 0.72);
   backdrop-filter: blur(6px);
+}
+
+.dashboard-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.dashboard-series-faded,
+.dashboard-legend-item-faded {
+  opacity: 0.18;
+}
+
+.dashboard-chart g,
+.dashboard-legend-item {
+  transition: opacity 0.18s ease;
+}
+
+.dashboard-gridline {
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 1;
+}
+
+.dashboard-gridline-zero {
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 1.2;
+}
+
+.dashboard-gridline-vertical {
+  stroke: rgba(255, 255, 255, 0.04);
+}
+
+.dashboard-axis-label {
+  fill: rgba(255, 255, 255, 0.46);
+  font-size: 11px;
+}
+
+.dashboard-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.6rem;
+}
+
+.dashboard-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.76rem;
+}
+
+.dashboard-legend-swatch {
+  width: 0.7rem;
+  height: 0.7rem;
+  flex: 0 0 auto;
+  border-radius: 9999px;
+  background: var(--swatch);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--swatch) 18%, transparent);
+}
+
+.dashboard-legend-name {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard-legend-value {
+  flex: 0 0 auto;
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .game-player-row-radiant {

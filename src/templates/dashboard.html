@@ -1,91 +1,66 @@
 {% extends "base.html" %}
 {% block title %}Dashboard – Dota Ranked{% endblock %}
 
-{% block content %}
-<div
-  x-data="{
-    sortBy: '{{ sort_by }}',
-    sortDir: '{{ sort_dir }}',
-    sort(col) {
-      if (this.sortBy === col) {
-        this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
-      } else {
-        this.sortBy = col;
-        this.sortDir = 'desc';
-      }
-    }
-  }"
->
-
-  <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+{% macro trend_chart(title, subtitle, chart) %}
+<section class="card border border-base-300" x-data="{ activeLine: null }">
+  <div class="card-body gap-4 p-4">
     <div>
-      <h1 class="text-2xl font-bold">All Players</h1>
-      <p class="text-base-content/60 text-sm mt-1">{{ total }} players tracked</p>
+      <h2 class="text-lg font-semibold">{{ title }}</h2>
+      <p class="text-sm text-base-content/60">{{ subtitle }}</p>
     </div>
 
-    <input
-      id="search-q"
-      name="q"
-      class="input input-bordered w-64"
-      type="search"
-      placeholder="Search player..."
-      hx-get="/players"
-      hx-trigger="input changed delay:200ms, search"
-      hx-target="#players-tbody"
-      hx-swap="innerHTML"
-      :hx-vals='JSON.stringify({ sort_by: sortBy, sort_dir: sortDir })'
-    />
+    <div class="overflow-x-auto rounded-box border border-base-300 bg-base-200/60">
+      <svg viewBox="0 0 {{ chart.width }} {{ chart.height }}" class="dashboard-chart min-w-[680px] sm:min-w-[780px]" role="img" aria-label="{{ title }}">
+        <rect x="0" y="0" width="{{ chart.width }}" height="{{ chart.height }}" rx="20" class="fill-base-200"></rect>
+
+        {% for tick in chart.y_ticks %}
+        <line
+          x1="56"
+          y1="{{ tick.y }}"
+          x2="{{ chart.width - 28 }}"
+          y2="{{ tick.y }}"
+          class="dashboard-gridline {{ 'dashboard-gridline-zero' if tick.value == 0 else '' }}"></line>
+        <text x="12" y="{{ tick.y + 4 }}" class="dashboard-axis-label">{{ tick.value }}</text>
+        {% endfor %}
+
+        {% for tick in chart.x_ticks %}
+        <line x1="{{ tick.x }}" y1="24" x2="{{ tick.x }}" y2="{{ chart.height - 42 }}" class="dashboard-gridline dashboard-gridline-vertical"></line>
+        <text x="{{ tick.x }}" y="{{ chart.height - 16 }}" text-anchor="{{ tick.anchor }}" class="dashboard-axis-label">{{ tick.label }}</text>
+        {% endfor %}
+
+        {% for line in chart.lines %}
+        <g
+          @mouseenter="activeLine = '{{ line.player_name }}'"
+          @mouseleave="activeLine = null"
+          :class="activeLine && activeLine !== '{{ line.player_name }}' ? 'dashboard-series-faded' : ''">
+          <path d="{{ line.path }}" fill="none" stroke="{{ line.color }}" stroke-width="3.25" stroke-linecap="round" stroke-linejoin="round"></path>
+          <circle cx="{{ line.end_x }}" cy="{{ line.end_y }}" r="3.2" fill="{{ line.color }}"></circle>
+        </g>
+        {% endfor %}
+      </svg>
+    </div>
+
+    <div class="dashboard-legend">
+      {% for line in chart.lines %}
+      <div class="dashboard-legend-item rounded-box border border-base-300 bg-base-300/60 px-3 py-2 text-xs"
+        @mouseenter="activeLine = '{{ line.player_name }}'"
+        @mouseleave="activeLine = null"
+        :class="activeLine && activeLine !== '{{ line.player_name }}' ? 'dashboard-legend-item-faded' : ''">
+        <span class="dashboard-legend-swatch" style="--swatch: {{ line.color }}"></span>
+        <span class="dashboard-legend-name">{{ line.player_name }}</span>
+        <span class="dashboard-legend-value">{{ "%+d"|format(line.latest_value|int) }}</span>
+      </div>
+      {% endfor %}
+    </div>
   </div>
+</section>
+{% endmacro %}
 
-  <div class="overflow-x-auto rounded-box border border-base-300">
-    <table class="table table-zebra table-sm w-full">
-      <thead>
-        <tr class="bg-base-200 text-base-content/70 text-xs uppercase tracking-wider">
-
-          {% macro th(col, label) %}
-          <th>
-            <button
-              class="flex items-center gap-1 hover:text-base-content transition-colors"
-              @click="sort('{{ col }}')"
-              hx-get="/players"
-              hx-target="#players-tbody"
-              hx-swap="innerHTML"
-              hx-include="#search-q"
-              :hx-vals='JSON.stringify({ sort_by: sortBy, sort_dir: sortDir })'
-              hx-trigger="click"
-            >
-              {{ label }}
-              <span class="w-3 text-center">
-                <template x-if="sortBy === '{{ col }}' && sortDir === 'asc'">
-                  <span>↑</span>
-                </template>
-                <template x-if="sortBy === '{{ col }}' && sortDir === 'desc'">
-                  <span>↓</span>
-                </template>
-                <template x-if="sortBy !== '{{ col }}'">
-                  <span class="opacity-20">↕</span>
-                </template>
-              </span>
-            </button>
-          </th>
-          {% endmacro %}
-
-          {{ th('name',     'Player') }}
-          {{ th('top_pos',  'Pos') }}
-          {{ th('games',    'Games') }}
-          {{ th('wins',     'Wins') }}
-          {{ th('win_pct',  'Win%') }}
-          {{ th('avg_k',    'Avg K') }}
-          {{ th('avg_d',    'Avg D') }}
-          {{ th('avg_a',    'Avg A') }}
-          {{ th('avg_gold', 'Avg Gold') }}
-        </tr>
-      </thead>
-      <tbody id="players-tbody">
-        {% include "partials/players_rows.html" %}
-      </tbody>
-    </table>
+{% block content %}
+<div class="mx-auto max-w-6xl">
+  <div class="grid gap-4 xl:grid-cols-2">
+    {{ trend_chart('Leaders by cumulative W-L', 'Last 30 matches. W-L resets at the start of the window.', leader_chart) }}
+    {{ trend_chart('Losers by cumulative W-L', 'Last 40 matches. W-L resets at the start of the window.', loser_chart) }}
   </div>
-
 </div>
 {% endblock %}

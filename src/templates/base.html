@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% block title %}Dota Ranked{% endblock %}</title>
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
   <link href="/static/theme.css" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script src="https://unpkg.com/htmx.org@1.9.12"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
   <style>[x-cloak]{display:none!important}</style>
@@ -19,6 +19,7 @@
     <div class="navbar-start gap-1">
       <a href="/games" class="btn btn-ghost btn-sm {% if active_page == 'games' %}btn-active{% endif %}">Games</a>
       <a href="/players" class="btn btn-ghost btn-sm {% if active_page == 'players' %}btn-active{% endif %}">Players</a>
+      <a href="/dashboard" class="btn btn-ghost btn-sm {% if active_page == 'dashboard' %}btn-active{% endif %}">Dashboard</a>
     </div>
     <div class="navbar-end">
       <div x-data="{
@@ -50,7 +51,7 @@
       }" class="relative" @click.outside="open = false">
         <form action="/player" method="get" class="flex gap-2" @submit.prevent="q ? (active >= 0 ? pick(suggestions[active]) : pick(q)) : null">
           <input name="name" x-model="q" @input="fetch()" @keydown="onKey($event)"
-            class="input input-sm input-bordered w-44" placeholder="Search player..." autocomplete="off" />
+            class="input input-sm w-44" placeholder="Search player..." autocomplete="off" />
           <button type="submit" class="btn btn-sm btn-ghost">→</button>
         </form>
         <ul x-show="open" x-cloak
