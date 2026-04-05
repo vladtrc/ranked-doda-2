@@ -29,7 +29,7 @@ _PLAYER_GAMES_PAGE_SIZE = 20
 
 
 _PAGE_SIZE = 20
-_DASHBOARD_WINDOWS: dict[str, int | None] = {"40": 40, "100": 100, "all": None}
+_DASHBOARD_WINDOWS: dict[str, int | None] = {"10": 10, "50": 50, "100": 100, "all": None}
 
 
 @asynccontextmanager
@@ -90,9 +90,9 @@ def players_page(request: Request):
 
 
 @app.get("/dashboard", response_class=HTMLResponse)
-def dashboard_page(request: Request, window: str = Query(default="40")):
+def dashboard_page(request: Request, window: str = Query(default="50")):
     if window not in _DASHBOARD_WINDOWS:
-        window = "40"
+        window = "50"
     match_window = _DASHBOARD_WINDOWS[window]
     leader_chart = fetch_dashboard_trends(match_window=match_window, direction="desc")
     loser_chart = fetch_dashboard_trends(match_window=match_window, direction="asc")
