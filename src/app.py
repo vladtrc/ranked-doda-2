@@ -69,10 +69,23 @@ def games_partial(request: Request, offset: int = Query(default=0)):
 def players_page(request: Request):
     sort_by, sort_dir = DEFAULT_SORT
     players = fetch_players(sort_by=sort_by, sort_dir=sort_dir)
+    players_json = [
+        {
+            **player,
+            "last_game": player["last_game"].strftime("%Y-%m-%d") if player["last_game"] else None,
+        }
+        for player in players
+    ]
     return templates.TemplateResponse(
         request,
         "players.html",
-        {"players": players, "sort_by": sort_by, "sort_dir": sort_dir, "active_page": "players"},
+        {
+            "players": players,
+            "players_json": players_json,
+            "sort_by": sort_by,
+            "sort_dir": sort_dir,
+            "active_page": "players",
+        },
     )
 
 
@@ -104,19 +117,6 @@ def player_suggest(q: str = Query(default="")):
         return JSONResponse([])
     players = fetch_players(q, sort_by="games", sort_dir="desc")
     return JSONResponse([p["name"] for p in players[:8]])
-
-
-@app.get("/api/players", response_class=HTMLResponse)
-def players_partial(
-    request: Request,
-    q: str = Query(default=""),
-    sort_by: str = Query(default="games"),
-    sort_dir: str = Query(default="desc"),
-):
-    players = fetch_players(q, sort_by, sort_dir)
-    return templates.TemplateResponse(
-        request, "partials/players_rows.html", {"players": players}
-    )
 
 
 @app.get("/api/game/{match_id}", response_class=HTMLResponse)

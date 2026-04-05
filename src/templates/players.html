@@ -2,19 +2,9 @@
 {% block title %}Players – Dota Ranked{% endblock %}
 
 {% block content %}
+<script src="/static/players.js"></script>
 <div
-  x-data="{
-    sortBy: '{{ sort_by }}',
-    sortDir: '{{ sort_dir }}',
-    sort(col) {
-      if (this.sortBy === col) {
-        this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
-      } else {
-        this.sortBy = col;
-        this.sortDir = 'desc';
-      }
-    }
-  }"
+  x-data='playersTable({{ players_json | tojson | forceescape }}, {{ sort_by | tojson | forceescape }}, {{ sort_dir | tojson | forceescape }})'
 >
   <div class="overflow-x-auto rounded-box border border-base-300">
     <table class="table table-zebra table-sm w-full">
@@ -26,12 +16,6 @@
             <button
               class="flex items-center gap-1 hover:text-base-content transition-colors"
               @click="sort('{{ col }}')"
-              hx-get="/api/players"
-              hx-target="#players-tbody"
-              hx-swap="innerHTML"
-
-              :hx-vals='JSON.stringify({ sort_by: sortBy, sort_dir: sortDir })'
-              hx-trigger="click"
             >
               {{ label }}
               <span class="w-3 text-center">
@@ -62,8 +46,47 @@
           {{ th('last_game', 'Last Game') }}
         </tr>
       </thead>
-      <tbody id="players-tbody">
-        {% include "partials/players_rows.html" %}
+      <tbody>
+        <template x-if="sortedPlayers().length === 0">
+          <tr>
+            <td colspan="11" class="text-center text-base-content/40 py-8">No players found.</td>
+          </tr>
+        </template>
+        <template x-for="p in sortedPlayers()" :key="p.name">
+          <tr class="transition-colors hover:bg-base-300">
+            <td class="text-right tabular-nums">
+              <span
+                :class="p.wl > 0 ? 'text-success' : (p.wl < 0 ? 'text-error' : 'text-base-content/50')"
+                x-text="`${p.wl > 0 ? '+' : ''}${p.wl}`"
+              ></span>
+            </td>
+            <td class="font-semibold">
+              <a class="hover:underline" :href="`/player/${encodeURIComponent(p.name)}`" x-text="p.name"></a>
+            </td>
+            <td class="text-center">
+              <span class="badge badge-ghost badge-sm font-mono" x-text="p.top_pos"></span>
+            </td>
+            <td class="text-right tabular-nums" x-text="p.games"></td>
+            <td class="text-right tabular-nums" x-text="p.wins"></td>
+            <td class="text-right tabular-nums">
+              <span
+                :class="p.win_pct >= 50 ? 'text-success' : 'text-error'"
+                x-text="`${p.win_pct}%`"
+              ></span>
+            </td>
+            <td class="text-right tabular-nums text-sm" x-text="p.avg_k"></td>
+            <td class="text-right tabular-nums text-sm" x-text="p.avg_d"></td>
+            <td class="text-right tabular-nums text-sm" x-text="p.avg_a"></td>
+            <td
+              class="text-right tabular-nums text-sm text-base-content/70"
+              x-text="new Intl.NumberFormat('en-US').format(p.avg_gold)"
+            ></td>
+            <td
+              class="text-right tabular-nums text-sm text-base-content/50"
+              x-text="p.last_game || '—'"
+            ></td>
+          </tr>
+        </template>
       </tbody>
     </table>
   </div>
