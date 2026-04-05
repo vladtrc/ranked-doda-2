@@ -1,0 +1,97 @@
+{% macro stat(label, value, color='') %}
+<div class="stat">
+  <div class="stat-title text-xs">{{ label }}</div>
+  <div class="stat-value text-lg md:text-xl {{ color }}">{{ value }}</div>
+</div>
+{% endmacro %}
+
+<div
+  id="filtered-games-section"
+  data-player-name="{{ player_name }}"
+  data-available-positions='{{ position_counts.items() | selectattr("1", ">", 0) | map(attribute="0") | list | tojson }}'>
+  <section class="card border border-base-300 bg-base-200">
+    <div class="card-body gap-5 p-5">
+      <div class="flex flex-col gap-2 lg:flex-row lg:items-start lg:justify-between">
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+          <div>
+            <h2 class="text-lg font-semibold">Recent Games</h2>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-base-content/40 uppercase tracking-wider">POS</span>
+            <div class="flex gap-1">
+            {% set no_filter = selected_positions | length == 0 %}
+            {% for pos in range(1, 6) %}
+            {% set lit = position_counts[pos] > 0 and (pos in selected_positions or no_filter) %}
+            {% set available = position_counts[pos] > 0 %}
+            <button
+              type="button"
+              onclick="togglePos({{ pos }})"
+              class="btn btn-xs border-base-300 {{ 'bg-base-content text-base-100 border-base-content' if lit else 'btn-ghost ' ~ ('text-base-content/55' if available else 'text-base-content/25 pointer-events-none') }}"
+              {{ 'disabled' if not available }}>
+              {{ pos }}
+            </button>
+            {% endfor %}
+            </div>
+          </div>
+        </div>
+        <p class="text-sm text-base-content/50 lg:text-right">
+          {% if stats %}
+          {{ stats.games }} games from {{ stats.first_game.strftime('%Y-%m-%d') if stats.first_game else '—' }} to {{ stats.last_game.strftime('%Y-%m-%d') if stats.last_game else '—' }}.
+          {% else %}
+          No games for the selected positions.
+          {% endif %}
+        </p>
+      </div>
+
+      <section class="rounded-box border border-base-300 bg-base-100 p-3 sm:p-4">
+        <div class="flex flex-wrap items-stretch justify-evenly gap-3">
+          <div class="player-stat-card flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('Games', stats.games if stats else '—') }}
+          </div>
+          <div class="player-stat-card flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('Wins', stats.wins if stats else '—') }}
+          </div>
+          <div class="player-stat-card flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('W-L', ("%+d"|format(stats.wl|int)) if stats else '—', 'text-success' if stats and stats.wl >= 0 else ('text-error' if stats else '')) }}
+          </div>
+          <div class="player-stat-card flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('Win%', (stats.win_pct ~ '%') if stats else '—', 'text-success' if stats and stats.win_pct >= 50 else ('text-error' if stats else '')) }}
+          </div>
+          <div class="player-stat-card flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('Avg K', stats.avg_k if stats else '—') }}
+          </div>
+          <div class="player-stat-card flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('Avg D', stats.avg_d if stats else '—') }}
+          </div>
+          <div class="player-stat-card flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('Avg A', stats.avg_a if stats else '—') }}
+          </div>
+          <div class="player-stat-card flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('Avg Gold', "{:,}".format(stats.avg_gold) if stats and stats.avg_gold is not none else '—') }}
+          </div>
+        </div>
+      </section>
+
+      <div class="overflow-x-auto rounded-box border border-base-300 bg-base-100 recent-games-table-wrap">
+        <table class="table table-zebra table-sm w-full recent-games-table">
+          <thead>
+            <tr class="text-base-content/65 text-xs uppercase tracking-wider">
+              <th>Date</th>
+              <th>Duration</th>
+              <th class="text-center">Team</th>
+              <th class="text-center">Result</th>
+              <th class="text-center">Pos</th>
+              <th class="text-right">K</th>
+              <th class="text-right">D</th>
+              <th class="text-right">A</th>
+              <th class="text-right">Gold</th>
+            </tr>
+          </thead>
+          <tbody id="recent-games-tbody">
+            {% include "partials/player_recent_games_rows.html" %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>

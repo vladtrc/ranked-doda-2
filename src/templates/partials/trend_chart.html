@@ -1,5 +1,8 @@
-{% macro trend_chart(title, chart, title_class='text-base-content/50') %}
-<div class="flex flex-col gap-3" x-data="{ activeLine: null }">
+{% macro trend_chart(title, chart, title_class='text-base-content/50', emphasized_line=None) %}
+<div
+  class="flex flex-col gap-3"
+  data-trend-chart
+  data-emphasized-line="{{ emphasized_line or '' }}">
   <p class="text-xs font-semibold uppercase tracking-wider {{ title_class }}">{{ title }}</p>
   <div>
     <svg viewBox="0 0 {{ chart.width }} {{ chart.height }}" class="dashboard-chart" role="img" aria-label="{{ title }}">
@@ -22,9 +25,8 @@
 
       {% for line in chart.lines %}
       <g
-        @mouseenter="activeLine = '{{ line.player_name }}'"
-        @mouseleave="activeLine = null"
-        :class="activeLine && activeLine !== '{{ line.player_name }}' ? 'dashboard-series-faded' : ''">
+        data-trend-line="{{ line.player_name }}"
+        style="opacity: {{ '0.22' if emphasized_line and emphasized_line != line.player_name else '1' }}">
         <path d="{{ line.path }}" fill="none" stroke="{{ line.color }}" stroke-width="3.25" stroke-linecap="round" stroke-linejoin="round" style="animation-delay: {{ loop.index0 * 0.15 }}s"></path>
         <circle cx="{{ line.end_x }}" cy="{{ line.end_y }}" r="3.2" fill="{{ line.color }}" style="animation-delay: {{ 2.3 + loop.index0 * 0.15 }}s"></circle>
       </g>
@@ -36,9 +38,8 @@
   <div class="dashboard-legend">
     {% for line in chart.lines %}
     <div class="dashboard-legend-item px-1 py-1 text-xs"
-      @mouseenter="activeLine = '{{ line.player_name }}'"
-      @mouseleave="activeLine = null"
-      :class="activeLine && activeLine !== '{{ line.player_name }}' ? 'dashboard-legend-item-faded' : ''">
+      data-trend-line="{{ line.player_name }}"
+      style="opacity: {{ '0.22' if emphasized_line and emphasized_line != line.player_name else '1' }}">
       <span class="dashboard-legend-swatch" style="--swatch: {{ line.color }}"></span>
       <span class="dashboard-legend-name">{{ line.player_name }}</span>
       <span class="dashboard-legend-value">{{ "%+d"|format(line.latest_value|int) }}</span>
@@ -47,4 +48,40 @@
   </div>
   {% endif %}
 </div>
+<script>
+  if (!window.initTrendCharts) {
+    window.initTrendCharts = function () {
+      document.querySelectorAll("[data-trend-chart]").forEach((chart) => {
+        if (chart.dataset.trendChartReady === "1") return;
+        chart.dataset.trendChartReady = "1";
+
+        const emphasizedLine = chart.dataset.emphasizedLine || "";
+        const lineItems = Array.from(chart.querySelectorAll("[data-trend-line]"));
+
+        const paint = (activeLine) => {
+          lineItems.forEach((item) => {
+            const name = item.dataset.trendLine;
+            if (activeLine) {
+              item.style.opacity = name === activeLine ? "1" : "0.18";
+              return;
+            }
+            item.style.opacity = emphasizedLine && name !== emphasizedLine ? "0.22" : "1";
+          });
+        };
+
+        paint("");
+
+        lineItems.forEach((item) => {
+          item.addEventListener("mouseenter", () => paint(item.dataset.trendLine));
+          item.addEventListener("mouseleave", () => paint(""));
+        });
+      });
+    };
+
+    document.addEventListener("DOMContentLoaded", window.initTrendCharts);
+    document.addEventListener("htmx:afterSwap", window.initTrendCharts);
+  }
+
+  window.initTrendCharts();
+</script>
 {% endmacro %}

@@ -1,5 +1,6 @@
 .PHONY: csv leaderboard main info personal players optimize rank-trueskill rank-bt rank-all sync serve lint type
 
+# deploy via .deploy folder
 # rebuild CSV exports from data.txt
 csv:
 	uv run python -m src.main_save

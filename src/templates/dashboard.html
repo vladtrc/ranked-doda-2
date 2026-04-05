@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Dashboard – Dota Ranked{% endblock %}
+{% block title %}Leaderboard – Dota Ranked{% endblock %}
 {% from "partials/trend_chart.html" import trend_chart %}
 
 {% macro lane_rows(rows, positions) %}
@@ -38,8 +38,8 @@
 
     <div class="flex flex-col gap-4">
       <div>
-        <p class="mb-2 text-xs font-semibold uppercase tracking-wider text-success/70">Best</p>
-        <div class="overflow-x-auto">
+        <div class="rounded-box border-2 bg-base-100 p-3" style="border-color: var(--color-success);">
+          <div class="dashboard-lane-table-wrap overflow-x-auto rounded-md">
           <table class="table table-sm w-full table-fixed dashboard-lane-table">
             <thead>
               <tr class="text-xs uppercase tracking-wider text-base-content/55">
@@ -51,12 +51,13 @@
             </thead>
             <tbody>{{ lane_rows(best, positions) }}</tbody>
           </table>
+          </div>
         </div>
       </div>
 
       <div>
-        <p class="mb-2 text-xs font-semibold uppercase tracking-wider text-error/70">Worst</p>
-        <div class="overflow-x-auto">
+        <div class="rounded-box border-2 bg-base-100 p-3" style="border-color: var(--color-error);">
+          <div class="dashboard-lane-table-wrap overflow-x-auto rounded-md">
           <table class="table table-sm w-full table-fixed dashboard-lane-table">
             <thead>
               <tr class="text-xs uppercase tracking-wider text-base-content/55">
@@ -68,6 +69,7 @@
             </thead>
             <tbody>{{ lane_rows(worst, positions) }}</tbody>
           </table>
+          </div>
         </div>
       </div>
     </div>
@@ -80,7 +82,7 @@
   <section class="card border border-base-300 bg-base-200">
     <div class="card-body gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
       <div class="flex flex-col gap-1">
-        <h1 class="text-xl font-semibold">Dashboard</h1>
+        <h1 class="text-xl font-semibold">Leaderboard</h1>
         <p class="text-sm text-base-content/60">All analytics below are recalculated for {{ window_label|lower }}.</p>
       </div>
 
@@ -99,9 +101,13 @@
         <p class="text-sm text-base-content/40 text-right">{{ window_label }}. W-L resets at the start of the window.</p>
       </div>
       <div class="grid gap-6 grid-cols-1 lg:grid-cols-[1fr_1px_1fr]">
-        {{ trend_chart('Best', leader_chart, 'text-success/70') }}
+        <div class="rounded-box border-2 bg-base-100 p-3" style="border-color: var(--color-success);">
+          {{ trend_chart('', leader_chart, 'hidden') }}
+        </div>
         <div class="hidden lg:block bg-base-300"></div>
-        {{ trend_chart('Worst', loser_chart, 'text-error/70') }}
+        <div class="rounded-box border-2 bg-base-100 p-3" style="border-color: var(--color-error);">
+          {{ trend_chart('', loser_chart, 'hidden') }}
+        </div>
       </div>
     </div>
   </section>

@@ -2,6 +2,14 @@ from .dashboard_trends import build_trend_chart
 from ..db import get_conn
 
 PLAYER_TREND_COLORS = ["#f8fafc", "#ef4444", "#60a5fa", "#facc15", "#2dd4bf", "#84cc16"]
+PLAYER_TREND_LINE_COLORS = {
+    "Overall": "#f8fafc",
+    1: "#ef4444",
+    2: "#60a5fa",
+    3: "#facc15",
+    4: "#2dd4bf",
+    5: "#84cc16",
+}
 
 VALID_SORT_COLS = {
     "name",
@@ -235,6 +243,7 @@ def fetch_player_trend(name: str, positions: list[int] | None = None) -> dict:
         [
             {
                 "player_name": "Overall",
+                "color": PLAYER_TREND_LINE_COLORS["Overall"],
                 "points": [{"match_idx": 0, "date_time": first_date, "value": 0}, *overall_points],
                 "latest_value": overall_latest,
             },
@@ -242,6 +251,7 @@ def fetch_player_trend(name: str, positions: list[int] | None = None) -> dict:
                 [
                     {
                         "player_name": f"POS {position}",
+                        "color": PLAYER_TREND_LINE_COLORS[position],
                         "points": [{"match_idx": 0, "date_time": first_date, "value": 0}, *points],
                         "latest_value": latest_values[position],
                     }

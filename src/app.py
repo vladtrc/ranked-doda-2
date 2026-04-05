@@ -30,14 +30,14 @@ _PLAYER_GAMES_PAGE_SIZE = 20
 
 
 _PAGE_SIZE = 20
-_DEFAULT_DASHBOARD_WINDOW = "50"
-_DASHBOARD_WINDOWS: list[dict[str, str | int | None]] = [
+_DEFAULT_LEADERBOARD_WINDOW = "50"
+_LEADERBOARD_WINDOWS: list[dict[str, str | int | None]] = [
     {"key": "15", "matches": 15, "label": "15 matches"},
     {"key": "50", "matches": 50, "label": "50 matches"},
     {"key": "100", "matches": 100, "label": "100 matches"},
     {"key": "all", "matches": None, "label": "All time"},
 ]
-_DASHBOARD_WINDOW_MAP = {item["key"]: item["matches"] for item in _DASHBOARD_WINDOWS}
+_LEADERBOARD_WINDOW_MAP = {item["key"]: item["matches"] for item in _LEADERBOARD_WINDOWS}
 
 
 @asynccontextmanager
@@ -99,10 +99,10 @@ def players_page(request: Request):
 
 
 @app.get("/dashboard", response_class=HTMLResponse)
-def dashboard_page(request: Request, window: str = Query(default=_DEFAULT_DASHBOARD_WINDOW)):
-    if window not in _DASHBOARD_WINDOW_MAP:
-        window = _DEFAULT_DASHBOARD_WINDOW
-    match_window = _DASHBOARD_WINDOW_MAP[window]
+def leaderboard_page(request: Request, window: str = Query(default=_DEFAULT_LEADERBOARD_WINDOW)):
+    if window not in _LEADERBOARD_WINDOW_MAP:
+        window = _DEFAULT_LEADERBOARD_WINDOW
+    match_window = _LEADERBOARD_WINDOW_MAP[window]
     leader_chart = fetch_dashboard_trends(match_window=match_window, direction="desc")
     loser_chart = fetch_dashboard_trends(match_window=match_window, direction="asc")
     lane_tables = fetch_dashboard_lane_stats(match_window=match_window)
@@ -112,7 +112,7 @@ def dashboard_page(request: Request, window: str = Query(default=_DEFAULT_DASHBO
         {
             "active_page": "dashboard",
             "window": window,
-            "dashboard_windows": _DASHBOARD_WINDOWS,
+            "dashboard_windows": _LEADERBOARD_WINDOWS,
             "window_label": "All time" if match_window is None else f"Last {match_window} matches",
             "leader_chart": leader_chart,
             "loser_chart": loser_chart,
@@ -153,6 +153,29 @@ def player_games_partial(request: Request, name: str, offset: int = Query(defaul
     )
 
 
+@app.get("/api/player/{name}/filtered", response_class=HTMLResponse)
+def player_filtered_partial(request: Request, name: str, positions: str = Query(default="")):
+    selected = _parse_positions(positions)
+    player = fetch_player(name)
+    position_counts = fetch_player_positions(name) if player else {pos: 0 for pos in range(1, 6)}
+    stats = fetch_player_stats(name, selected or None) if player else None
+    recent_games = fetch_recent_games(name, limit=_PLAYER_GAMES_PAGE_SIZE, offset=0, positions=selected or None) if player else []
+    return templates.TemplateResponse(
+        request,
+        "partials/player_filtered_section.html",
+        {
+            "player": player,
+            "player_name": name,
+            "stats": stats,
+            "recent_games": recent_games,
+            "offset": _PLAYER_GAMES_PAGE_SIZE,
+            "positions": positions,
+            "selected_positions": selected,
+            "position_counts": position_counts,
+        },
+    )
+
+
 @app.get("/player", response_class=RedirectResponse)
 def player_search(name: str = Query(default="")):
     return RedirectResponse(url=f"/player/{name}")
@@ -164,7 +187,7 @@ def player_profile(request: Request, name: str, positions: str = Query(default="
     player = fetch_player(name)
     position_counts = fetch_player_positions(name) if player else {pos: 0 for pos in range(1, 6)}
     stats = fetch_player_stats(name, selected or None) if player else None
-    trend_chart = fetch_player_trend(name, selected or None) if player else None
+    trend_chart = fetch_player_trend(name) if player else None
     recent_games = fetch_recent_games(name, limit=_PLAYER_GAMES_PAGE_SIZE, offset=0, positions=selected or None) if player else []
     return templates.TemplateResponse(
         request,

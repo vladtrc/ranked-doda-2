@@ -5,190 +5,158 @@
 {% block content %}
 {% if player %}
 <div class="flex flex-col gap-6">
-
-  {% macro stat(label, value, color='') %}
-  <div class="stat">
-    <div class="stat-title text-xs">{{ label }}</div>
-    <div class="stat-value text-lg md:text-xl {{ color }}">{{ value }}</div>
-  </div>
-  {% endmacro %}
-
-  <section class="card border border-base-300 bg-base-200">
-    <div class="card-body gap-4 p-4">
-      <div class="flex flex-col gap-2 lg:flex-row lg:items-start lg:justify-between">
-        <h1 class="text-2xl font-bold">{{ player.name }}</h1>
-        <p class="text-sm text-base-content/60 lg:text-right">Player profile across all tracked matches.</p>
-      </div>
-
-      <div class="rounded-box border border-base-300 bg-base-100 p-3">
-        <div class="flex flex-wrap items-stretch justify-evenly gap-3">
-          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
-            {{ stat('Matches', player.games) }}
-          </div>
-          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
-            {{ stat('First Match', player.first_game.strftime('%Y-%m-%d') if player.first_game else '—') }}
-          </div>
-          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
-            {{ stat('Last Match', player.last_game.strftime('%Y-%m-%d') if player.last_game else '—') }}
-          </div>
-          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
-            {{ stat('Wins', player.wins) }}
-          </div>
-          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
-            {{ stat('W-L', "%+d"|format(player.wl|int), 'text-success' if player.wl >= 0 else 'text-error') }}
-          </div>
-          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
-            {{ stat('Win%', player.win_pct ~ '%', 'text-success' if player.win_pct >= 50 else 'text-error') }}
-          </div>
-        </div>
-      </div>
+    {% macro stat(label, value, color='') %}
+    <div class="stat">
+        <div class="stat-title text-xs">{{ label }}</div>
+        <div class="stat-value text-lg md:text-xl {{ color }}">{{ value }}</div>
     </div>
-  </section>
+    {% endmacro %}
 
-  <section class="card border border-base-300 bg-base-200">
-    <div class="card-body gap-5 p-4">
-      <div class="flex flex-col gap-2 lg:flex-row lg:items-start lg:justify-between">
-        <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <h2 class="text-lg font-semibold">Filtered Dashboard</h2>
-          <div class="flex items-center gap-2">
-            <span class="text-xs text-base-content/40 uppercase tracking-wider">POS</span>
-            <div class="flex gap-1">
-          {% set no_filter = selected_positions | length == 0 %}
-          {% for pos in range(1, 6) %}
-          {% set lit = position_counts[pos] > 0 and (pos in selected_positions or no_filter) %}
-          {% set available = position_counts[pos] > 0 %}
-          <button
-            onclick="togglePos({{ pos }})"
-            class="btn btn-xs border-base-300 {{ 'bg-base-content text-base-100 border-base-content' if lit else 'btn-ghost ' ~ ('text-base-content/55' if available else 'text-base-content/25 pointer-events-none') }}"
-            {{ 'disabled' if not available }}>
-            {{ pos }}
-          </button>
-          {% endfor %}
+    <section class="card border border-base-300 bg-base-200">
+        <div class="card-body gap-5 p-5">
+            <div
+                class="player-page-hero flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between"
+            >
+                <div class="flex flex-col gap-2">
+                    <h1 class="text-3xl font-bold leading-none sm:text-4xl">{{ player.name }}</h1>
+                </div>
             </div>
-          </div>
+
+            <div class="rounded-box border border-base-300 bg-base-100 p-3 sm:p-4">
+                <div class="flex flex-wrap items-stretch justify-evenly gap-3">
+                    <div
+                        class="player-stat-card flex-none rounded-box border border-base-300 bg-base-200/55"
+                    >
+                        {{ stat('Matches', player.games) }}
+                    </div>
+                    <div
+                        class="player-stat-card flex-none rounded-box border border-base-300 bg-base-200/55"
+                    >
+                        {{ stat('First Match',
+                        player.first_game.strftime('%Y-%m-%d') if
+                        player.first_game else '—') }}
+                    </div>
+                    <div
+                        class="player-stat-card flex-none rounded-box border border-base-300 bg-base-200/55"
+                    >
+                        {{ stat('Last Match',
+                        player.last_game.strftime('%Y-%m-%d') if
+                        player.last_game else '—') }}
+                    </div>
+                    <div
+                        class="player-stat-card flex-none rounded-box border border-base-300 bg-base-200/55"
+                    >
+                        {{ stat('Wins', player.wins) }}
+                    </div>
+                    <div
+                        class="player-stat-card flex-none rounded-box border border-base-300 bg-base-200/55"
+                    >
+                        {{ stat('W-L', "%+d"|format(player.wl|int),
+                        'text-success' if player.wl >= 0 else 'text-error') }}
+                    </div>
+                    <div
+                        class="player-stat-card flex-none rounded-box border border-base-300 bg-base-200/55"
+                    >
+                        {{ stat('Win%', player.win_pct ~ '%', 'text-success' if
+                        player.win_pct >= 50 else 'text-error') }}
+                    </div>
+                </div>
+            </div>
         </div>
-        <p class="text-sm text-base-content/50 lg:text-right">
-          {% if stats %}
-          {{ stats.games }} games from {{ stats.first_game.strftime('%Y-%m-%d') if stats.first_game else '—' }} to {{ stats.last_game.strftime('%Y-%m-%d') if stats.last_game else '—' }}.
-          {% else %}
-          No games for the selected positions.
-          {% endif %}
-        </p>
-      </div>
+    </section>
 
-      <section class="rounded-box border border-base-300 bg-base-100 p-4">
-        {{ render_trend_chart('Cumulative W-L', trend_chart, 'text-info/70') }}
-      </section>
+    <section class="card border border-base-300 bg-base-200">
+        <div class="card-body gap-5 p-5">
+            <div
+                class="flex flex-col gap-2 lg:flex-row lg:items-start lg:justify-between"
+            >
+                <div>
+                    <h2 class="text-lg font-semibold">W-L by Position</h2>
+                </div>
+            </div>
 
-      <section class="rounded-box border border-base-300 bg-base-100 p-3">
-        <div class="flex flex-wrap items-stretch justify-evenly gap-3">
-          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
-            {{ stat('Games', stats.games if stats else '—') }}
-          </div>
-          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
-            {{ stat('Wins', stats.wins if stats else '—') }}
-          </div>
-          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
-            {{ stat('W-L', ("%+d"|format(stats.wl|int)) if stats else '—', 'text-success' if stats and stats.wl >= 0 else ('text-error' if stats else '')) }}
-          </div>
-          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
-            {{ stat('Win%', (stats.win_pct ~ '%') if stats else '—', 'text-success' if stats and stats.win_pct >= 50 else ('text-error' if stats else '')) }}
-          </div>
-          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
-            {{ stat('Avg K', stats.avg_k if stats else '—') }}
-          </div>
-          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
-            {{ stat('Avg D', stats.avg_d if stats else '—') }}
-          </div>
-          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
-            {{ stat('Avg A', stats.avg_a if stats else '—') }}
-          </div>
-          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
-            {{ stat('Avg Gold', "{:,}".format(stats.avg_gold) if stats and stats.avg_gold is not none else '—') }}
-          </div>
+            <section class="rounded-box border border-base-300 bg-base-100 p-4">
+                {{ render_trend_chart('Cumulative W-L', trend_chart,
+                'text-info/70', 'Overall') }}
+            </section>
         </div>
-      </section>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <div class="mb-3 flex items-center gap-4">
-      <h2 class="text-lg font-semibold">Games</h2>
-      <p class="text-sm text-base-content/45">List below respects the current `POS` filter.</p>
-    </div>
-    <div class="overflow-x-auto rounded-box border border-base-300">
-      <table class="table table-zebra table-sm w-full">
-        <thead>
-          <tr class="bg-base-200 text-base-content/70 text-xs uppercase tracking-wider">
-            <th>Date</th>
-            <th>Duration</th>
-            <th class="text-center">Team</th>
-            <th class="text-center">Result</th>
-            <th class="text-center">Pos</th>
-            <th class="text-right">K</th>
-            <th class="text-right">D</th>
-            <th class="text-right">A</th>
-            <th class="text-right">Gold</th>
-          </tr>
-        </thead>
-        <tbody id="recent-games-tbody">
-          {% include "partials/player_recent_games_rows.html" %}
-        </tbody>
-      </table>
-    </div>
-  </section>
+    {% include "partials/player_filtered_section.html" %}
 
-  <dialog id="game-modal" class="modal modal-bottom sm:modal-middle">
-    <div class="modal-box max-w-2xl p-4">
-      <div id="game-modal-body" class="min-h-[100px] flex items-center justify-center text-base-content/30 text-sm">
-        Loading...
-      </div>
-      <div class="modal-action mt-3">
-        <form method="dialog"><button class="btn btn-sm btn-ghost">Close</button></form>
-      </div>
-    </div>
-    <form method="dialog" class="modal-backdrop"><button>close</button></form>
-  </dialog>
+    <dialog id="game-modal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box max-w-2xl p-4">
+            <div
+                id="game-modal-body"
+                class="min-h-[100px] flex items-center justify-center text-base-content/30 text-sm"
+            >
+                Loading...
+            </div>
+            <div class="modal-action mt-3">
+                <form method="dialog">
+                    <button class="btn btn-sm btn-ghost">Close</button>
+                </form>
+            </div>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+        </form>
+    </dialog>
 
-  <script>
-    window.openGameModal = function () {
-      const body = document.getElementById("game-modal-body");
-      body.textContent = "Loading...";
-      document.getElementById("game-modal").showModal();
-    };
+    <script>
+        window.openGameModal = function () {
+            const body = document.getElementById("game-modal-body");
+            body.textContent = "Loading...";
+            document.getElementById("game-modal").showModal();
+        };
 
-    const _available = {{ position_counts.items() | selectattr('1', '>', 0) | map(attribute='0') | list | tojson }};
-    const _selected = new Set({{ selected_positions | tojson }});
-    const _noFilter = _selected.size === 0;
-
-    window.togglePos = function(pos) {
-      let next;
-      if (_noFilter) {
-        // все активны → клик исключает одну, остальные остаются
-        next = new Set(_available.filter(p => p !== pos));
-      } else if (_selected.has(pos)) {
-        next = new Set([..._selected].filter(p => p !== pos));
-      } else {
-        next = new Set([..._selected, pos]);
-      }
-      // если осталось всё доступное — сброс в no_filter
-      if (_available.every(p => next.has(p))) next = new Set();
-      const url = new URL(window.location);
-      const sorted = Array.from(next).sort();
-      if (sorted.length > 0) {
-        url.searchParams.set('positions', sorted.join(','));
-      } else {
-        url.searchParams.delete('positions');
-      }
-      window.location = url.toString();
-    };
-  </script>
-
+        window.togglePos = function (pos) {
+            const section = document.getElementById("filtered-games-section");
+            const available = JSON.parse(
+                section.dataset.availablePositions || "[]",
+            );
+            const params = new URLSearchParams(window.location.search);
+            const selectedValues = (params.get("positions") || "")
+                .split(",")
+                .filter(Boolean)
+                .map(Number)
+                .filter((p) => available.includes(p));
+            const selected = new Set(selectedValues);
+            const noFilter = selected.size === 0;
+            let next;
+            if (noFilter) {
+                // все активны → клик исключает одну, остальные остаются
+                next = new Set(available.filter((p) => p !== pos));
+            } else if (selected.has(pos)) {
+                next = new Set([...selected].filter((p) => p !== pos));
+            } else {
+                next = new Set([...selected, pos]);
+            }
+            // если осталось всё доступное — сброс в no_filter
+            if (available.every((p) => next.has(p))) next = new Set();
+            const url = new URL(window.location);
+            const sorted = Array.from(next).sort();
+            if (sorted.length > 0) {
+                url.searchParams.set("positions", sorted.join(","));
+            } else {
+                url.searchParams.delete("positions");
+            }
+            window.history.replaceState({}, "", url.toString());
+            htmx.ajax(
+                "GET",
+                `/api/player/${encodeURIComponent(section.dataset.playerName)}/filtered${url.search}`,
+                {
+                    target: "#filtered-games-section",
+                    swap: "outerHTML",
+                },
+            );
+        };
+    </script>
 </div>
 {% else %}
 <div class="text-center py-20">
-  <p class="text-base-content/40 text-lg">Player not found.</p>
-  <a href="/players" class="btn btn-ghost btn-sm mt-4">← Back to Players</a>
+    <p class="text-base-content/40 text-lg">Player not found.</p>
+    <a href="/players" class="btn btn-ghost btn-sm mt-4">← Back to Players</a>
 </div>
 {% endif %}
 {% endblock %}

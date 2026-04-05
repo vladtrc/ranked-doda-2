@@ -115,7 +115,7 @@ def build_trend_chart(lines: list[dict], palette: list[str], total_matches: int 
         rendered_lines.append(
             {
                 **line,
-                "color": palette[idx % len(palette)],
+                "color": line.get("color", palette[idx % len(palette)]),
                 "polyline": polyline,
                 "path": path,
                 "end_x": round(scale_x(last_point["match_idx"]), 1),
