@@ -29,7 +29,14 @@ _PLAYER_GAMES_PAGE_SIZE = 20
 
 
 _PAGE_SIZE = 20
-_DASHBOARD_WINDOWS: dict[str, int | None] = {"10": 10, "50": 50, "100": 100, "all": None}
+_DEFAULT_DASHBOARD_WINDOW = "50"
+_DASHBOARD_WINDOWS: list[dict[str, str | int | None]] = [
+    {"key": "15", "matches": 15, "label": "15 matches"},
+    {"key": "50", "matches": 50, "label": "50 matches"},
+    {"key": "100", "matches": 100, "label": "100 matches"},
+    {"key": "all", "matches": None, "label": "All time"},
+]
+_DASHBOARD_WINDOW_MAP = {item["key"]: item["matches"] for item in _DASHBOARD_WINDOWS}
 
 
 @asynccontextmanager
@@ -90,10 +97,10 @@ def players_page(request: Request):
 
 
 @app.get("/dashboard", response_class=HTMLResponse)
-def dashboard_page(request: Request, window: str = Query(default="50")):
-    if window not in _DASHBOARD_WINDOWS:
-        window = "50"
-    match_window = _DASHBOARD_WINDOWS[window]
+def dashboard_page(request: Request, window: str = Query(default=_DEFAULT_DASHBOARD_WINDOW)):
+    if window not in _DASHBOARD_WINDOW_MAP:
+        window = _DEFAULT_DASHBOARD_WINDOW
+    match_window = _DASHBOARD_WINDOW_MAP[window]
     leader_chart = fetch_dashboard_trends(match_window=match_window, direction="desc")
     loser_chart = fetch_dashboard_trends(match_window=match_window, direction="asc")
     lane_tables = fetch_dashboard_lane_stats(match_window=match_window)
@@ -103,6 +110,7 @@ def dashboard_page(request: Request, window: str = Query(default="50")):
         {
             "active_page": "dashboard",
             "window": window,
+            "dashboard_windows": _DASHBOARD_WINDOWS,
             "window_label": "All time" if match_window is None else f"Last {match_window} matches",
             "leader_chart": leader_chart,
             "loser_chart": loser_chart,
