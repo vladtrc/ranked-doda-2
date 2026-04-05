@@ -1,0 +1,50 @@
+{% macro trend_chart(title, chart, title_class='text-base-content/50') %}
+<div class="flex flex-col gap-3" x-data="{ activeLine: null }">
+  <p class="text-xs font-semibold uppercase tracking-wider {{ title_class }}">{{ title }}</p>
+  <div>
+    <svg viewBox="0 0 {{ chart.width }} {{ chart.height }}" class="dashboard-chart" role="img" aria-label="{{ title }}">
+      <rect x="0" y="0" width="{{ chart.width }}" height="{{ chart.height }}" rx="20" fill="transparent"></rect>
+
+      {% for tick in chart.y_ticks %}
+      <line
+        x1="56"
+        y1="{{ tick.y }}"
+        x2="{{ chart.width - 28 }}"
+        y2="{{ tick.y }}"
+        class="dashboard-gridline {{ 'dashboard-gridline-zero' if tick.value == 0 else '' }}"></line>
+      <text x="12" y="{{ tick.y + 4 }}" class="dashboard-axis-label">{{ tick.value }}</text>
+      {% endfor %}
+
+      {% for tick in chart.x_ticks %}
+      <line x1="{{ tick.x }}" y1="24" x2="{{ tick.x }}" y2="{{ chart.height - 42 }}" class="dashboard-gridline dashboard-gridline-vertical"></line>
+      <text x="{{ tick.x }}" y="{{ chart.height - 16 }}" text-anchor="{{ tick.anchor }}" class="dashboard-axis-label">{{ tick.label }}</text>
+      {% endfor %}
+
+      {% for line in chart.lines %}
+      <g
+        @mouseenter="activeLine = '{{ line.player_name }}'"
+        @mouseleave="activeLine = null"
+        :class="activeLine && activeLine !== '{{ line.player_name }}' ? 'dashboard-series-faded' : ''">
+        <path d="{{ line.path }}" fill="none" stroke="{{ line.color }}" stroke-width="3.25" stroke-linecap="round" stroke-linejoin="round" style="animation-delay: {{ loop.index0 * 0.15 }}s"></path>
+        <circle cx="{{ line.end_x }}" cy="{{ line.end_y }}" r="3.2" fill="{{ line.color }}" style="animation-delay: {{ 2.3 + loop.index0 * 0.15 }}s"></circle>
+      </g>
+      {% endfor %}
+    </svg>
+  </div>
+
+  {% if chart.lines %}
+  <div class="dashboard-legend">
+    {% for line in chart.lines %}
+    <div class="dashboard-legend-item px-1 py-1 text-xs"
+      @mouseenter="activeLine = '{{ line.player_name }}'"
+      @mouseleave="activeLine = null"
+      :class="activeLine && activeLine !== '{{ line.player_name }}' ? 'dashboard-legend-item-faded' : ''">
+      <span class="dashboard-legend-swatch" style="--swatch: {{ line.color }}"></span>
+      <span class="dashboard-legend-name">{{ line.player_name }}</span>
+      <span class="dashboard-legend-value">{{ "%+d"|format(line.latest_value|int) }}</span>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endmacro %}

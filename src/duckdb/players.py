@@ -1,4 +1,7 @@
+from .dashboard_trends import build_trend_chart
 from ..db import get_conn
+
+PLAYER_TREND_COLORS = ["#f8fafc", "#ef4444", "#60a5fa", "#facc15", "#2dd4bf", "#84cc16"]
 
 VALID_SORT_COLS = {
     "name",
@@ -11,6 +14,7 @@ VALID_SORT_COLS = {
     "avg_a",
     "avg_gold",
     "top_pos",
+    "first_game",
     "last_game",
 }
 DEFAULT_SORT = ("wl", "desc")
@@ -28,6 +32,7 @@ SELECT
     round(avg(pr.assists), 1)                              AS avg_a,
     cast(round(avg(pr.net_worth)) AS bigint)               AS avg_gold,
     arg_max(pr.position, cnt_pos.cnt)                      AS top_pos,
+    min(m.date_time)                                       AS first_game,
     max(m.date_time)                                       AS last_game
 FROM player_result pr
 JOIN "match" m USING (match_id)
@@ -51,7 +56,7 @@ def fetch_players(q: str = "", sort_by: str = "games", sort_dir: str = "desc") -
     sql = PLAYERS_SQL.format(where=where, sort_col=sort_by, sort_dir=sort_dir)
     params = [f"%{q}%"] if q else []
     rows = conn.execute(sql, params).fetchall()
-    cols = ["name", "games", "wins", "win_pct", "wl", "avg_k", "avg_d", "avg_a", "avg_gold", "top_pos", "last_game"]
+    cols = ["name", "games", "wins", "win_pct", "wl", "avg_k", "avg_d", "avg_a", "avg_gold", "top_pos", "first_game", "last_game"]
     return [dict(zip(cols, row)) for row in rows]
 
 
@@ -76,12 +81,15 @@ def fetch_player_stats(name: str, positions: list[int] | None = None) -> dict | 
         SELECT
             count(*) AS games,
             sum(CASE WHEN pr.team = m.winning_team THEN 1 ELSE 0 END) AS wins,
+            sum(CASE WHEN pr.team = m.winning_team THEN 1 ELSE -1 END) AS wl,
             cast(round(100.0 * sum(CASE WHEN pr.team = m.winning_team THEN 1 ELSE 0 END)
                  / nullif(count(*), 0)) AS int) AS win_pct,
             round(avg(pr.kills),   1) AS avg_k,
             round(avg(pr.deaths),  1) AS avg_d,
             round(avg(pr.assists), 1) AS avg_a,
-            cast(round(avg(pr.net_worth)) AS bigint) AS avg_gold
+            cast(round(avg(pr.net_worth)) AS bigint) AS avg_gold,
+            min(m.date_time) AS first_game,
+            max(m.date_time) AS last_game
         FROM player_result pr
         JOIN "match" m USING (match_id)
         WHERE lower(pr.player_name) = lower(?)
@@ -91,7 +99,7 @@ def fetch_player_stats(name: str, positions: list[int] | None = None) -> dict | 
     ).fetchone()
     if not rows or rows[0] == 0:
         return None
-    cols = ["games", "wins", "win_pct", "avg_k", "avg_d", "avg_a", "avg_gold"]
+    cols = ["games", "wins", "wl", "win_pct", "avg_k", "avg_d", "avg_a", "avg_gold", "first_game", "last_game"]
     return dict(zip(cols, rows))
 
 
@@ -151,3 +159,97 @@ def fetch_recent_games(name: str, limit: int, offset: int, positions: list[int] 
         game["won"] = game["team"] == game["winning_team"]
         result.append(game)
     return result
+
+
+def fetch_player_trend(name: str, positions: list[int] | None = None) -> dict:
+    conn = get_conn()
+    if positions:
+        placeholders = ", ".join(["?" for _ in positions])
+        pos_filter = f"AND pr.position IN ({placeholders})"
+        params = [name, *positions]
+    else:
+        pos_filter = ""
+        params = [name]
+
+    rows = conn.execute(
+        f"""
+        WITH player_matches AS (
+            SELECT
+                m.date_time,
+                pr.position,
+                row_number() OVER (ORDER BY m.date_time ASC, m.match_id ASC) AS match_idx,
+                CASE WHEN pr.team = m.winning_team THEN 1 ELSE -1 END AS wl_delta
+            FROM player_result pr
+            JOIN "match" m USING (match_id)
+            WHERE lower(pr.player_name) = lower(?)
+            {pos_filter}
+        ),
+        selected_positions AS (
+            SELECT DISTINCT position
+            FROM player_matches
+        ),
+        filled AS (
+            SELECT
+                pm.match_idx,
+                pm.date_time,
+                sp.position,
+                sum(CASE WHEN pm.position = sp.position THEN pm.wl_delta ELSE 0 END) OVER (
+                    PARTITION BY sp.position
+                    ORDER BY pm.match_idx
+                    ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+                ) AS cumulative_wl
+            FROM player_matches pm
+            CROSS JOIN selected_positions sp
+        )
+        SELECT position, date_time, match_idx, cumulative_wl
+        FROM filled
+        ORDER BY match_idx ASC, position ASC
+        """,
+        params,
+    ).fetchall()
+
+    if not rows:
+        return build_trend_chart([], PLAYER_TREND_COLORS, 0)
+
+    by_position: dict[int, list[dict]] = {}
+    latest_values: dict[int, int] = {}
+    total_matches = 0
+    first_date = rows[0][1]
+    overall_by_match: dict[int, dict] = {}
+    for position, date_time, match_idx, cumulative_wl in rows:
+        by_position.setdefault(position, []).append(
+            {"match_idx": match_idx, "date_time": date_time, "value": cumulative_wl}
+        )
+        latest_values[position] = cumulative_wl
+        total_matches = max(total_matches, match_idx)
+        overall_by_match[match_idx] = {"match_idx": match_idx, "date_time": date_time}
+
+    overall_points = []
+    overall_latest = 0
+    for match_idx in sorted(overall_by_match):
+        total_value = sum(points[match_idx - 1]["value"] for points in by_position.values())
+        overall_points.append({**overall_by_match[match_idx], "value": total_value})
+        overall_latest = total_value
+
+    return build_trend_chart(
+        [
+            {
+                "player_name": "Overall",
+                "points": [{"match_idx": 0, "date_time": first_date, "value": 0}, *overall_points],
+                "latest_value": overall_latest,
+            },
+            *sorted(
+                [
+                    {
+                        "player_name": f"POS {position}",
+                        "points": [{"match_idx": 0, "date_time": first_date, "value": 0}, *points],
+                        "latest_value": latest_values[position],
+                    }
+                    for position, points in by_position.items()
+                ],
+                key=lambda line: line["player_name"],
+            ),
+        ],
+        PLAYER_TREND_COLORS,
+        total_matches,
+    )

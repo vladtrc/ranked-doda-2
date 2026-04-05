@@ -14,6 +14,7 @@ from .duckdb import (
     fetch_game,
     fetch_games,
     fetch_player,
+    fetch_player_trend,
     fetch_players,
     fetch_recent_games,
 )
@@ -79,6 +80,7 @@ def players_page(request: Request):
     players_json = [
         {
             **player,
+            "first_game": player["first_game"].strftime("%Y-%m-%d") if player["first_game"] else None,
             "last_game": player["last_game"].strftime("%Y-%m-%d") if player["last_game"] else None,
         }
         for player in players
@@ -162,6 +164,7 @@ def player_profile(request: Request, name: str, positions: str = Query(default="
     player = fetch_player(name)
     position_counts = fetch_player_positions(name) if player else {pos: 0 for pos in range(1, 6)}
     stats = fetch_player_stats(name, selected or None) if player else None
+    trend_chart = fetch_player_trend(name, selected or None) if player else None
     recent_games = fetch_recent_games(name, limit=_PLAYER_GAMES_PAGE_SIZE, offset=0, positions=selected or None) if player else []
     return templates.TemplateResponse(
         request,
@@ -169,6 +172,7 @@ def player_profile(request: Request, name: str, positions: str = Query(default="
         {
             "player": player,
             "stats": stats,
+            "trend_chart": trend_chart,
             "recent_games": recent_games,
             "player_name": name,
             "offset": _PLAYER_GAMES_PAGE_SIZE,

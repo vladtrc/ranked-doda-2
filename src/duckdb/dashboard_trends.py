@@ -72,7 +72,7 @@ def _smooth_zigzag(points: list[dict]) -> list[dict]:
     return [{**p, "value": v} for p, v in zip(points, values)]
 
 
-def _build_trend_chart(lines: list[dict], palette: list[str], total_matches: int = 0) -> dict:
+def build_trend_chart(lines: list[dict], palette: list[str], total_matches: int = 0) -> dict:
     width = 760
     height = 320
     pad_left = 52
@@ -244,7 +244,7 @@ def fetch_dashboard_trends(match_window: int, direction: str = "desc") -> dict:
             }
         )
 
-    return _build_trend_chart(lines, palette, total_matches)
+    return build_trend_chart(lines, palette, total_matches)
 
 
 def fetch_dashboard_lane_stats(match_window: int | None) -> dict[str, dict[str, list[dict]]]:

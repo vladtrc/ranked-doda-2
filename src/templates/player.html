@@ -1,40 +1,58 @@
 {% extends "base.html" %}
 {% block title %}{{ player.name if player else 'Player not found' }} – Dota Ranked{% endblock %}
+{% from "partials/trend_chart.html" import trend_chart as render_trend_chart %}
 
 {% block content %}
 {% if player %}
 <div class="flex flex-col gap-6">
 
-  <div class="flex flex-col gap-1">
-    <h1 class="text-2xl font-bold">{{ player.name }}</h1>
-    <p class="text-base-content/60 text-sm">{{ player.games }} games tracked</p>
+  {% macro stat(label, value, color='') %}
+  <div class="stat">
+    <div class="stat-title text-xs">{{ label }}</div>
+    <div class="stat-value text-lg md:text-xl {{ color }}">{{ value }}</div>
   </div>
+  {% endmacro %}
 
-  <div class="overflow-x-auto">
-    <div class="stats stats-vertical lg:stats-horizontal w-full border border-base-300 bg-base-200">
-    {% macro stat(label, value, color='') %}
-    <div class="stat">
-      <div class="stat-title text-xs">{{ label }}</div>
-      <div class="stat-value text-xl {{ color }}">{{ value }}</div>
+  <section class="card border border-base-300 bg-base-200">
+    <div class="card-body gap-4 p-4">
+      <div class="flex flex-col gap-2 lg:flex-row lg:items-start lg:justify-between">
+        <h1 class="text-2xl font-bold">{{ player.name }}</h1>
+        <p class="text-sm text-base-content/60 lg:text-right">Player profile across all tracked matches.</p>
+      </div>
+
+      <div class="rounded-box border border-base-300 bg-base-100 p-3">
+        <div class="flex flex-wrap items-stretch justify-evenly gap-3">
+          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('Matches', player.games) }}
+          </div>
+          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('First Match', player.first_game.strftime('%Y-%m-%d') if player.first_game else '—') }}
+          </div>
+          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('Last Match', player.last_game.strftime('%Y-%m-%d') if player.last_game else '—') }}
+          </div>
+          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('Wins', player.wins) }}
+          </div>
+          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('W-L', "%+d"|format(player.wl|int), 'text-success' if player.wl >= 0 else 'text-error') }}
+          </div>
+          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('Win%', player.win_pct ~ '%', 'text-success' if player.win_pct >= 50 else 'text-error') }}
+          </div>
+        </div>
+      </div>
     </div>
-    {% endmacro %}
+  </section>
 
-    {{ stat('Games', stats.games) }}
-    {{ stat('Wins', stats.wins) }}
-    {{ stat('Win%', stats.win_pct ~ '%', 'text-success' if stats.win_pct >= 50 else 'text-error') }}
-    {{ stat('Avg K', stats.avg_k) }}
-    {{ stat('Avg D', stats.avg_d) }}
-    {{ stat('Avg A', stats.avg_a) }}
-    {{ stat('Avg Gold', "{:,}".format(stats.avg_gold)) }}
-    </div>
-  </div>
-
-  <div>
-    <div class="mb-3 flex items-center gap-4">
-      <h2 class="text-lg font-semibold">Recent Games</h2>
-      <div class="flex items-center gap-2">
-        <span class="text-xs text-base-content/40 uppercase tracking-wider">Pos</span>
-        <div class="flex gap-1">
+  <section class="card border border-base-300 bg-base-200">
+    <div class="card-body gap-5 p-4">
+      <div class="flex flex-col gap-2 lg:flex-row lg:items-start lg:justify-between">
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+          <h2 class="text-lg font-semibold">Filtered Dashboard</h2>
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-base-content/40 uppercase tracking-wider">POS</span>
+            <div class="flex gap-1">
           {% set no_filter = selected_positions | length == 0 %}
           {% for pos in range(1, 6) %}
           {% set lit = position_counts[pos] > 0 and (pos in selected_positions or no_filter) %}
@@ -46,8 +64,57 @@
             {{ pos }}
           </button>
           {% endfor %}
+            </div>
+          </div>
         </div>
+        <p class="text-sm text-base-content/50 lg:text-right">
+          {% if stats %}
+          {{ stats.games }} games from {{ stats.first_game.strftime('%Y-%m-%d') if stats.first_game else '—' }} to {{ stats.last_game.strftime('%Y-%m-%d') if stats.last_game else '—' }}.
+          {% else %}
+          No games for the selected positions.
+          {% endif %}
+        </p>
       </div>
+
+      <section class="rounded-box border border-base-300 bg-base-100 p-4">
+        {{ render_trend_chart('Cumulative W-L', trend_chart, 'text-info/70') }}
+      </section>
+
+      <section class="rounded-box border border-base-300 bg-base-100 p-3">
+        <div class="flex flex-wrap items-stretch justify-evenly gap-3">
+          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('Games', stats.games if stats else '—') }}
+          </div>
+          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('Wins', stats.wins if stats else '—') }}
+          </div>
+          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('W-L', ("%+d"|format(stats.wl|int)) if stats else '—', 'text-success' if stats and stats.wl >= 0 else ('text-error' if stats else '')) }}
+          </div>
+          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('Win%', (stats.win_pct ~ '%') if stats else '—', 'text-success' if stats and stats.win_pct >= 50 else ('text-error' if stats else '')) }}
+          </div>
+          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('Avg K', stats.avg_k if stats else '—') }}
+          </div>
+          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('Avg D', stats.avg_d if stats else '—') }}
+          </div>
+          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('Avg A', stats.avg_a if stats else '—') }}
+          </div>
+          <div class="flex-none rounded-box border border-base-300 bg-base-200/55">
+            {{ stat('Avg Gold', "{:,}".format(stats.avg_gold) if stats and stats.avg_gold is not none else '—') }}
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <section>
+    <div class="mb-3 flex items-center gap-4">
+      <h2 class="text-lg font-semibold">Games</h2>
+      <p class="text-sm text-base-content/45">List below respects the current `POS` filter.</p>
     </div>
     <div class="overflow-x-auto rounded-box border border-base-300">
       <table class="table table-zebra table-sm w-full">
@@ -69,7 +136,7 @@
         </tbody>
       </table>
     </div>
-  </div>
+  </section>
 
   <dialog id="game-modal" class="modal modal-bottom sm:modal-middle">
     <div class="modal-box max-w-2xl p-4">
