@@ -4449,8 +4449,8 @@ sobolew 4 22612 5/11/24
 2:04:46 66-55 radiant
 radiant
 sobolew 4 71061 28/7/23
-jumays 2 72682 8/17/29
-bnc 1 77138 16/9/35
+jumays 1 72682 8/17/29
+bnc 2 77138 16/9/35
 katokan 3 60918 6/12/42
 pizza 5 56307 7/12/39
 dire
