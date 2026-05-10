@@ -12,7 +12,7 @@
 # poopy      <- Mr. Poopy ButtHole
 # bars_lapk  <- Bars Lapk
 # dead_alive <- dead/alive
-# tajik      <- Дядя Таджик
+# tj4k <- Дядя Таджик
 # muzhsok    <- мужской сок
 # karp       <- карп иваныч
 # papa_vor   <- папа вор
@@ -4409,7 +4409,7 @@ dire
 fishscale 2 48350 7/4/13
 imba 1 59572 12/2/20
 de 5 21240 5/8/23
-tajik 3 33625 9/6/7
+tj4k 3 33625 9/6/7
 microsha 4 25727 3/8/21
 
 
@@ -4424,7 +4424,7 @@ imba 2 22991 12/1/16
 dire
 sobolew 3 15645 2/7/10
 kebab 5 7182 6/9/8
-tajik 1 18450 6/7/6
+tj4k 1 18450 6/7/6
 de 4 11184 1/11/8
 gantz 2 17265 3/5/6
 
@@ -4473,7 +4473,7 @@ dire
 katokan 5 9054 2/11/15
 imba 1 25216 5/1/9
 kebab 4 10264 5/14/11
-tajik 3 16609 5/9/11
+tj4k 3 16609 5/9/11
 bnc 2 18865 10/7/11
 
 
@@ -4481,7 +4481,7 @@ bnc 2 18865 10/7/11
 46:14 42-27 radiant
 radiant
 starlight 1 31217 7/5/13
-tajik 3 28050 8/6/11
+tj4k 3 28050 8/6/11
 bnc 2 37978 17/1/7
 de 5 13309 4/10/19
 kebab 4 15082 5/6/20
@@ -4498,7 +4498,7 @@ imba 1 23138 6/4/4
 radiant
 kebab 5 9337 6/12/10
 fishscale 1 25482 8/7/7
-tajik 2 16332 8/9/11
+tj4k 2 16332 8/9/11
 de 3 12949 3/11/8
 papa_vor 4 11974 0/13/8
 dire
@@ -4513,7 +4513,7 @@ zavod 4 16492 3/9/20
 48:24 51-36 radiant
 radiant
 papa_vor 4 21898 2/12/17
-tajik 1 28611 25/8/13
+tj4k 1 28611 25/8/13
 bnc 2 37607 15/1/19
 heart 5 15105 1/7/26
 de 3 25432 7/8/15
@@ -4531,7 +4531,7 @@ radiant
 gantz 3 12414 11/9/9
 fishscale 2 13037 10/6/6
 imba 4 10970 3/11/12
-tajik 1 14249 3/9/12
+tj4k 1 14249 3/9/12
 pizza 5 6408 1/13/8
 dire
 microsha 1 22825 6/2/13
